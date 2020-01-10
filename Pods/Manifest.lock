@@ -1,0 +1,56 @@
+PODS:
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
+  - FBRetainCycleDetector (0.1.4)
+  - HYBUnicodeReadable (1.1)
+  - LookinServer (0.9.4)
+  - Mantle (2.1.0):
+    - Mantle/extobjc (= 2.1.0)
+  - Mantle/extobjc (2.1.0)
+  - MJRefresh (3.1.15)
+  - MLeaksFinder (1.0.0):
+    - FBRetainCycleDetector
+
+DEPENDENCIES:
+  - AFNetworking (= 3.2.1)
+  - HYBUnicodeReadable (= 1.1)
+  - LookinServer (= 0.9.4)
+  - Mantle (= 2.1.0)
+  - MJRefresh (= 3.1.15)
+  - MLeaksFinder (= 1.0.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - FBRetainCycleDetector
+    - HYBUnicodeReadable
+    - LookinServer
+    - Mantle
+    - MJRefresh
+    - MLeaksFinder
+
+SPEC CHECKSUMS:
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  FBRetainCycleDetector: 46f8179bbb1c587deee3ea838a1a3ee02acf5015
+  HYBUnicodeReadable: ad81c2313f07fe89bd8e6698c60ab6e45e78f85f
+  LookinServer: 54eb99921647bda4068ff8776d842285e2bf0adb
+  Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
+  MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
+  MLeaksFinder: 8c435bd2f6d070af18cff082b503b21adc130fc0
+
+PODFILE CHECKSUM: 046ec3724525616368252ec9c8728af1b30a969f
+
+COCOAPODS: 1.7.3
