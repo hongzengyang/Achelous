@@ -33,6 +33,7 @@
 		4431E5BD23CC2EC500FF57AC /* OORefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E5BC23CC2EC500FF57AC /* OORefreshHeader.m */; };
 		4431E5C423CC359900FF57AC /* UIColor+XYStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E5C323CC359800FF57AC /* UIColor+XYStyle.m */; };
 		4431E5C823CC431200FF57AC /* OOLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E5C723CC431200FF57AC /* OOLoginVC.m */; };
+		4438AF2F23D153F3002F66B3 /* OOHomeHeaderTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4438AF2E23D153F3002F66B3 /* OOHomeHeaderTypeView.m */; };
 		4460F3C623CCA2AF00DE7CC4 /* UIImage+XYInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F3A423CCA2AF00DE7CC4 /* UIImage+XYInit.m */; };
 		4460F3C723CCA2AF00DE7CC4 /* UIFont+XYLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F3A823CCA2AF00DE7CC4 /* UIFont+XYLoad.m */; };
 		4460F3C823CCA2AF00DE7CC4 /* UIView+XYBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F3A923CCA2AF00DE7CC4 /* UIView+XYBlur.m */; };
@@ -151,6 +152,8 @@
 		4431E5C323CC359800FF57AC /* UIColor+XYStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+XYStyle.m"; sourceTree = "<group>"; };
 		4431E5C623CC431200FF57AC /* OOLoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOLoginVC.h; sourceTree = "<group>"; };
 		4431E5C723CC431200FF57AC /* OOLoginVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOLoginVC.m; sourceTree = "<group>"; };
+		4438AF2D23D153F3002F66B3 /* OOHomeHeaderTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOHomeHeaderTypeView.h; sourceTree = "<group>"; };
+		4438AF2E23D153F3002F66B3 /* OOHomeHeaderTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOHomeHeaderTypeView.m; sourceTree = "<group>"; };
 		4460F3A423CCA2AF00DE7CC4 /* UIImage+XYInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+XYInit.m"; sourceTree = "<group>"; };
 		4460F3A523CCA2AF00DE7CC4 /* UIDevice+XYInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+XYInfo.h"; sourceTree = "<group>"; };
 		4460F3A623CCA2AF00DE7CC4 /* UIApplication+XYAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+XYAppInfo.h"; sourceTree = "<group>"; };
@@ -578,6 +581,8 @@
 				4460F42623D058AD00DE7CC4 /* OOHomeCollectionView.m */,
 				4460F42923D0597C00DE7CC4 /* OOHomeHeaderView.h */,
 				4460F42A23D0597C00DE7CC4 /* OOHomeHeaderView.m */,
+				4438AF2D23D153F3002F66B3 /* OOHomeHeaderTypeView.h */,
+				4438AF2E23D153F3002F66B3 /* OOHomeHeaderTypeView.m */,
 				4460F42F23D060A100DE7CC4 /* OOHomeModel.h */,
 				4460F43023D060A100DE7CC4 /* OOHomeModel.m */,
 			);
@@ -824,6 +829,7 @@
 				4460F41823CCA2CD00DE7CC4 /* NSData+XYBase64.m in Sources */,
 				441D608D23B20EC200F07134 /* OONavigationController.m in Sources */,
 				4460F40E23CCA2CD00DE7CC4 /* NSString+XYHTMLEscape.m in Sources */,
+				4438AF2F23D153F3002F66B3 /* OOHomeHeaderTypeView.m in Sources */,
 				4460F3C623CCA2AF00DE7CC4 /* UIImage+XYInit.m in Sources */,
 				4460F40A23CCA2CD00DE7CC4 /* NSData+XYMD5.m in Sources */,
 				4460F3CD23CCA2AF00DE7CC4 /* UIView+XYFrame.m in Sources */,

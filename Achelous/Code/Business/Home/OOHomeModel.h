@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *XQinfo;
 @property (nonatomic, copy) NSString *JBinfo;
 
-@property (nonatomic, strong) NSArray *menuList;
+@property (nonatomic, strong) NSMutableArray <OOHomeDataMenuModel *>*menuList;
 
 @end
 

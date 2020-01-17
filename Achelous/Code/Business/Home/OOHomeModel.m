@@ -43,8 +43,15 @@
             self.dataModel.XQinfo = [data xyStringForKey:@"XQinfo"];
             self.dataModel.JBinfo = [data xyStringForKey:@"JBinfo"];
             
+            [self.dataModel.menuList removeAllObjects];
             NSArray *array = [data xyArrayForKey:@"menu"];
-            self.dataModel.menuList = [OOHomeDataMenuModel yy_];
+            [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *dic = (NSDictionary *)obj;
+                    OOHomeDataMenuModel *model = [OOHomeDataMenuModel yy_modelWithJSON:dic];
+                    [self.dataModel.menuList addObject:model];
+                }
+            }];
         }
         
         if (completeBlock) {
