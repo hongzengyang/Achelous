@@ -23,6 +23,8 @@ PODS:
   - MJRefresh (3.1.15)
   - MLeaksFinder (1.0.0):
     - FBRetainCycleDetector
+  - SVProgressHUD (2.2.5)
+  - YYModel (1.0.4)
 
 DEPENDENCIES:
   - AFNetworking (= 3.2.1)
@@ -31,6 +33,8 @@ DEPENDENCIES:
   - Mantle (= 2.1.0)
   - MJRefresh (= 3.1.15)
   - MLeaksFinder (= 1.0.0)
+  - SVProgressHUD (= 2.2.5)
+  - YYModel (= 1.0.4)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -41,6 +45,8 @@ SPEC REPOS:
     - Mantle
     - MJRefresh
     - MLeaksFinder
+    - SVProgressHUD
+    - YYModel
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
@@ -50,7 +56,9 @@ SPEC CHECKSUMS:
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
   MLeaksFinder: 8c435bd2f6d070af18cff082b503b21adc130fc0
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 046ec3724525616368252ec9c8728af1b30a969f
+PODFILE CHECKSUM: 0f5ae699946294962be4f48fbb436752f7b00b42
 
 COCOAPODS: 1.7.3

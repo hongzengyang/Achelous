@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MDPageMasterViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OOHomeVC : UIViewController
+@interface OOHomeVC : MDPageMasterViewController
 
 @end
 

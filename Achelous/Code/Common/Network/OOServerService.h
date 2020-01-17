@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OOServerApiName.h"
 
-typedef void (^OO_SERVER_BLOCK)(id request, NSInteger nErrCode, id response);
+typedef void (^OO_SERVER_BLOCK)(BOOL success, id response);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,10 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
                          options:(NSDictionary *)options
                            block:(OO_SERVER_BLOCK)block;
 
-- (NSDictionary *)getWithUrlKey:(NSString *)urlKey
-                     parameters:(NSDictionary *)parameters
-                        options:(NSDictionary *)options
-                          block:(OO_SERVER_BLOCK)block;
+//- (NSDictionary *)getWithUrlKey:(NSString *)urlKey
+//                     parameters:(NSDictionary *)parameters
+//                        options:(NSDictionary *)options
+//                          block:(OO_SERVER_BLOCK)block;
 
 @end
 

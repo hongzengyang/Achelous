@@ -30,3 +30,8 @@ static NSString *const kApi_patrol_Appmenu   = @"/api/api/Appmenu";
 //地理相关
 //static NSString *const kApi_patrol_Appmenu   = @"/api/api/Appmenu";
 //static NSString *const kApi_patrol_Appmenu   = @"/api/api/Appmenu";
+
+
+@interface OOServerApiName : NSObject
+
+@end

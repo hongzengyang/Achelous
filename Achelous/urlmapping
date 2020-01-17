@@ -1,0 +1,5 @@
+#页面key值                  :页面className
+
+
+oo_home_vc           :OOHomeVC
+oo_logn_vc           :OOLoginVC

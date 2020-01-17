@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "OONavigationController.h"
-#import "OOHomeVC.h"
+#import "MDPageMaster.h"
 
 @interface AppDelegate ()
 
@@ -19,14 +19,22 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    OOHomeVC *viewController = [[OOHomeVC alloc] init];
-    OONavigationController *nav = [[OONavigationController alloc] initWithRootViewController:viewController];
-    //设置主界面并显示
+    self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
-    self.window.rootViewController = nav;
-    
+    [self setupPageMaster];
     
     return YES;
+}
+
+- (void)setupPageMaster {
+    //设置根导航
+    NSDictionary *params = @{@"schema":@"xiaoying",
+                             @"pagesFile":@"urlmapping",
+                             @"rootVC":@"OOLoginVC"};
+    [[MDPageMaster master] setupNavigationControllerWithParams:params];
+    [MDPageMaster master].navigationContorller.view.backgroundColor = [UIColor whiteColor];
+    [MDPageMaster master].navigationContorller.navigationBar.hidden = YES;
+    self.window.rootViewController = [MDPageMaster master].navigationContorller;
 }
 
 
