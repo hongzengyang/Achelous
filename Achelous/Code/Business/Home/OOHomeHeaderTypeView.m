@@ -22,6 +22,10 @@
     if (self = [super initWithFrame:frame]) {
         self.strTitle = strTitle;
         
+        self.backgroundColor = [UIColor whiteColor];
+        self.layer.cornerRadius = 4;
+        self.layer.masksToBounds = YES;
+        
         [self addSubview:self.titleLab];
         [self addSubview:self.countLab];
     }

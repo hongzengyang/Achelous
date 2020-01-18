@@ -1,3 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-Achelous/Pods-Achelous-resources.sh
+${PODS_ROOT}/BaiduMapKit/BaiduMapKit/BaiduMapAPI_Map.framework/mapapi.bundle
 ${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle
 ${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle
+${PODS_ROOT}/WMZDialog/WMZDialog/WMZDialog/WMZDialog.bundle

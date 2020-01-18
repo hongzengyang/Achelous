@@ -41,7 +41,7 @@
 
 #pragma mark - Common colors
 + (UIColor *)appMainColor {
-    return [UIColor blueColor];
+    return [UIColor xycColorWithHex:0x458BE8];
 }
 
 + (UIColor *)appTextColor {

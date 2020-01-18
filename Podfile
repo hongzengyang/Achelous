@@ -7,6 +7,10 @@ platform :ios, '8.0'
 eval(File.open('PodDevExtension.rb').read) if File.exist? 'PodDevExtension.rb'
 
 
+pod 'BaiduMapKit', '5.1.0'
+pod 'BMKLocationKit', '1.8.5'
+pod 'WMZDialog',  '1.0.7'
+pod 'SDWebImage', '~> 4.0.0'
 pod 'SVProgressHUD', '2.2.5'
 pod 'YYModel' ,'1.0.4'
 pod 'AFNetworking','3.2.1'

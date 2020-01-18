@@ -10,6 +10,8 @@
 #define PrefixHeader_pch
 
 #import "OOAppCommonDef.h"
+#import "OOAPPMgr.h"
+#import "OOUserMgr.h"
 #import "UIView+OOEasyFrames.h"
 #import "UIColor+XYStyle.h"
 #import "MDPageMaster.h"
@@ -21,6 +23,7 @@
 
 #import "XYContainerConvertor.h"
 #import "NSDictionary+XYContainerConvertor.h"
+#import "NSString+XYEmpty.h"
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.

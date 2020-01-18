@@ -1,5 +1,11 @@
 #页面key值                  :页面className
 
 
-oo_home_vc           :OOHomeVC
-oo_logn_vc           :OOLoginVC
+oo_home_vc               :OOHomeVC
+oo_logn_vc               :OOLoginVC
+oo_createxc_vc           :OOCreateXCVC
+oo_patrol_vc             :OOPatrolVC
+oo_report_vc             :OOReportVC
+
+oo_xc_track_page_vc        :OOXCTrackPageVC
+oo_xc_track_vc             :OOXCTrackVC

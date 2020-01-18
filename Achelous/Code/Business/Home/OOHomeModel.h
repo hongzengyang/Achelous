@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define PREF_KEY_HOME_DATA_FRESH_FINISH    @"pref_key_home_data_refresh_fnish"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OOHomeDataMenuModel : NSObject
@@ -34,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) OOHomeDataModel *dataModel;
 
-- (void)fetchHomeDataWithCompleteBlock:(OOCompleteBlock)completeBlock;
+- (void)fetchHomeData;
 
 @end
 

@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat safeTopArea;
 @property (nonatomic, assign) CGFloat safeBottomArea;
 
+@property (nonatomic, copy) NSString *currentXCID;
+
 + (OOAPPMgr *)sharedMgr;
 
 - (NSString *)deviceID;

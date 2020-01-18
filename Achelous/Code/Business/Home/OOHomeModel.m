@@ -29,10 +29,17 @@
     return @{@"menuList" : [OOHomeDataMenuModel class]};
 }
 
+- (NSMutableArray<OOHomeDataMenuModel *> *)menuList {
+    if (!_menuList) {
+        _menuList = [[NSMutableArray alloc] init];
+    }
+    return _menuList;
+}
+
 @end
 
 @implementation OOHomeModel
-- (void)fetchHomeDataWithCompleteBlock:(OOCompleteBlock)completeBlock {
+- (void)fetchHomeData {
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
     [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
     [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_Appmenu parameters:param options:nil block:^(BOOL success, id response) {
@@ -54,9 +61,7 @@
             }];
         }
         
-        if (completeBlock) {
-            completeBlock(success);
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:PREF_KEY_HOME_DATA_FRESH_FINISH object:nil userInfo:nil];
     }];
 }
 

@@ -35,7 +35,8 @@
         self.type_width = ([UIScreen mainScreen].bounds.size.width - 30 - self.type_interval * 3) / 4;
         self.type_height = ([UIScreen mainScreen].bounds.size.width - 30 - self.type_interval * 3) / 4;
         [self configUI];
-        [self fetchData];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeDataRefreshFinished) name:PREF_KEY_HOME_DATA_FRESH_FINISH object:nil];
     }
     return self;
 }
@@ -48,17 +49,15 @@
     [self addSubview:self.JBTypeView];
 }
 
-- (void)fetchData {
-    [self.homeModel fetchHomeDataWithCompleteBlock:^(BOOL complete) {
-        if (complete) {
-            [self.SLTypeView updateCount:self.homeModel.dataModel.SLinfo];
-            [self.WRTypeView updateCount:self.homeModel.dataModel.WRinfo];
-            [self.XQTypeView updateCount:self.homeModel.dataModel.XQinfo];
-            [self.JBTypeView updateCount:self.homeModel.dataModel.JBinfo];
-        }
-    }];
+#pragma mark -- 通知
+- (void)homeDataRefreshFinished {
+    [self.SLTypeView updateCount:self.homeModel.dataModel.SLinfo];
+    [self.WRTypeView updateCount:self.homeModel.dataModel.WRinfo];
+    [self.XQTypeView updateCount:self.homeModel.dataModel.XQinfo];
+    [self.JBTypeView updateCount:self.homeModel.dataModel.JBinfo];
 }
 
+#pragma mark -- Lazy
 - (OOHomeHeaderTypeView *)SLTypeView {
     if (!_SLTypeView) {
         _SLTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(15, self.height - 20 - self.type_height, self.type_width, self.type_height) title:@"四乱现象"];
@@ -75,14 +74,14 @@
 
 - (OOHomeHeaderTypeView *)XQTypeView {
     if (!_XQTypeView) {
-        _XQTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.WRTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"污染现象"];
+        _XQTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.WRTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"险情现象"];
     }
     return _XQTypeView;
 }
 
 - (OOHomeHeaderTypeView *)JBTypeView {
     if (!_JBTypeView) {
-        _JBTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.XQTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"污染现象"];
+        _JBTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.XQTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"上报现象"];
     }
     return _JBTypeView;
 }

@@ -24,7 +24,7 @@
     
     self.label = [[UILabel alloc] init];
     self.label.textColor = [UIColor xycColorWithHex:0x999999];
-    self.label.font = [UIFont systemFontOfSize:10];
+    self.label.font = [UIFont systemFontOfSize:12];
     self.label.textAlignment = NSTextAlignmentCenter;
     self.label.text = @"加载中...";
     self.label.hidden = YES;
@@ -40,7 +40,7 @@
 - (void)placeSubviews {
     [super placeSubviews];
     
-    [self.loadingView setFrame:CGRectMake((self.width - 30), 10, 30, 30)];
+    [self.loadingView setFrame:CGRectMake((self.mj_w - 30) / 2.0, 10, 30, 30)];
     
     [self.label sizeToFit];
     [self.label setFrame:CGRectMake((self.mj_w - self.label.width)/2.0, self.loadingView.bottom + 5, self.label.width, self.label.height)];

@@ -36,6 +36,12 @@
     [self.view addSubview:self.headerView];
     [self.view addSubview:self.collectionView];
     [self.view addSubview:self.navBar];
+    
+    [self.homeModel fetchHomeData];
+    
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 - (OOHomeNavBar *)navBar {
@@ -56,8 +62,10 @@
 
 - (OOHomeCollectionView *)collectionView {
     if (!_collectionView) {
-        _collectionView = [[OOHomeCollectionView alloc] initWithFrame:CGRectMake(0, self.headerView.bottom, SCREEN_WIDTH, SCREEN_HEIGHT - self.headerView.bottom - SAFE_BOTTOM) collectionViewLayout:[UICollectionViewFlowLayout new] model:self.homeModel];
-        _collectionView.backgroundColor = [UIColor yellowColor];
+        UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
+        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        _collectionView = [[OOHomeCollectionView alloc] initWithFrame:CGRectMake(0, self.headerView.bottom, SCREEN_WIDTH, SCREEN_HEIGHT - self.headerView.bottom - SAFE_BOTTOM) collectionViewLayout:layout model:self.homeModel];
+        _collectionView.backgroundColor = [UIColor xycColorWithHex:0xF0F1F5];
     }
     return _collectionView;
 }

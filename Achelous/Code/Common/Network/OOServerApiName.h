@@ -13,7 +13,7 @@ static NSString *const kApi_user_Iuserlogin = @"/api/api/Iuserlogin";
 
 //巡查相关
 static NSString *const kApi_patrol_returnhk         = @"/api/api/returnhk";
-static NSString *const kApi_patrol_Beginxc          = @"/api/api/Beginxc";
+static NSString *const kApi_patrol_createXC          = @"/api/api/createXC";
 static NSString *const kApi_patrol_Endxc            = @"/api/api/Endxc";
 static NSString *const kApi_patrol_Upgps            = @"/api/api/Upgps";
 static NSString *const kApi_patrol_ImgUpload        = @"/api/api/ImgUpload";

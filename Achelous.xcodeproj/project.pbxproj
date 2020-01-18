@@ -20,6 +20,14 @@
 		441D609023B20FCF00F07134 /* UIView+OOEasyFrames.m in Sources */ = {isa = PBXBuildFile; fileRef = 441D608F23B20FCF00F07134 /* UIView+OOEasyFrames.m */; };
 		441D609523B2117700F07134 /* OOServerApiName.m in Sources */ = {isa = PBXBuildFile; fileRef = 441D609423B2117700F07134 /* OOServerApiName.m */; };
 		441D609823B2119F00F07134 /* OOServerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 441D609723B2119F00F07134 /* OOServerService.m */; };
+		44255B2F23D2DA0900DF9465 /* OOXCTrackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B2E23D2DA0900DF9465 /* OOXCTrackVC.m */; };
+		44255B3423D2DAD900DF9465 /* SportAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3223D2DAD900DF9465 /* SportAnnotationView.m */; };
+		44255B3523D2DAD900DF9465 /* SportNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3323D2DAD900DF9465 /* SportNode.m */; };
+		44255B3823D2DB8600DF9465 /* OOXCTrackPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3723D2DB8600DF9465 /* OOXCTrackPageVC.m */; };
+		44255B3B23D2DCE700DF9465 /* OOXCTrackPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3A23D2DCE700DF9465 /* OOXCTrackPageCell.m */; };
+		44255B3F23D2DF4000DF9465 /* OORefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3E23D2DF4000DF9465 /* OORefreshFooter.m */; };
+		44255B4223D2E14700DF9465 /* OOXCTrackPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B4123D2E14700DF9465 /* OOXCTrackPageModel.m */; };
+		44255B4623D2EDEC00DF9465 /* OOTrackNodeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B4523D2EDEC00DF9465 /* OOTrackNodeInfo.m */; };
 		4431E5A323CC0E4400FF57AC /* MDPageMasterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E59623CC0E4400FF57AC /* MDPageMasterNavigationController.m */; };
 		4431E5A523CC0E4400FF57AC /* MDPageMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E59A23CC0E4400FF57AC /* MDPageMasterViewController.m */; };
 		4431E5A623CC0E4400FF57AC /* MDUrlAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E59B23CC0E4400FF57AC /* MDUrlAction.m */; };
@@ -77,6 +85,24 @@
 		4460F42B23D0597C00DE7CC4 /* OOHomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F42A23D0597C00DE7CC4 /* OOHomeHeaderView.m */; };
 		4460F42E23D05A4300DE7CC4 /* OOHomeNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F42D23D05A4300DE7CC4 /* OOHomeNavBar.m */; };
 		4460F43123D060A100DE7CC4 /* OOHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F43023D060A100DE7CC4 /* OOHomeModel.m */; };
+		4460F43423D1637500DE7CC4 /* OOHomeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F43323D1637500DE7CC4 /* OOHomeCollectionCell.m */; };
+		4460F43923D1841900DE7CC4 /* OOCreateXCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F43823D1841800DE7CC4 /* OOCreateXCVC.m */; };
+		4460F43C23D187DA00DE7CC4 /* OOCreateXCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F43B23D187DA00DE7CC4 /* OOCreateXCTableView.m */; };
+		4460F43F23D188C400DE7CC4 /* OOCreateXCModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F43E23D188C400DE7CC4 /* OOCreateXCModel.m */; };
+		4460F44223D189B300DE7CC4 /* OOCreateXCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F44123D189B300DE7CC4 /* OOCreateXCTableViewCell.m */; };
+		4460F44623D1A05A00DE7CC4 /* LNActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F44523D1A05900DE7CC4 /* LNActionSheet.m */; };
+		4460F44A23D1C26A00DE7CC4 /* OOPatrolVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F44923D1C26A00DE7CC4 /* OOPatrolVC.m */; };
+		4460F45123D1D71800DE7CC4 /* OOReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F45023D1D71800DE7CC4 /* OOReportVC.m */; };
+		4460F45423D1D8B500DE7CC4 /* OOReportModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F45323D1D8B500DE7CC4 /* OOReportModel.m */; };
+		4460F45823D1DCC600DE7CC4 /* OOTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F45723D1DCC600DE7CC4 /* OOTypeView.m */; };
+		4460F45A23D1EE0E00DE7CC4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F45923D1EE0E00DE7CC4 /* CoreLocation.framework */; };
+		4460F45C23D1EE1800DE7CC4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F45B23D1EE1800DE7CC4 /* SystemConfiguration.framework */; };
+		4460F45E23D1EE1F00DE7CC4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F45D23D1EE1F00DE7CC4 /* Security.framework */; };
+		4460F46023D1EE2C00DE7CC4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F45F23D1EE2C00DE7CC4 /* libsqlite3.0.tbd */; };
+		4460F46223D1EE3500DE7CC4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F46123D1EE3500DE7CC4 /* CoreTelephony.framework */; };
+		4460F46423D1EE4300DE7CC4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F46323D1EE4300DE7CC4 /* libc++.tbd */; };
+		4460F46623D1EE4900DE7CC4 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F46523D1EE4900DE7CC4 /* AdSupport.framework */; };
+		4460F46823D1F4DA00DE7CC4 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4460F46723D1F4D900DE7CC4 /* mapapi.bundle */; };
 		4AB0696DE17B8B5BCFF08046 /* libPods-Achelous.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFED6BB4609DC60CD4BAF33B /* libPods-Achelous.a */; };
 /* End PBXBuildFile section */
 
@@ -127,6 +153,22 @@
 		441D609623B2119F00F07134 /* OOServerService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOServerService.h; sourceTree = "<group>"; };
 		441D609723B2119F00F07134 /* OOServerService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOServerService.m; sourceTree = "<group>"; };
 		441D609923B211E100F07134 /* OOAppCommonDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOAppCommonDef.h; sourceTree = "<group>"; };
+		44255B2D23D2DA0900DF9465 /* OOXCTrackVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCTrackVC.h; sourceTree = "<group>"; };
+		44255B2E23D2DA0900DF9465 /* OOXCTrackVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOXCTrackVC.m; sourceTree = "<group>"; };
+		44255B3023D2DAD900DF9465 /* SportAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportAnnotationView.h; sourceTree = "<group>"; };
+		44255B3123D2DAD900DF9465 /* SportNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportNode.h; sourceTree = "<group>"; };
+		44255B3223D2DAD900DF9465 /* SportAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportAnnotationView.m; sourceTree = "<group>"; };
+		44255B3323D2DAD900DF9465 /* SportNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportNode.m; sourceTree = "<group>"; };
+		44255B3623D2DB8600DF9465 /* OOXCTrackPageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCTrackPageVC.h; sourceTree = "<group>"; };
+		44255B3723D2DB8600DF9465 /* OOXCTrackPageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOXCTrackPageVC.m; sourceTree = "<group>"; };
+		44255B3923D2DCE700DF9465 /* OOXCTrackPageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCTrackPageCell.h; sourceTree = "<group>"; };
+		44255B3A23D2DCE700DF9465 /* OOXCTrackPageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOXCTrackPageCell.m; sourceTree = "<group>"; };
+		44255B3D23D2DF4000DF9465 /* OORefreshFooter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OORefreshFooter.h; sourceTree = "<group>"; };
+		44255B3E23D2DF4000DF9465 /* OORefreshFooter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OORefreshFooter.m; sourceTree = "<group>"; };
+		44255B4023D2E14700DF9465 /* OOXCTrackPageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCTrackPageModel.h; sourceTree = "<group>"; };
+		44255B4123D2E14700DF9465 /* OOXCTrackPageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOXCTrackPageModel.m; sourceTree = "<group>"; };
+		44255B4423D2EDEC00DF9465 /* OOTrackNodeInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOTrackNodeInfo.h; sourceTree = "<group>"; };
+		44255B4523D2EDEC00DF9465 /* OOTrackNodeInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOTrackNodeInfo.m; sourceTree = "<group>"; };
 		4431E59323CC0E4400FF57AC /* MDUrlAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDUrlAction.h; sourceTree = "<group>"; };
 		4431E59423CC0E4400FF57AC /* MDPageMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPageMasterViewController.h; sourceTree = "<group>"; };
 		4431E59623CC0E4400FF57AC /* MDPageMasterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPageMasterNavigationController.m; sourceTree = "<group>"; };
@@ -240,6 +282,34 @@
 		4460F42D23D05A4300DE7CC4 /* OOHomeNavBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOHomeNavBar.m; sourceTree = "<group>"; };
 		4460F42F23D060A100DE7CC4 /* OOHomeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOHomeModel.h; sourceTree = "<group>"; };
 		4460F43023D060A100DE7CC4 /* OOHomeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOHomeModel.m; sourceTree = "<group>"; };
+		4460F43223D1637500DE7CC4 /* OOHomeCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOHomeCollectionCell.h; sourceTree = "<group>"; };
+		4460F43323D1637500DE7CC4 /* OOHomeCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOHomeCollectionCell.m; sourceTree = "<group>"; };
+		4460F43723D1841800DE7CC4 /* OOCreateXCVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOCreateXCVC.h; sourceTree = "<group>"; };
+		4460F43823D1841800DE7CC4 /* OOCreateXCVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOCreateXCVC.m; sourceTree = "<group>"; };
+		4460F43A23D187DA00DE7CC4 /* OOCreateXCTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOCreateXCTableView.h; sourceTree = "<group>"; };
+		4460F43B23D187DA00DE7CC4 /* OOCreateXCTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOCreateXCTableView.m; sourceTree = "<group>"; };
+		4460F43D23D188C400DE7CC4 /* OOCreateXCModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOCreateXCModel.h; sourceTree = "<group>"; };
+		4460F43E23D188C400DE7CC4 /* OOCreateXCModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOCreateXCModel.m; sourceTree = "<group>"; };
+		4460F44023D189B300DE7CC4 /* OOCreateXCTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOCreateXCTableViewCell.h; sourceTree = "<group>"; };
+		4460F44123D189B300DE7CC4 /* OOCreateXCTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOCreateXCTableViewCell.m; sourceTree = "<group>"; };
+		4460F44423D1A05900DE7CC4 /* LNActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNActionSheet.h; sourceTree = "<group>"; };
+		4460F44523D1A05900DE7CC4 /* LNActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNActionSheet.m; sourceTree = "<group>"; };
+		4460F44823D1C26A00DE7CC4 /* OOPatrolVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOPatrolVC.h; sourceTree = "<group>"; };
+		4460F44923D1C26A00DE7CC4 /* OOPatrolVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOPatrolVC.m; sourceTree = "<group>"; };
+		4460F44F23D1D71800DE7CC4 /* OOReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOReportVC.h; sourceTree = "<group>"; };
+		4460F45023D1D71800DE7CC4 /* OOReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOReportVC.m; sourceTree = "<group>"; };
+		4460F45223D1D8B500DE7CC4 /* OOReportModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOReportModel.h; sourceTree = "<group>"; };
+		4460F45323D1D8B500DE7CC4 /* OOReportModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOReportModel.m; sourceTree = "<group>"; };
+		4460F45623D1DCC600DE7CC4 /* OOTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOTypeView.h; sourceTree = "<group>"; };
+		4460F45723D1DCC600DE7CC4 /* OOTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOTypeView.m; sourceTree = "<group>"; };
+		4460F45923D1EE0E00DE7CC4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		4460F45B23D1EE1800DE7CC4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4460F45D23D1EE1F00DE7CC4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4460F45F23D1EE2C00DE7CC4 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		4460F46123D1EE3500DE7CC4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4460F46323D1EE4300DE7CC4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		4460F46523D1EE4900DE7CC4 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		4460F46723D1F4D900DE7CC4 /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = mapapi.bundle; path = Pods/BaiduMapKit/BaiduMapKit/BaiduMapAPI_Map.framework/mapapi.bundle; sourceTree = "<group>"; };
 		4A7E86C2E9AE47E23EB97C0E /* Pods-Achelous.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Achelous.debug.xcconfig"; path = "Target Support Files/Pods-Achelous/Pods-Achelous.debug.xcconfig"; sourceTree = "<group>"; };
 		ACB678F4D203D137A601AEA8 /* Pods-Achelous.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Achelous.release.xcconfig"; path = "Target Support Files/Pods-Achelous/Pods-Achelous.release.xcconfig"; sourceTree = "<group>"; };
 		AFED6BB4609DC60CD4BAF33B /* libPods-Achelous.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Achelous.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -250,6 +320,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4460F46623D1EE4900DE7CC4 /* AdSupport.framework in Frameworks */,
+				4460F46423D1EE4300DE7CC4 /* libc++.tbd in Frameworks */,
+				4460F46223D1EE3500DE7CC4 /* CoreTelephony.framework in Frameworks */,
+				4460F46023D1EE2C00DE7CC4 /* libsqlite3.0.tbd in Frameworks */,
+				4460F45E23D1EE1F00DE7CC4 /* Security.framework in Frameworks */,
+				4460F45C23D1EE1800DE7CC4 /* SystemConfiguration.framework in Frameworks */,
+				4460F45A23D1EE0E00DE7CC4 /* CoreLocation.framework in Frameworks */,
 				4431E5AB23CC0ED900FF57AC /* QuartzCore.framework in Frameworks */,
 				4AB0696DE17B8B5BCFF08046 /* libPods-Achelous.a in Frameworks */,
 			);
@@ -275,6 +352,7 @@
 		441D604023B20E7B00F07134 = {
 			isa = PBXGroup;
 			children = (
+				4460F46723D1F4D900DE7CC4 /* mapapi.bundle */,
 				441D604B23B20E7B00F07134 /* Achelous */,
 				441D606723B20E7C00F07134 /* AchelousTests */,
 				441D607223B20E7C00F07134 /* AchelousUITests */,
@@ -297,7 +375,6 @@
 		441D604B23B20E7B00F07134 /* Achelous */ = {
 			isa = PBXGroup;
 			children = (
-				4431E59123CC0E4400FF57AC /* MDPageMaster */,
 				441D604C23B20E7B00F07134 /* AppDelegate.h */,
 				441D604D23B20E7B00F07134 /* AppDelegate.m */,
 				441D605223B20E7B00F07134 /* ViewController.h */,
@@ -344,6 +421,10 @@
 		441D608223B20EC200F07134 /* Business */ = {
 			isa = PBXGroup;
 			children = (
+				4460F43623D183FE00DE7CC4 /* 创建巡查 */,
+				4460F43523D183FE00DE7CC4 /* 巡查轨迹 */,
+				4460F44723D1C21A00DE7CC4 /* 河湖巡查 */,
+				4460F44E23D1D70300DE7CC4 /* 上报页面 */,
 				4460F42823D0594E00DE7CC4 /* Home */,
 				4431E5C523CC42FD00FF57AC /* Log in */,
 			);
@@ -360,6 +441,8 @@
 				441D608923B20EC200F07134 /* UIKit */,
 				441D608A23B20EC200F07134 /* Network */,
 				4431E5C123CC359800FF57AC /* ToolKit */,
+				4431E59123CC0E4400FF57AC /* MDPageMaster */,
+				4460F44323D1A05900DE7CC4 /* Bottom Alert */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -394,6 +477,34 @@
 				441D609423B2117700F07134 /* OOServerApiName.m */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		44255B3C23D2DDDA00DF9465 /* Track Page */ = {
+			isa = PBXGroup;
+			children = (
+				44255B3623D2DB8600DF9465 /* OOXCTrackPageVC.h */,
+				44255B3723D2DB8600DF9465 /* OOXCTrackPageVC.m */,
+				44255B3923D2DCE700DF9465 /* OOXCTrackPageCell.h */,
+				44255B3A23D2DCE700DF9465 /* OOXCTrackPageCell.m */,
+				44255B4023D2E14700DF9465 /* OOXCTrackPageModel.h */,
+				44255B4123D2E14700DF9465 /* OOXCTrackPageModel.m */,
+			);
+			path = "Track Page";
+			sourceTree = "<group>";
+		};
+		44255B4323D2EDB500DF9465 /* Track */ = {
+			isa = PBXGroup;
+			children = (
+				44255B2D23D2DA0900DF9465 /* OOXCTrackVC.h */,
+				44255B2E23D2DA0900DF9465 /* OOXCTrackVC.m */,
+				44255B4423D2EDEC00DF9465 /* OOTrackNodeInfo.h */,
+				44255B4523D2EDEC00DF9465 /* OOTrackNodeInfo.m */,
+				44255B3023D2DAD900DF9465 /* SportAnnotationView.h */,
+				44255B3223D2DAD900DF9465 /* SportAnnotationView.m */,
+				44255B3123D2DAD900DF9465 /* SportNode.h */,
+				44255B3323D2DAD900DF9465 /* SportNode.m */,
+			);
+			path = Track;
 			sourceTree = "<group>";
 		};
 		4431E59123CC0E4400FF57AC /* MDPageMaster */ = {
@@ -439,6 +550,8 @@
 			children = (
 				4431E5BB23CC2EC500FF57AC /* OORefreshHeader.h */,
 				4431E5BC23CC2EC500FF57AC /* OORefreshHeader.m */,
+				44255B3D23D2DF4000DF9465 /* OORefreshFooter.h */,
+				44255B3E23D2DF4000DF9465 /* OORefreshFooter.m */,
 			);
 			path = "UI Component";
 			sourceTree = "<group>";
@@ -579,6 +692,8 @@
 				4460F42D23D05A4300DE7CC4 /* OOHomeNavBar.m */,
 				4460F42523D058AD00DE7CC4 /* OOHomeCollectionView.h */,
 				4460F42623D058AD00DE7CC4 /* OOHomeCollectionView.m */,
+				4460F43223D1637500DE7CC4 /* OOHomeCollectionCell.h */,
+				4460F43323D1637500DE7CC4 /* OOHomeCollectionCell.m */,
 				4460F42923D0597C00DE7CC4 /* OOHomeHeaderView.h */,
 				4460F42A23D0597C00DE7CC4 /* OOHomeHeaderView.m */,
 				4438AF2D23D153F3002F66B3 /* OOHomeHeaderTypeView.h */,
@@ -587,6 +702,69 @@
 				4460F43023D060A100DE7CC4 /* OOHomeModel.m */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		4460F43523D183FE00DE7CC4 /* 巡查轨迹 */ = {
+			isa = PBXGroup;
+			children = (
+				44255B4323D2EDB500DF9465 /* Track */,
+				44255B3C23D2DDDA00DF9465 /* Track Page */,
+			);
+			path = "巡查轨迹";
+			sourceTree = "<group>";
+		};
+		4460F43623D183FE00DE7CC4 /* 创建巡查 */ = {
+			isa = PBXGroup;
+			children = (
+				4460F43723D1841800DE7CC4 /* OOCreateXCVC.h */,
+				4460F43823D1841800DE7CC4 /* OOCreateXCVC.m */,
+				4460F43A23D187DA00DE7CC4 /* OOCreateXCTableView.h */,
+				4460F43B23D187DA00DE7CC4 /* OOCreateXCTableView.m */,
+				4460F44023D189B300DE7CC4 /* OOCreateXCTableViewCell.h */,
+				4460F44123D189B300DE7CC4 /* OOCreateXCTableViewCell.m */,
+				4460F43D23D188C400DE7CC4 /* OOCreateXCModel.h */,
+				4460F43E23D188C400DE7CC4 /* OOCreateXCModel.m */,
+			);
+			path = "创建巡查";
+			sourceTree = "<group>";
+		};
+		4460F44323D1A05900DE7CC4 /* Bottom Alert */ = {
+			isa = PBXGroup;
+			children = (
+				4460F44423D1A05900DE7CC4 /* LNActionSheet.h */,
+				4460F44523D1A05900DE7CC4 /* LNActionSheet.m */,
+			);
+			path = "Bottom Alert";
+			sourceTree = "<group>";
+		};
+		4460F44723D1C21A00DE7CC4 /* 河湖巡查 */ = {
+			isa = PBXGroup;
+			children = (
+				4460F44823D1C26A00DE7CC4 /* OOPatrolVC.h */,
+				4460F44923D1C26A00DE7CC4 /* OOPatrolVC.m */,
+			);
+			path = "河湖巡查";
+			sourceTree = "<group>";
+		};
+		4460F44E23D1D70300DE7CC4 /* 上报页面 */ = {
+			isa = PBXGroup;
+			children = (
+				4460F45523D1DC8E00DE7CC4 /* Views */,
+				4460F44F23D1D71800DE7CC4 /* OOReportVC.h */,
+				4460F45023D1D71800DE7CC4 /* OOReportVC.m */,
+				4460F45223D1D8B500DE7CC4 /* OOReportModel.h */,
+				4460F45323D1D8B500DE7CC4 /* OOReportModel.m */,
+			);
+			path = "上报页面";
+			sourceTree = "<group>";
+		};
+		4460F45523D1DC8E00DE7CC4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4460F45623D1DCC600DE7CC4 /* OOTypeView.h */,
+				4460F45723D1DCC600DE7CC4 /* OOTypeView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4AC1F9D4CA901CC1E175C83D /* Pods */ = {
@@ -601,6 +779,13 @@
 		B64676710B3E6E225EB32FFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4460F46523D1EE4900DE7CC4 /* AdSupport.framework */,
+				4460F46323D1EE4300DE7CC4 /* libc++.tbd */,
+				4460F46123D1EE3500DE7CC4 /* CoreTelephony.framework */,
+				4460F45F23D1EE2C00DE7CC4 /* libsqlite3.0.tbd */,
+				4460F45D23D1EE1F00DE7CC4 /* Security.framework */,
+				4460F45B23D1EE1800DE7CC4 /* SystemConfiguration.framework */,
+				4460F45923D1EE0E00DE7CC4 /* CoreLocation.framework */,
 				4431E5AA23CC0ED800FF57AC /* QuartzCore.framework */,
 				AFED6BB4609DC60CD4BAF33B /* libPods-Achelous.a */,
 			);
@@ -714,6 +899,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				441D605C23B20E7C00F07134 /* LaunchScreen.storyboard in Resources */,
+				4460F46823D1F4DA00DE7CC4 /* mapapi.bundle in Resources */,
 				4431E5B223CC24D700FF57AC /* urlmapping in Resources */,
 				441D605923B20E7C00F07134 /* Assets.xcassets in Resources */,
 				441D605723B20E7B00F07134 /* Main.storyboard in Resources */,
@@ -803,18 +989,23 @@
 				4460F40623CCA2CD00DE7CC4 /* NSFileManager+XYOperate.m in Sources */,
 				441D605423B20E7B00F07134 /* ViewController.m in Sources */,
 				441D609023B20FCF00F07134 /* UIView+OOEasyFrames.m in Sources */,
+				44255B3F23D2DF4000DF9465 /* OORefreshFooter.m in Sources */,
 				4460F3CF23CCA2AF00DE7CC4 /* UIColor+XYInit.m in Sources */,
 				4460F43123D060A100DE7CC4 /* OOHomeModel.m in Sources */,
 				4431E5A623CC0E4400FF57AC /* MDUrlAction.m in Sources */,
+				4460F45123D1D71800DE7CC4 /* OOReportVC.m in Sources */,
+				4460F43F23D188C400DE7CC4 /* OOCreateXCModel.m in Sources */,
 				4460F40D23CCA2CD00DE7CC4 /* NSString+XYEmpty.m in Sources */,
 				4460F3CA23CCA2AF00DE7CC4 /* UIViewController+XYiPad.m in Sources */,
 				4460F3CB23CCA2AF00DE7CC4 /* UIView+XYLevel.m in Sources */,
 				4460F40C23CCA2CD00DE7CC4 /* NSURL+XYURLEncode.m in Sources */,
 				4431E5A323CC0E4400FF57AC /* MDPageMasterNavigationController.m in Sources */,
 				4460F41423CCA2CD00DE7CC4 /* NSObject+XYJSON.m in Sources */,
+				4460F44623D1A05A00DE7CC4 /* LNActionSheet.m in Sources */,
 				4460F3D123CCA2AF00DE7CC4 /* UIView+XYSnapshot.m in Sources */,
 				4460F41523CCA2CD00DE7CC4 /* XYContainerConvertor.m in Sources */,
 				4460F40723CCA2CD00DE7CC4 /* NSData+XYAESEncrypt.m in Sources */,
+				4460F43923D1841900DE7CC4 /* OOCreateXCVC.m in Sources */,
 				4431E5C423CC359900FF57AC /* UIColor+XYStyle.m in Sources */,
 				441D609823B2119F00F07134 /* OOServerService.m in Sources */,
 				4460F3CC23CCA2AF00DE7CC4 /* UIDevice+XYInfo.m in Sources */,
@@ -822,9 +1013,11 @@
 				4460F41723CCA2CD00DE7CC4 /* NSDictionary+XYContainerConvertor.m in Sources */,
 				4460F40B23CCA2CD00DE7CC4 /* NSFileManager+XYProperty.m in Sources */,
 				4460F40923CCA2CD00DE7CC4 /* NSObject+XYParameter.m in Sources */,
+				44255B3423D2DAD900DF9465 /* SportAnnotationView.m in Sources */,
 				4460F3D423CCA2AF00DE7CC4 /* UIImage+XYResize.m in Sources */,
 				4460F42723D058AE00DE7CC4 /* OOHomeCollectionView.m in Sources */,
 				441D608C23B20EC200F07134 /* OOHomeVC.m in Sources */,
+				4460F45423D1D8B500DE7CC4 /* OOReportModel.m in Sources */,
 				4460F3D023CCA2AF00DE7CC4 /* NSString+XYCalcSize.m in Sources */,
 				4460F41823CCA2CD00DE7CC4 /* NSData+XYBase64.m in Sources */,
 				441D608D23B20EC200F07134 /* OONavigationController.m in Sources */,
@@ -836,14 +1029,18 @@
 				4460F41623CCA2CD00DE7CC4 /* NSArray+XYContainerConvertor.m in Sources */,
 				4431E5A823CC0E4400FF57AC /* NSURL+MDPageMaster.m in Sources */,
 				4431E5BD23CC2EC500FF57AC /* OORefreshHeader.m in Sources */,
+				44255B4223D2E14700DF9465 /* OOXCTrackPageModel.m in Sources */,
+				4460F43423D1637500DE7CC4 /* OOHomeCollectionCell.m in Sources */,
 				4460F41323CCA2CD00DE7CC4 /* NSDate+XYFormat.m in Sources */,
 				4431E5C823CC431200FF57AC /* OOLoginVC.m in Sources */,
 				4431E5A523CC0E4400FF57AC /* MDPageMasterViewController.m in Sources */,
 				4460F41023CCA2CD00DE7CC4 /* NSString+XYValidate.m in Sources */,
 				4460F41223CCA2CD00DE7CC4 /* NSString+XYMD5.m in Sources */,
+				44255B3523D2DAD900DF9465 /* SportNode.m in Sources */,
 				4431E5B923CC2C0000FF57AC /* OOUserMgr.m in Sources */,
 				441D609523B2117700F07134 /* OOServerApiName.m in Sources */,
 				4460F40823CCA2CD00DE7CC4 /* NSData+XYString.m in Sources */,
+				4460F45823D1DCC600DE7CC4 /* OOTypeView.m in Sources */,
 				441D604E23B20E7B00F07134 /* AppDelegate.m in Sources */,
 				4460F3D623CCA2AF00DE7CC4 /* UIApplication+XYState.m in Sources */,
 				4431E5B623CC2BF300FF57AC /* OOAPPMgr.m in Sources */,
@@ -852,16 +1049,23 @@
 				4460F41A23CCA2CD00DE7CC4 /* NSString+XYURLEncode.m in Sources */,
 				441D605F23B20E7C00F07134 /* main.m in Sources */,
 				4460F3CE23CCA2AF00DE7CC4 /* UIApplication+XYAppInfo.m in Sources */,
+				44255B3B23D2DCE700DF9465 /* OOXCTrackPageCell.m in Sources */,
 				4460F42E23D05A4300DE7CC4 /* OOHomeNavBar.m in Sources */,
 				4460F3C823CCA2AF00DE7CC4 /* UIView+XYBlur.m in Sources */,
+				44255B4623D2EDEC00DF9465 /* OOTrackNodeInfo.m in Sources */,
 				4431E5B023CC120F00FF57AC /* UIViewController+MDPageMaster.m in Sources */,
+				44255B3823D2DB8600DF9465 /* OOXCTrackPageVC.m in Sources */,
 				4460F42B23D0597C00DE7CC4 /* OOHomeHeaderView.m in Sources */,
 				4460F41923CCA2CD00DE7CC4 /* NSString+XYBase64.m in Sources */,
+				4460F44223D189B300DE7CC4 /* OOCreateXCTableViewCell.m in Sources */,
 				4431E5A723CC0E4400FF57AC /* MDPageMaster.m in Sources */,
 				4460F3D223CCA2AF00DE7CC4 /* UIViewController+XYVisible.m in Sources */,
+				44255B2F23D2DA0900DF9465 /* OOXCTrackVC.m in Sources */,
 				4460F3C723CCA2AF00DE7CC4 /* UIFont+XYLoad.m in Sources */,
 				4460F40523CCA2CD00DE7CC4 /* NSBundle+XYInit.m in Sources */,
+				4460F44A23D1C26A00DE7CC4 /* OOPatrolVC.m in Sources */,
 				4460F40F23CCA2CD00DE7CC4 /* NSString+XYLength.m in Sources */,
+				4460F43C23D187DA00DE7CC4 /* OOCreateXCTableView.m in Sources */,
 				4460F3D323CCA2AF00DE7CC4 /* UIImage+XYBlur.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1034,6 +1238,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BMP99N9345;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Achelous/pch/PrefixHeader.pch";
@@ -1044,9 +1252,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hezhang.Achelous;
+				PRODUCT_BUNDLE_IDENTIFIER = com.he.zhang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1057,6 +1265,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BMP99N9345;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Achelous/pch/PrefixHeader.pch";
@@ -1067,9 +1279,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hezhang.Achelous;
+				PRODUCT_BUNDLE_IDENTIFIER = com.he.zhang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
