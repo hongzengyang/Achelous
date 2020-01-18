@@ -92,7 +92,7 @@
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     _locationManager.activityType = CLActivityTypeAutomotiveNavigation;
     _locationManager.pausesLocationUpdatesAutomatically = NO;
-    _locationManager.allowsBackgroundLocationUpdates = NO;
+    _locationManager.allowsBackgroundLocationUpdates = YES;
     _locationManager.locationTimeout = 10;
     _locationManager.reGeocodeTimeout = 10;
     
