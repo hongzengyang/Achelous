@@ -49,6 +49,13 @@
         NSLog(@"启动引擎失败");
     }
     
+    [SVProgressHUD setDefaultStyle:(SVProgressHUDStyleDark)];
+    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+    
+    
+    [OOAPPMgr sharedMgr];
+    [OOUserMgr sharedMgr];
+    
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

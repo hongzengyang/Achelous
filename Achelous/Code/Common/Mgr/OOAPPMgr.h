@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#define PREF_KEY_NETWORK_AVAILABLE  @"pref_key_network_available"
+
+#define CHECK_NWTWORK(showDialog)   [[OOAPPMgr sharedMgr] networkAvailable:showDialog]
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OOAPPMgr : NSObject
@@ -16,12 +20,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat safeTopArea;
 @property (nonatomic, assign) CGFloat safeBottomArea;
 
-@property (nonatomic, copy) NSString *currentXCID;
-
 + (OOAPPMgr *)sharedMgr;
 
 - (NSString *)deviceID;
 - (NSString *)appVersion;
+
+- (BOOL)networkAvailable:(BOOL)showDialog;
+
+//获取当前时间戳
+- (NSString *)currentTimeStr;
+// 时间戳转时间,时间戳为13位是精确到毫秒的，10位精确到秒
+- (NSString *)getDateString;
 
 @end
 

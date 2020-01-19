@@ -12,6 +12,7 @@
 #import "OOAppCommonDef.h"
 #import "OOAPPMgr.h"
 #import "OOUserMgr.h"
+#import "OOXCMgr.h"
 #import "UIView+OOEasyFrames.h"
 #import "UIColor+XYStyle.h"
 #import "MDPageMaster.h"

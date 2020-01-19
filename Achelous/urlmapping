@@ -9,3 +9,4 @@ oo_report_vc             :OOReportVC
 
 oo_xc_track_page_vc        :OOXCTrackPageVC
 oo_xc_track_vc             :OOXCTrackVC
+oo_xc_finish_vc            :OOXCFinishVC

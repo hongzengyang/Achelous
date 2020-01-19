@@ -21,13 +21,16 @@
 		441D609523B2117700F07134 /* OOServerApiName.m in Sources */ = {isa = PBXBuildFile; fileRef = 441D609423B2117700F07134 /* OOServerApiName.m */; };
 		441D609823B2119F00F07134 /* OOServerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 441D609723B2119F00F07134 /* OOServerService.m */; };
 		44255B2F23D2DA0900DF9465 /* OOXCTrackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B2E23D2DA0900DF9465 /* OOXCTrackVC.m */; };
-		44255B3423D2DAD900DF9465 /* SportAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3223D2DAD900DF9465 /* SportAnnotationView.m */; };
-		44255B3523D2DAD900DF9465 /* SportNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3323D2DAD900DF9465 /* SportNode.m */; };
 		44255B3823D2DB8600DF9465 /* OOXCTrackPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3723D2DB8600DF9465 /* OOXCTrackPageVC.m */; };
 		44255B3B23D2DCE700DF9465 /* OOXCTrackPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3A23D2DCE700DF9465 /* OOXCTrackPageCell.m */; };
 		44255B3F23D2DF4000DF9465 /* OORefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B3E23D2DF4000DF9465 /* OORefreshFooter.m */; };
 		44255B4223D2E14700DF9465 /* OOXCTrackPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B4123D2E14700DF9465 /* OOXCTrackPageModel.m */; };
-		44255B4623D2EDEC00DF9465 /* OOTrackNodeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B4523D2EDEC00DF9465 /* OOTrackNodeInfo.m */; };
+		44255B4C23D3F77800DF9465 /* OOXCMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B4B23D3F77800DF9465 /* OOXCMgr.m */; };
+		44255B5023D4114D00DF9465 /* OOXCFinishVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B4F23D4114D00DF9465 /* OOXCFinishVC.m */; };
+		44255B5423D4125B00DF9465 /* OOUserInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B5323D4125B00DF9465 /* OOUserInputView.m */; };
+		44255B5723D4145B00DF9465 /* OOEndTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B5623D4145B00DF9465 /* OOEndTimeView.m */; };
+		44255B5B23D46EC800DF9465 /* DouglasPeucker.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B5A23D46EC800DF9465 /* DouglasPeucker.m */; };
+		44255B5D23D488BD00DF9465 /* oo_loading_refresh.gif in Resources */ = {isa = PBXBuildFile; fileRef = 44255B5C23D488BD00DF9465 /* oo_loading_refresh.gif */; };
 		4431E5A323CC0E4400FF57AC /* MDPageMasterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E59623CC0E4400FF57AC /* MDPageMasterNavigationController.m */; };
 		4431E5A523CC0E4400FF57AC /* MDPageMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E59A23CC0E4400FF57AC /* MDPageMasterViewController.m */; };
 		4431E5A623CC0E4400FF57AC /* MDUrlAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E59B23CC0E4400FF57AC /* MDUrlAction.m */; };
@@ -155,10 +158,6 @@
 		441D609923B211E100F07134 /* OOAppCommonDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOAppCommonDef.h; sourceTree = "<group>"; };
 		44255B2D23D2DA0900DF9465 /* OOXCTrackVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCTrackVC.h; sourceTree = "<group>"; };
 		44255B2E23D2DA0900DF9465 /* OOXCTrackVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOXCTrackVC.m; sourceTree = "<group>"; };
-		44255B3023D2DAD900DF9465 /* SportAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportAnnotationView.h; sourceTree = "<group>"; };
-		44255B3123D2DAD900DF9465 /* SportNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportNode.h; sourceTree = "<group>"; };
-		44255B3223D2DAD900DF9465 /* SportAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportAnnotationView.m; sourceTree = "<group>"; };
-		44255B3323D2DAD900DF9465 /* SportNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportNode.m; sourceTree = "<group>"; };
 		44255B3623D2DB8600DF9465 /* OOXCTrackPageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCTrackPageVC.h; sourceTree = "<group>"; };
 		44255B3723D2DB8600DF9465 /* OOXCTrackPageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOXCTrackPageVC.m; sourceTree = "<group>"; };
 		44255B3923D2DCE700DF9465 /* OOXCTrackPageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCTrackPageCell.h; sourceTree = "<group>"; };
@@ -167,8 +166,17 @@
 		44255B3E23D2DF4000DF9465 /* OORefreshFooter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OORefreshFooter.m; sourceTree = "<group>"; };
 		44255B4023D2E14700DF9465 /* OOXCTrackPageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCTrackPageModel.h; sourceTree = "<group>"; };
 		44255B4123D2E14700DF9465 /* OOXCTrackPageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOXCTrackPageModel.m; sourceTree = "<group>"; };
-		44255B4423D2EDEC00DF9465 /* OOTrackNodeInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOTrackNodeInfo.h; sourceTree = "<group>"; };
-		44255B4523D2EDEC00DF9465 /* OOTrackNodeInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOTrackNodeInfo.m; sourceTree = "<group>"; };
+		44255B4A23D3F77800DF9465 /* OOXCMgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCMgr.h; sourceTree = "<group>"; };
+		44255B4B23D3F77800DF9465 /* OOXCMgr.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOXCMgr.m; sourceTree = "<group>"; };
+		44255B4E23D4114D00DF9465 /* OOXCFinishVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOXCFinishVC.h; sourceTree = "<group>"; };
+		44255B4F23D4114D00DF9465 /* OOXCFinishVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOXCFinishVC.m; sourceTree = "<group>"; };
+		44255B5223D4125B00DF9465 /* OOUserInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOUserInputView.h; sourceTree = "<group>"; };
+		44255B5323D4125B00DF9465 /* OOUserInputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOUserInputView.m; sourceTree = "<group>"; };
+		44255B5523D4145B00DF9465 /* OOEndTimeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOEndTimeView.h; sourceTree = "<group>"; };
+		44255B5623D4145B00DF9465 /* OOEndTimeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOEndTimeView.m; sourceTree = "<group>"; };
+		44255B5923D46EC800DF9465 /* DouglasPeucker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouglasPeucker.h; sourceTree = "<group>"; };
+		44255B5A23D46EC800DF9465 /* DouglasPeucker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DouglasPeucker.m; sourceTree = "<group>"; };
+		44255B5C23D488BD00DF9465 /* oo_loading_refresh.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = oo_loading_refresh.gif; sourceTree = "<group>"; };
 		4431E59323CC0E4400FF57AC /* MDUrlAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDUrlAction.h; sourceTree = "<group>"; };
 		4431E59423CC0E4400FF57AC /* MDPageMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPageMasterViewController.h; sourceTree = "<group>"; };
 		4431E59623CC0E4400FF57AC /* MDPageMasterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPageMasterNavigationController.m; sourceTree = "<group>"; };
@@ -381,6 +389,7 @@
 				441D605323B20E7B00F07134 /* ViewController.m */,
 				441D605523B20E7B00F07134 /* Main.storyboard */,
 				441D605823B20E7C00F07134 /* Assets.xcassets */,
+				44255B5C23D488BD00DF9465 /* oo_loading_refresh.gif */,
 				4431E5B123CC24D700FF57AC /* urlmapping */,
 				441D605A23B20E7C00F07134 /* LaunchScreen.storyboard */,
 				441D605D23B20E7C00F07134 /* Info.plist */,
@@ -421,12 +430,13 @@
 		441D608223B20EC200F07134 /* Business */ = {
 			isa = PBXGroup;
 			children = (
+				4431E5C523CC42FD00FF57AC /* 登录 */,
+				4460F42823D0594E00DE7CC4 /* 首页 */,
 				4460F43623D183FE00DE7CC4 /* 创建巡查 */,
-				4460F43523D183FE00DE7CC4 /* 巡查轨迹 */,
 				4460F44723D1C21A00DE7CC4 /* 河湖巡查 */,
 				4460F44E23D1D70300DE7CC4 /* 上报页面 */,
-				4460F42823D0594E00DE7CC4 /* Home */,
-				4431E5C523CC42FD00FF57AC /* Log in */,
+				4460F43523D183FE00DE7CC4 /* 巡查轨迹 */,
+				44255B4D23D4111000DF9465 /* 提交巡查 */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -434,6 +444,7 @@
 		441D608523B20EC200F07134 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				44255B5823D46EB200DF9465 /* 抽稀处理 */,
 				441D609923B211E100F07134 /* OOAppCommonDef.h */,
 				4431E5BA23CC2E7400FF57AC /* UI Component */,
 				4431E5B323CC2BE300FF57AC /* Mgr */,
@@ -497,14 +508,38 @@
 			children = (
 				44255B2D23D2DA0900DF9465 /* OOXCTrackVC.h */,
 				44255B2E23D2DA0900DF9465 /* OOXCTrackVC.m */,
-				44255B4423D2EDEC00DF9465 /* OOTrackNodeInfo.h */,
-				44255B4523D2EDEC00DF9465 /* OOTrackNodeInfo.m */,
-				44255B3023D2DAD900DF9465 /* SportAnnotationView.h */,
-				44255B3223D2DAD900DF9465 /* SportAnnotationView.m */,
-				44255B3123D2DAD900DF9465 /* SportNode.h */,
-				44255B3323D2DAD900DF9465 /* SportNode.m */,
 			);
 			path = Track;
+			sourceTree = "<group>";
+		};
+		44255B4D23D4111000DF9465 /* 提交巡查 */ = {
+			isa = PBXGroup;
+			children = (
+				44255B4E23D4114D00DF9465 /* OOXCFinishVC.h */,
+				44255B4F23D4114D00DF9465 /* OOXCFinishVC.m */,
+				44255B5123D4123E00DF9465 /* Views */,
+			);
+			path = "提交巡查";
+			sourceTree = "<group>";
+		};
+		44255B5123D4123E00DF9465 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				44255B5223D4125B00DF9465 /* OOUserInputView.h */,
+				44255B5323D4125B00DF9465 /* OOUserInputView.m */,
+				44255B5523D4145B00DF9465 /* OOEndTimeView.h */,
+				44255B5623D4145B00DF9465 /* OOEndTimeView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		44255B5823D46EB200DF9465 /* 抽稀处理 */ = {
+			isa = PBXGroup;
+			children = (
+				44255B5923D46EC800DF9465 /* DouglasPeucker.h */,
+				44255B5A23D46EC800DF9465 /* DouglasPeucker.m */,
+			);
+			path = "抽稀处理";
 			sourceTree = "<group>";
 		};
 		4431E59123CC0E4400FF57AC /* MDPageMaster */ = {
@@ -541,6 +576,8 @@
 				4431E5B523CC2BF300FF57AC /* OOAPPMgr.m */,
 				4431E5B723CC2C0000FF57AC /* OOUserMgr.h */,
 				4431E5B823CC2C0000FF57AC /* OOUserMgr.m */,
+				44255B4A23D3F77800DF9465 /* OOXCMgr.h */,
+				44255B4B23D3F77800DF9465 /* OOXCMgr.m */,
 			);
 			path = Mgr;
 			sourceTree = "<group>";
@@ -574,13 +611,13 @@
 			path = ToolKit;
 			sourceTree = "<group>";
 		};
-		4431E5C523CC42FD00FF57AC /* Log in */ = {
+		4431E5C523CC42FD00FF57AC /* 登录 */ = {
 			isa = PBXGroup;
 			children = (
 				4431E5C623CC431200FF57AC /* OOLoginVC.h */,
 				4431E5C723CC431200FF57AC /* OOLoginVC.m */,
 			);
-			path = "Log in";
+			path = "登录";
 			sourceTree = "<group>";
 		};
 		4460F3A323CCA2AF00DE7CC4 /* UIKit */ = {
@@ -683,7 +720,7 @@
 			path = ContainerConvertor;
 			sourceTree = "<group>";
 		};
-		4460F42823D0594E00DE7CC4 /* Home */ = {
+		4460F42823D0594E00DE7CC4 /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
 				441D608423B20EC200F07134 /* OOHomeVC.h */,
@@ -701,7 +738,7 @@
 				4460F42F23D060A100DE7CC4 /* OOHomeModel.h */,
 				4460F43023D060A100DE7CC4 /* OOHomeModel.m */,
 			);
-			path = Home;
+			path = "首页";
 			sourceTree = "<group>";
 		};
 		4460F43523D183FE00DE7CC4 /* 巡查轨迹 */ = {
@@ -899,6 +936,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				441D605C23B20E7C00F07134 /* LaunchScreen.storyboard in Resources */,
+				44255B5D23D488BD00DF9465 /* oo_loading_refresh.gif in Resources */,
 				4460F46823D1F4DA00DE7CC4 /* mapapi.bundle in Resources */,
 				4431E5B223CC24D700FF57AC /* urlmapping in Resources */,
 				441D605923B20E7C00F07134 /* Assets.xcassets in Resources */,
@@ -1013,12 +1051,13 @@
 				4460F41723CCA2CD00DE7CC4 /* NSDictionary+XYContainerConvertor.m in Sources */,
 				4460F40B23CCA2CD00DE7CC4 /* NSFileManager+XYProperty.m in Sources */,
 				4460F40923CCA2CD00DE7CC4 /* NSObject+XYParameter.m in Sources */,
-				44255B3423D2DAD900DF9465 /* SportAnnotationView.m in Sources */,
 				4460F3D423CCA2AF00DE7CC4 /* UIImage+XYResize.m in Sources */,
 				4460F42723D058AE00DE7CC4 /* OOHomeCollectionView.m in Sources */,
 				441D608C23B20EC200F07134 /* OOHomeVC.m in Sources */,
 				4460F45423D1D8B500DE7CC4 /* OOReportModel.m in Sources */,
 				4460F3D023CCA2AF00DE7CC4 /* NSString+XYCalcSize.m in Sources */,
+				44255B5B23D46EC800DF9465 /* DouglasPeucker.m in Sources */,
+				44255B5723D4145B00DF9465 /* OOEndTimeView.m in Sources */,
 				4460F41823CCA2CD00DE7CC4 /* NSData+XYBase64.m in Sources */,
 				441D608D23B20EC200F07134 /* OONavigationController.m in Sources */,
 				4460F40E23CCA2CD00DE7CC4 /* NSString+XYHTMLEscape.m in Sources */,
@@ -1035,8 +1074,9 @@
 				4431E5C823CC431200FF57AC /* OOLoginVC.m in Sources */,
 				4431E5A523CC0E4400FF57AC /* MDPageMasterViewController.m in Sources */,
 				4460F41023CCA2CD00DE7CC4 /* NSString+XYValidate.m in Sources */,
+				44255B4C23D3F77800DF9465 /* OOXCMgr.m in Sources */,
 				4460F41223CCA2CD00DE7CC4 /* NSString+XYMD5.m in Sources */,
-				44255B3523D2DAD900DF9465 /* SportNode.m in Sources */,
+				44255B5023D4114D00DF9465 /* OOXCFinishVC.m in Sources */,
 				4431E5B923CC2C0000FF57AC /* OOUserMgr.m in Sources */,
 				441D609523B2117700F07134 /* OOServerApiName.m in Sources */,
 				4460F40823CCA2CD00DE7CC4 /* NSData+XYString.m in Sources */,
@@ -1052,7 +1092,6 @@
 				44255B3B23D2DCE700DF9465 /* OOXCTrackPageCell.m in Sources */,
 				4460F42E23D05A4300DE7CC4 /* OOHomeNavBar.m in Sources */,
 				4460F3C823CCA2AF00DE7CC4 /* UIView+XYBlur.m in Sources */,
-				44255B4623D2EDEC00DF9465 /* OOTrackNodeInfo.m in Sources */,
 				4431E5B023CC120F00FF57AC /* UIViewController+MDPageMaster.m in Sources */,
 				44255B3823D2DB8600DF9465 /* OOXCTrackPageVC.m in Sources */,
 				4460F42B23D0597C00DE7CC4 /* OOHomeHeaderView.m in Sources */,
@@ -1062,6 +1101,7 @@
 				4460F3D223CCA2AF00DE7CC4 /* UIViewController+XYVisible.m in Sources */,
 				44255B2F23D2DA0900DF9465 /* OOXCTrackVC.m in Sources */,
 				4460F3C723CCA2AF00DE7CC4 /* UIFont+XYLoad.m in Sources */,
+				44255B5423D4125B00DF9465 /* OOUserInputView.m in Sources */,
 				4460F40523CCA2CD00DE7CC4 /* NSBundle+XYInit.m in Sources */,
 				4460F44A23D1C26A00DE7CC4 /* OOPatrolVC.m in Sources */,
 				4460F40F23CCA2CD00DE7CC4 /* NSString+XYLength.m in Sources */,

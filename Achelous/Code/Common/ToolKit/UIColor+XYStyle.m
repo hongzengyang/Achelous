@@ -48,4 +48,8 @@
     return [UIColor xycColorWithHex:0x333333];
 }
 
++ (UIColor *)appGrayTextColor {
+    return [UIColor xycColorWithHex:0x45454D alpha:0.6];
+}
+
 @end

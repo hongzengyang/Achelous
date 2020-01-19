@@ -7,6 +7,7 @@
 //
 
 #import "OORefreshHeader.h"
+#import <SDWebImage/UIImage+GIF.h>
 
 @interface OORefreshHeader ()
 

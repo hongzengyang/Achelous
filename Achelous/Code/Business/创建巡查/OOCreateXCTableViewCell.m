@@ -90,7 +90,7 @@
     }else if (type == OOCreateXCType_startTime) {
         self.titleLab.text = @"开始时间";
         
-        NSString *time = [self getDateStringWithTimeStr:[self currentTimeStr]];
+        NSString *time = [[OOAPPMgr sharedMgr] getDateString];
         self.rightLab.text = time;
         self.rightLab.textColor = [UIColor xycColorWithHex:0x45454D alpha:0.6];
         
@@ -115,26 +115,6 @@
     [self.rightLab sizeToFit];
     [self.rightLab setFrame:CGRectMake(self.arrowImageView.left - 4 - self.rightLab.width, 0, self.rightLab.width, self.height)];
 }
-
-//获取当前时间戳
-- (NSString *)currentTimeStr {
-    NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];//获取当前时间0秒后的时间
-    NSTimeInterval time=[date timeIntervalSince1970]*1000;// *1000 是精确到毫秒，不乘就是精确到秒
-    NSString *timeString = [NSString stringWithFormat:@"%.0f", time];
-    return timeString;
-}
-
-// 时间戳转时间,时间戳为13位是精确到毫秒的，10位精确到秒
-- (NSString *)getDateStringWithTimeStr:(NSString *)str{
-    NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
-    NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
-    //设定时间格式,这里可以设置成自己需要的格式
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
-    return currentDateStr;
-}
-
 
 - (UILabel *)titleLab {
     if (!_titleLab) {

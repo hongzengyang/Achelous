@@ -10,15 +10,8 @@
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BMKLocationkit/BMKLocationComponent.h>
 #import <YYModel/YYModel.h>
-#import "OOTrackNodeInfo.h"
-#import "SportAnnotationView.h"
-#import "SportNode.h"
 
 @interface OOXCTrackVC ()<BMKMapViewDelegate,BMKLocationManagerDelegate>
-
-{
-    SportAnnotationView *_sportAnnotationView;
-}
 
 @property (nonatomic, strong) UIView *navBar;
 
@@ -49,7 +42,7 @@
     [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[NSDictionary class]]) {
             NSDictionary *d = (NSDictionary *)obj;
-            OOTrackNodeInfo *info = [OOTrackNodeInfo yy_modelWithJSON:d];
+            OOSportNode *info = [OOSportNode yy_modelWithJSON:d];
             [self.sportNodes addObject:info];
         }
     }];
@@ -76,36 +69,13 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-//    [self initSportNodes];
     [self addSubViews];
-//    [self initLocation];
 }
 
 #pragma mark -- Other
-- (void)addSubViews
-{
-//    BMKMapView *mapView = [[BMKMapView alloc] initWithFrame:self.view.bounds];
-//    mapView.rotateEnabled = NO;
-//    mapView.delegate = self;
-//    mapView.zoomLevel = 19.2;
-//    mapView.centerCoordinate = CLLocationCoordinate2DMake(40.056898, 116.307626);
-//    [self.view addSubview:mapView];
-//    _mapView = mapView;
-    
+- (void)addSubViews {
     [self.view addSubview:self.navBar];
     [self.view addSubview:self.mapView];
-}
-
-- (void)initSportNodes
-{
-    // 读取数据
-    NSData *jsonData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sport_path" ofType:@"json"]];
-    NSArray *dataArray = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
-    
-    for (NSDictionary *dict in dataArray) {
-        SportNode *node = [SportNode nodeWithDictionary:dict];
-        [self.sportNodes addObject:node];
-    }
 }
 
 #pragma mark -- Click
@@ -119,12 +89,16 @@
 
 #pragma mark -- BMKMapView Delegate
 /** 地图加载完成 */
-- (void)mapViewDidFinishLoading:(BMKMapView *)mapView
-{
+- (void)mapViewDidFinishLoading:(BMKMapView *)mapView {
+    
+//    NSArray *temp = [[OOXCMgr sharedMgr] handleDouglasPeuckerWithArray:self.sportNodes];
+//    [self.sportNodes removeAllObjects];
+//    [self.sportNodes addObjectsFromArray:temp];
+    
     CLLocation *firstLocation;
     CLLocationCoordinate2D coors[self.sportNodes.count];
     for (NSInteger i = 0; i < self.sportNodes.count; i++) {
-        OOTrackNodeInfo *info = [self.sportNodes objectAtIndex:i];
+        OOSportNode *info = [self.sportNodes objectAtIndex:i];
         NSString *location = info.location;
         NSArray *coordinate = [location componentsSeparatedByString:@","];
         if (coordinate.count == 2) {
@@ -139,25 +113,25 @@
     
     //轨迹
     BMKPolyline *polyline = [BMKPolyline polylineWithCoordinates:coors count:self.sportNodes.count];
-    [_mapView addOverlay:polyline];
+    [self.mapView addOverlay:polyline];
     
     //起点
     BMKPointAnnotation *beginAnnotation = [[BMKPointAnnotation alloc]init];
     beginAnnotation.coordinate = coors[0];
     beginAnnotation.title = @"起点";
     beginAnnotation.subtitle = @"起点--";
-    [_mapView addAnnotation:beginAnnotation];
+    [self.mapView addAnnotation:beginAnnotation];
     //终点
     BMKPointAnnotation *endAnnotation = [[BMKPointAnnotation alloc]init];
     endAnnotation.coordinate = coors[self.sportNodes.count - 1];
     endAnnotation.title = @"终点";
     endAnnotation.subtitle = @"终点--";
-    [_mapView addAnnotation:endAnnotation];
+    [self.mapView addAnnotation:endAnnotation];
     
 
     BMKUserLocation *beginLocation = [[BMKUserLocation alloc] init];
     beginLocation.location = firstLocation;
-    [_mapView updateLocationData:beginLocation];
+    [self.mapView updateLocationData:beginLocation];
 }
 
 /** 根据overlay生成对应的View */
@@ -166,7 +140,7 @@
     if (![overlay isKindOfClass:[BMKPolyline class]]) return nil;
     
     BMKPolylineView *polylineView = [[BMKPolylineView alloc] initWithOverlay:overlay];
-    polylineView.strokeColor = [UIColor greenColor];
+    polylineView.strokeColor = [UIColor xycColorWithHex:0x3978EB];
     polylineView.lineWidth = 3.0;
     polylineView.lineDashType = kBMKLineDashTypeSquare;
     
@@ -236,7 +210,7 @@
     if (!_mapView) {
         _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, self.navBar.bottom, self.view.width, self.view.height - SAFE_BOTTOM - self.navBar.bottom)];
         //设置undersideMapView的缩放等级
-        [_mapView setZoomLevel:19];
+        [_mapView setZoomLevel:21];
         _mapView.showsUserLocation = YES;
         _mapView.userTrackingMode = BMKUserTrackingModeFollow;
     }

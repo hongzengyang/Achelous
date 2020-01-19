@@ -48,9 +48,15 @@
 #pragma mark -- UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        [[MDPageMaster master] openUrl:@"xiaoying://oo_createxc_vc" action:^(MDUrlAction * _Nullable action) {
-            
-        }];
+        if ([OOXCMgr sharedMgr].unFinishedXCModel) {
+            [[MDPageMaster master] openUrl:@"xiaoying://oo_patrol_vc" action:^(MDUrlAction * _Nullable action) {
+                
+            }];
+        }else {
+            [[MDPageMaster master] openUrl:@"xiaoying://oo_createxc_vc" action:^(MDUrlAction * _Nullable action) {
+                
+            }];
+        }
     }
     
     if (indexPath.row == 1) {

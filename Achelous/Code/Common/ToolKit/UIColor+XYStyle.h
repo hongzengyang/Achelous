@@ -22,4 +22,6 @@
 
 + (UIColor *)appTextColor;
 
++ (UIColor *)appGrayTextColor;
+
 @end

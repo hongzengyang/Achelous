@@ -21,11 +21,13 @@ typedef void(^OOCompleteBlock)(BOOL complete);
 #define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
 
 #define TIP_TEXT_WATING             @"请等待..."
-#define TIP_TEXT_NETWORK_ERRROE   @"网络故障，请稍后再试"
+#define TIP_TEXT_NETWORK_ERRROE     @"网络故障，请稍后再试"
+#define TIP_TEXT_NETWORK_NOT_AVAILABLE     @"无网络"
 
 #define PREF_KEY_NETWORK_AVAILABLE_STATE_CHANGE                              @"pref_key_network_available_state_change"
 #define PREF_KEY_USER_LOGIN_SUCCESS               @"pref_key_user_login_success"
 #define PREF_KEY_USER_LOGOUT                      @"pref_key_user_logout"
+
 
 
 #endif /* OOAppCommonDef_h */

@@ -42,6 +42,18 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkAvailable) name:PREF_KEY_NETWORK_AVAILABLE object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.homeModel fetchHomeData];
+}
+
+- (void)networkAvailable {
+    [self.homeModel fetchHomeData];
 }
 
 - (OOHomeNavBar *)navBar {

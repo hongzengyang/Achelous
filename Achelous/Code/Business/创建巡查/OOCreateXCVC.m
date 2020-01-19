@@ -41,8 +41,6 @@
 //    [[MDPageMaster master] openUrl:@"xiaoying://oo_patrol_vc" action:^(MDUrlAction * _Nullable action) {
 //
 //    }];
-//    [self.navigationController pushViewController:[OOXCVC new] animated:YES];
-//    
 //    return;
     
     if (self.model.xc_type == OOCreateTypeSubType_none) {
@@ -83,12 +81,20 @@
             if ([response isKindOfClass:[NSDictionary class]]) {
                 NSDictionary *dic = (NSDictionary *)response;
                 NSDictionary *data = [dic xyDictionaryForKey:@"data"];
-                [OOAPPMgr sharedMgr].currentXCID = [data valueForKey:@"id"];
-            }
-            
-            [[MDPageMaster master] openUrl:@"xiaoying://oo_patrol_vc" action:^(MDUrlAction * _Nullable action) {
                 
-            }];
+                if ([data valueForKey:@"id"]) {
+                    OOUnFinishedXCModel *model = [[OOUnFinishedXCModel alloc] init];
+                    model.xc_id = [[data valueForKey:@"id"] integerValue];
+                    model.XCMC = self.model.xc_name;
+                    model.XCR = [[OOUserMgr sharedMgr] loginUserInfo].UserId;
+                    model.status = OOXCStatus_notBegin;
+                    
+                    [OOXCMgr sharedMgr].unFinishedXCModel = model;
+                }
+                [[MDPageMaster master] openUrl:@"xiaoying://oo_patrol_vc" action:^(MDUrlAction * _Nullable action) {
+                    
+                }];
+            }
         }else {
             [SVProgressHUD showErrorWithStatus:TIP_TEXT_NETWORK_ERRROE];
         }
