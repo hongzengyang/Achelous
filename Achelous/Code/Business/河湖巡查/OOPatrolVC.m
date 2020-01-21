@@ -23,6 +23,8 @@
 @property (nonatomic, strong) UIButton *beginBtn;
 @property (nonatomic, strong) UIButton *endBtn;
 
+@property (nonatomic, strong) UITextView *debugTextView;
+
 @end
 
 @implementation OOPatrolVC
@@ -42,13 +44,15 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self initViews];
+    [self updateButtonUI];
+    [[OOXCMgr sharedMgr] startUpdatingLocation];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationManagerDidUpdateHeading) name:pref_key_notification_didUpdateHeading object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationManagerDidUpdateLocation) name:pref_key_notification_didUpdateLocation object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationManagerUploadLocationSuccess) name:pref_key_notification_upload_location_success object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationManagerUploadLocationBegin:) name:pref_key_notification_upload_location_begin object:nil];
     
-    [[OOXCMgr sharedMgr] startUpdatingLocation];
+    [self.view addSubview:self.debugTextView];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -91,17 +95,11 @@
                             [weakSelf.sportNodes addObject:node];
                         }
                     }];
-                }
-                
-                [weakSelf drawTrackMap];
-                
-                if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_ing) {
-                    [[OOXCMgr sharedMgr] startUpdatingLocation];
+                    [weakSelf updateButtonUI];
                 }
             }
         }
-        
-        [weakSelf updateButtonUI];
+        [weakSelf drawTrackMap];
     }];
 }
 
@@ -111,11 +109,18 @@
 }
 
 - (void)locationManagerDidUpdateLocation {
-    [self.mapView updateLocationData:[OOXCMgr sharedMgr].userLocation];
+    CGFloat distance = [[OOXCMgr sharedMgr] distanceFrompreUploadLocation];
+    
+    if (distance > 10) {
+        [self.mapView updateLocationData:[OOXCMgr sharedMgr].userLocation];
+    }
+    
+    self.debugTextView.text = [self.debugTextView.text stringByAppendingFormat:@"\n----%lf",distance];
 }
 
 - (void)locationManagerUploadLocationSuccess {
     [self updateButtonUI];
+    self.debugTextView.text = [self.debugTextView.text stringByAppendingString:@"\n成功上报服务器"];
 }
 
 - (void)locationManagerUploadLocationBegin:(NSNotification *)notification {
@@ -126,6 +131,8 @@
         [self.sportNodes addObject:sportNode];
     }
     [self drawTrackMap];
+    
+    self.debugTextView.text = [self.debugTextView.text stringByAppendingFormat:@"\n开始上报服务器-当前上报点总数:%ld",self.sportNodes.count];
 }
 
 #pragma mark -- 绘制地图
@@ -170,7 +177,7 @@
 
 - (void)clickShareButton {
     NSMutableArray *array = [NSMutableArray new];
-    NSArray *titles = @[@"四乱事件",@"污染事件",@"险情事件",@"巡查实况"];
+    NSArray *titles = [[OOXCMgr sharedMgr] reportTypeArray];
     for (int i = 0; i < titles.count; i++) {
         LNActionSheetModel *model = [[LNActionSheetModel alloc]init];
         model.title = titles[i];
@@ -179,7 +186,7 @@
         
         model.actionBlock = ^{
             [[MDPageMaster master] openUrl:@"xiaoying://oo_report_vc" action:^(MDUrlAction * _Nullable action) {
-                [action setString:titles[i] forKey:@"typeText"];
+                [action setInteger:i forKey:@"typeIndex"];
             }];
         };
         [array addObject:model];
@@ -204,6 +211,7 @@
                     
                     [[OOXCMgr sharedMgr] startUpdatingLocation];
                     [weakSelf updateButtonUI];
+                    [[OOXCMgr sharedMgr] uploadCurrentLoactionToServer];
                 }
                 
                 [SVProgressHUD dismiss];
@@ -261,6 +269,8 @@
         [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_finish_vc" action:^(MDUrlAction * _Nullable action) {
             
         }];
+        
+        [[OOXCMgr sharedMgr] uploadCurrentLoactionToServer];
     });
 }
 
@@ -268,7 +278,9 @@
 #pragma mark -- 百度Map
 /** 地图加载完成 */
 - (void)mapViewDidFinishLoading:(BMKMapView *)mapView {
-    [self prepareData];
+    if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_ing || [OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_pause) {
+        [self prepareData];
+    }
     
     [self.mapView updateLocationData:[OOXCMgr sharedMgr].userLocation];
 }
@@ -369,6 +381,10 @@
         [_mapView setZoomLevel:17];
         _mapView.showsUserLocation = YES;
         _mapView.userTrackingMode = BMKUserTrackingModeFollow;
+        
+        BMKLocationViewDisplayParam *param = [[BMKLocationViewDisplayParam alloc] init];
+        param.isAccuracyCircleShow = NO;
+        [_mapView updateLocationViewWithParam:param];
     }
     return _mapView;
 }
@@ -402,6 +418,17 @@
         _sportNodes = [[NSMutableArray alloc] init];
     }
     return _sportNodes;
+}
+
+
+- (UITextView *)debugTextView {
+    if (!_debugTextView) {
+        _debugTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 100)];
+        _debugTextView.font = [UIFont systemFontOfSize:14];
+        _debugTextView.backgroundColor = [UIColor whiteColor];
+        _debugTextView.editable = NO;
+    }
+    return _debugTextView;
 }
 
 @end

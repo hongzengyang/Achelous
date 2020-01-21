@@ -13,12 +13,15 @@
 @property (nonatomic, strong) UILabel *titleLab;
 @property (nonatomic, strong) UITextView *textView;
 
+@property (nonatomic, copy) NSString *titltText;
+
 @end
 
 @implementation OOUserInputView
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame title:(nonnull NSString *)title {
     if (self = [super initWithFrame:frame]) {
+        self.titltText = title;
         [self addSubview:self.titleLab];
         [self addSubview:self.textView];
     }
@@ -32,12 +35,12 @@
 - (UILabel *)titleLab {
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 0)];
-        _titleLab.text = @"情况描述";
+        _titleLab.text = self.titltText;
         [_titleLab sizeToFit];
         [_titleLab setFrame:CGRectMake(15, 15, _titleLab.width, _titleLab.height)];
         _titleLab.textColor = [UIColor appTextColor];
         _titleLab.textAlignment = NSTextAlignmentLeft;
-        _titleLab.font = [UIFont systemFontOfSize:15 weight:(UIFontWeightMedium)];
+        _titleLab.font = [UIFont systemFontOfSize:15 weight:(UIFontWeightRegular)];
     }
     return _titleLab;
 }

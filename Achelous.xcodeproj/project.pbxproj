@@ -30,7 +30,11 @@
 		44255B5423D4125B00DF9465 /* OOUserInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B5323D4125B00DF9465 /* OOUserInputView.m */; };
 		44255B5723D4145B00DF9465 /* OOEndTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B5623D4145B00DF9465 /* OOEndTimeView.m */; };
 		44255B5B23D46EC800DF9465 /* DouglasPeucker.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B5A23D46EC800DF9465 /* DouglasPeucker.m */; };
-		44255B5D23D488BD00DF9465 /* oo_loading_refresh.gif in Resources */ = {isa = PBXBuildFile; fileRef = 44255B5C23D488BD00DF9465 /* oo_loading_refresh.gif */; };
+		44255B6123D5506200DF9465 /* MDPhotoPickVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B6023D5506200DF9465 /* MDPhotoPickVC.m */; };
+		44255B6423D5533E00DF9465 /* OOPhotoPickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B6323D5533E00DF9465 /* OOPhotoPickCell.m */; };
+		44255B6723D5535700DF9465 /* OOPhotoPickEnterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B6623D5535700DF9465 /* OOPhotoPickEnterCell.m */; };
+		44255B6D23D5A75800DF9465 /* OOH5VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B6C23D5A75800DF9465 /* OOH5VC.m */; };
+		44255B7023D6ACEE00DF9465 /* OOSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 44255B6F23D6ACEE00DF9465 /* OOSettingVC.m */; };
 		4431E5A323CC0E4400FF57AC /* MDPageMasterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E59623CC0E4400FF57AC /* MDPageMasterNavigationController.m */; };
 		4431E5A523CC0E4400FF57AC /* MDPageMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E59A23CC0E4400FF57AC /* MDPageMasterViewController.m */; };
 		4431E5A623CC0E4400FF57AC /* MDUrlAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4431E59B23CC0E4400FF57AC /* MDUrlAction.m */; };
@@ -176,7 +180,16 @@
 		44255B5623D4145B00DF9465 /* OOEndTimeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOEndTimeView.m; sourceTree = "<group>"; };
 		44255B5923D46EC800DF9465 /* DouglasPeucker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouglasPeucker.h; sourceTree = "<group>"; };
 		44255B5A23D46EC800DF9465 /* DouglasPeucker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DouglasPeucker.m; sourceTree = "<group>"; };
-		44255B5C23D488BD00DF9465 /* oo_loading_refresh.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = oo_loading_refresh.gif; sourceTree = "<group>"; };
+		44255B5F23D5506200DF9465 /* MDPhotoPickVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDPhotoPickVC.h; sourceTree = "<group>"; };
+		44255B6023D5506200DF9465 /* MDPhotoPickVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDPhotoPickVC.m; sourceTree = "<group>"; };
+		44255B6223D5533E00DF9465 /* OOPhotoPickCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOPhotoPickCell.h; sourceTree = "<group>"; };
+		44255B6323D5533E00DF9465 /* OOPhotoPickCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOPhotoPickCell.m; sourceTree = "<group>"; };
+		44255B6523D5535700DF9465 /* OOPhotoPickEnterCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOPhotoPickEnterCell.h; sourceTree = "<group>"; };
+		44255B6623D5535700DF9465 /* OOPhotoPickEnterCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOPhotoPickEnterCell.m; sourceTree = "<group>"; };
+		44255B6B23D5A75800DF9465 /* OOH5VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOH5VC.h; sourceTree = "<group>"; };
+		44255B6C23D5A75800DF9465 /* OOH5VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOH5VC.m; sourceTree = "<group>"; };
+		44255B6E23D6ACEE00DF9465 /* OOSettingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOSettingVC.h; sourceTree = "<group>"; };
+		44255B6F23D6ACEE00DF9465 /* OOSettingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOSettingVC.m; sourceTree = "<group>"; };
 		4431E59323CC0E4400FF57AC /* MDUrlAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDUrlAction.h; sourceTree = "<group>"; };
 		4431E59423CC0E4400FF57AC /* MDPageMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPageMasterViewController.h; sourceTree = "<group>"; };
 		4431E59623CC0E4400FF57AC /* MDPageMasterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPageMasterNavigationController.m; sourceTree = "<group>"; };
@@ -389,7 +402,6 @@
 				441D605323B20E7B00F07134 /* ViewController.m */,
 				441D605523B20E7B00F07134 /* Main.storyboard */,
 				441D605823B20E7C00F07134 /* Assets.xcassets */,
-				44255B5C23D488BD00DF9465 /* oo_loading_refresh.gif */,
 				4431E5B123CC24D700FF57AC /* urlmapping */,
 				441D605A23B20E7C00F07134 /* LaunchScreen.storyboard */,
 				441D605D23B20E7C00F07134 /* Info.plist */,
@@ -435,8 +447,11 @@
 				4460F43623D183FE00DE7CC4 /* 创建巡查 */,
 				4460F44723D1C21A00DE7CC4 /* 河湖巡查 */,
 				4460F44E23D1D70300DE7CC4 /* 上报页面 */,
+				44255B5E23D5504100DF9465 /* 照片选择 */,
 				4460F43523D183FE00DE7CC4 /* 巡查轨迹 */,
 				44255B4D23D4111000DF9465 /* 提交巡查 */,
+				44255B6923D5A73700DF9465 /* H5页面 */,
+				44255B6A23D5A73700DF9465 /* 设置页面 */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -540,6 +555,37 @@
 				44255B5A23D46EC800DF9465 /* DouglasPeucker.m */,
 			);
 			path = "抽稀处理";
+			sourceTree = "<group>";
+		};
+		44255B5E23D5504100DF9465 /* 照片选择 */ = {
+			isa = PBXGroup;
+			children = (
+				44255B5F23D5506200DF9465 /* MDPhotoPickVC.h */,
+				44255B6023D5506200DF9465 /* MDPhotoPickVC.m */,
+				44255B6223D5533E00DF9465 /* OOPhotoPickCell.h */,
+				44255B6323D5533E00DF9465 /* OOPhotoPickCell.m */,
+				44255B6523D5535700DF9465 /* OOPhotoPickEnterCell.h */,
+				44255B6623D5535700DF9465 /* OOPhotoPickEnterCell.m */,
+			);
+			path = "照片选择";
+			sourceTree = "<group>";
+		};
+		44255B6923D5A73700DF9465 /* H5页面 */ = {
+			isa = PBXGroup;
+			children = (
+				44255B6B23D5A75800DF9465 /* OOH5VC.h */,
+				44255B6C23D5A75800DF9465 /* OOH5VC.m */,
+			);
+			path = "H5页面";
+			sourceTree = "<group>";
+		};
+		44255B6A23D5A73700DF9465 /* 设置页面 */ = {
+			isa = PBXGroup;
+			children = (
+				44255B6E23D6ACEE00DF9465 /* OOSettingVC.h */,
+				44255B6F23D6ACEE00DF9465 /* OOSettingVC.m */,
+			);
+			path = "设置页面";
 			sourceTree = "<group>";
 		};
 		4431E59123CC0E4400FF57AC /* MDPageMaster */ = {
@@ -936,7 +982,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				441D605C23B20E7C00F07134 /* LaunchScreen.storyboard in Resources */,
-				44255B5D23D488BD00DF9465 /* oo_loading_refresh.gif in Resources */,
 				4460F46823D1F4DA00DE7CC4 /* mapapi.bundle in Resources */,
 				4431E5B223CC24D700FF57AC /* urlmapping in Resources */,
 				441D605923B20E7C00F07134 /* Assets.xcassets in Resources */,
@@ -1030,6 +1075,7 @@
 				44255B3F23D2DF4000DF9465 /* OORefreshFooter.m in Sources */,
 				4460F3CF23CCA2AF00DE7CC4 /* UIColor+XYInit.m in Sources */,
 				4460F43123D060A100DE7CC4 /* OOHomeModel.m in Sources */,
+				44255B6723D5535700DF9465 /* OOPhotoPickEnterCell.m in Sources */,
 				4431E5A623CC0E4400FF57AC /* MDUrlAction.m in Sources */,
 				4460F45123D1D71800DE7CC4 /* OOReportVC.m in Sources */,
 				4460F43F23D188C400DE7CC4 /* OOCreateXCModel.m in Sources */,
@@ -1061,6 +1107,7 @@
 				4460F41823CCA2CD00DE7CC4 /* NSData+XYBase64.m in Sources */,
 				441D608D23B20EC200F07134 /* OONavigationController.m in Sources */,
 				4460F40E23CCA2CD00DE7CC4 /* NSString+XYHTMLEscape.m in Sources */,
+				44255B6123D5506200DF9465 /* MDPhotoPickVC.m in Sources */,
 				4438AF2F23D153F3002F66B3 /* OOHomeHeaderTypeView.m in Sources */,
 				4460F3C623CCA2AF00DE7CC4 /* UIImage+XYInit.m in Sources */,
 				4460F40A23CCA2CD00DE7CC4 /* NSData+XYMD5.m in Sources */,
@@ -1083,6 +1130,7 @@
 				4460F45823D1DCC600DE7CC4 /* OOTypeView.m in Sources */,
 				441D604E23B20E7B00F07134 /* AppDelegate.m in Sources */,
 				4460F3D623CCA2AF00DE7CC4 /* UIApplication+XYState.m in Sources */,
+				44255B7023D6ACEE00DF9465 /* OOSettingVC.m in Sources */,
 				4431E5B623CC2BF300FF57AC /* OOAPPMgr.m in Sources */,
 				4460F3D523CCA2AF00DE7CC4 /* UINib+XYInit.m in Sources */,
 				4460F41123CCA2CD00DE7CC4 /* NSString+XYUUID.m in Sources */,
@@ -1103,8 +1151,10 @@
 				4460F3C723CCA2AF00DE7CC4 /* UIFont+XYLoad.m in Sources */,
 				44255B5423D4125B00DF9465 /* OOUserInputView.m in Sources */,
 				4460F40523CCA2CD00DE7CC4 /* NSBundle+XYInit.m in Sources */,
+				44255B6D23D5A75800DF9465 /* OOH5VC.m in Sources */,
 				4460F44A23D1C26A00DE7CC4 /* OOPatrolVC.m in Sources */,
 				4460F40F23CCA2CD00DE7CC4 /* NSString+XYLength.m in Sources */,
+				44255B6423D5533E00DF9465 /* OOPhotoPickCell.m in Sources */,
 				4460F43C23D187DA00DE7CC4 /* OOCreateXCTableView.m in Sources */,
 				4460F3D323CCA2AF00DE7CC4 /* UIImage+XYBlur.m in Sources */,
 			);

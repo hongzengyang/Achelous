@@ -89,7 +89,6 @@
     return available;
 }
 
-
 #pragma mark -- 工具方法
 //获取当前时间戳
 - (NSString *)currentTimeStr {

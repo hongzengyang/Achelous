@@ -7,7 +7,6 @@
 //
 
 #import "OOXCMgr.h"
-#import "DouglasPeucker.h"
 
 @implementation OOUnFinishedXCModel
 
@@ -38,13 +37,9 @@
 @property(nonatomic, strong) BMKLocationManager *locationManager;
 @property(nonatomic, copy) BMKLocatingCompletionBlock completionBlock;
 
-@property (nonatomic, strong) BMKLocation *preLocation; //当前位置对象
-
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) CLLocation *preUploadLocation; //当前位置对象
 
 @property (nonatomic, assign) BOOL isStartUpdatingLocation;  //是否开启了定位
-
-@property (nonatomic, strong) DouglasPeucker *peucker;
 
 @end
 
@@ -65,6 +60,10 @@
     [self initLocationManager];
     [self initCompleteBlock];
     [self requestLocation];
+    
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"pref_key_notification_interval"]) {
+        self.notificationInterval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"pref_key_notification_interval"] integerValue];
+    }
 }
 
 - (void)initLocationManager {
@@ -83,119 +82,32 @@
 -(void)initCompleteBlock {
     __weak typeof(self) weakSelf = self;
     self.completionBlock = ^(BMKLocation *location, BMKLocationNetworkState state, NSError *error) {
-//        if (error) {
-//            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
-//        }
-//
-//        if (location.location) {//得到定位信息，添加annotation
-//
-//            NSLog(@"LOC = %@",location.location);
-//            NSLog(@"LOC ID= %@",location.locationID);
-//            BMKPointAnnotation *pointAnnotation = [[BMKPointAnnotation alloc] init];
-//
-//            pointAnnotation.coordinate = location.location.coordinate;
-//            pointAnnotation.title = @"单次定位";
-//            if (location.rgcData) {
-//                pointAnnotation.subtitle = [location.rgcData description];
-//            } else {
-//                pointAnnotation.subtitle = @"rgc = null!";
-//            }
-//
-//            if (location.rgcData.poiList) {
-//                for (BMKLocationPoi * poi in location.rgcData.poiList) {
-//                    NSLog(@"poi = %@, %@, %f, %@, %@", poi.name, poi.addr, poi.relaiability, poi.tags, poi.uid);
-//                }
-//            }
-//
-//            if (location.rgcData.poiRegion) {
-//                NSLog(@"poiregion = %@, %@, %@", location.rgcData.poiRegion.name, location.rgcData.poiRegion.tags, location.rgcData.poiRegion.directionDesc);
-//            }
-//        }
-//
-//        if (location.rgcData) {
-//            NSLog(@"rgc = %@",[location.rgcData description]);
-//        }
+        //返回是否在国内或海外，返回YES为国内，NO为海外。
+        BOOL inChina = [BMKLocationManager BMKLocationDataAvailableForCoordinate:location.location.coordinate withCoorType:BMKLocationCoordinateTypeBMK09LL];
+        if (!inChina) {
+            return;
+        }
 
-        CGFloat distance = [location.location distanceFromLocation:weakSelf.preLocation.location];
+        CGFloat distance = [location.location distanceFromLocation:weakSelf.preUploadLocation];
         NSLog(@"与上一位置点的距离为:%f",distance);
         
         weakSelf.userLocation.location = location.location;
         [[NSNotificationCenter defaultCenter] postNotificationName:pref_key_notification_didUpdateLocation object:nil];
-        
-        weakSelf.preLocation = location;
-        
-        if ([OOXCMgr sharedMgr].unFinishedXCModel.status != OOXCStatus_ing) {
-            return;
-        }
-        OOSportNode *sportNode;
-        NSString *createTime = [[OOAPPMgr sharedMgr] getDateString];
-        NSString *intervalTime = [[OOAPPMgr sharedMgr] currentTimeStr];
-        NSString *roadName = @"";
-        CGFloat speed = 0;
-        CGFloat latitude = location.location.coordinate.latitude;
-        CGFloat longitude = location.location.coordinate.longitude;
-        // 如果大于5米 上传到服务器
-        if (distance > 0) {
-            NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-            [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
-            [param setValue:@([OOXCMgr sharedMgr].unFinishedXCModel.xc_id) forKey:@"Xcid"];
-            
-            NSArray *points;
-            {
-                NSMutableDictionary *uploadLocation = [[NSMutableDictionary alloc] init];
-                [uploadLocation setValue:createTime forKey:@"createTime"];
-                [uploadLocation setValue:intervalTime forKey:@"locTime"];
-                [uploadLocation setValue:roadName forKey:@"roadName"];
-                [uploadLocation setValue:@(speed) forKey:@"speed"];
-                
-                NSMutableDictionary *longitudeAndLatitude = [[NSMutableDictionary alloc] init];
-                [longitudeAndLatitude setValue:@(latitude) forKey:@"latitude"];
-                [longitudeAndLatitude setValue:@(longitude) forKey:@"longitude"];
-                [uploadLocation setValue:longitudeAndLatitude forKey:@"location"];
-                
-                points = @[uploadLocation];
-            }
-            [param setValue:points forKey:@"points"];
-            
-            [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_Upgps parameters:param options:nil block:^(BOOL success, id response) {
-                if (success) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:pref_key_notification_upload_location_success object:nil];
-                }
-            }];
-            
-            OOSportNode *node = [[OOSportNode alloc] init];
-            node.location = [NSString stringWithFormat:@"%lf",latitude];
-            node.location = [node.location stringByAppendingString:@","];
-            node.location = [node.location stringByAppendingFormat:@"%lf",longitude];
-            node.locTime = intervalTime;
-            node.speed = [NSString stringWithFormat:@"%lf",speed];
-            node.createTime = createTime;
-            node.roadName = roadName;
-            sportNode = node;
-            [[NSNotificationCenter defaultCenter] postNotificationName:pref_key_notification_upload_location_begin object:nil userInfo:@{@"sportNode":sportNode}];
-        }
-        
     };
-
-
 }
 
 - (void)startUpdatingLocation {
-//    if (self.isStartUpdatingLocation) {
-//        return;
-//    }
-    
     //开启定位服务
+    [self.locationManager stopUpdatingLocation];
     [self.locationManager startUpdatingLocation];
     [self.locationManager startUpdatingHeading];
-//    [self beginTimer];
     self.isStartUpdatingLocation = YES;
+    self.preUploadLocation = self.userLocation.location;
 }
 
 - (void)finishUpdatingLocation {
     [self.locationManager stopUpdatingHeading];
     [self.locationManager stopUpdatingLocation];
-//    [self endTimer];
     self.isStartUpdatingLocation = NO;
 }
 
@@ -203,8 +115,9 @@
     BOOL success = [self.locationManager requestLocationWithReGeocode:YES withNetworkState:YES completionBlock:self.completionBlock];
 }
 
-- (NSArray *)handleDouglasPeuckerWithArray:(NSArray<OOSportNode *> *)dataList {
-    return [self.peucker douglasAlgorithm:dataList threshold:10];
+- (CGFloat)distanceFrompreUploadLocation {
+    CGFloat distance = [self.userLocation.location distanceFromLocation:self.preUploadLocation];
+    return distance;
 }
 
 #pragma mark -- 百度定位
@@ -216,64 +129,86 @@
         NSLog(@"当前并没有开启巡查");
         return;
     }
-    CGFloat distance = [location.location distanceFromLocation:self.preLocation.location];
+    
+    //返回是否在国内或海外，返回YES为国内，NO为海外。
+    BOOL inChina = [BMKLocationManager BMKLocationDataAvailableForCoordinate:location.location.coordinate withCoorType:BMKLocationCoordinateTypeBMK09LL];
+    if (!inChina) {
+        return;
+    }
+    
+    CGFloat distance = [location.location distanceFromLocation:self.preUploadLocation];
     NSLog(@"与上一位置点的距离为:%f",distance);
+    if (distance < 0 && !self.preUploadLocation) {
+        self.preUploadLocation = location.location;
+    }
+    
+//    if (distance < 0 && !self.userLocation.location) {
+//        self.userLocation.location = location.location;
+//    }
+//    // 如果大于30米 更新地图上的定位点
+//    if (distance > 30) {
+//    }
     
     self.userLocation.location = location.location;
     [[NSNotificationCenter defaultCenter] postNotificationName:pref_key_notification_didUpdateLocation object:nil];
     
-    self.preLocation = location;
-    
-    if ([OOXCMgr sharedMgr].unFinishedXCModel.status != OOXCStatus_ing) {
-        return;
+    if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_ing) {
+        // 如果大于30米 上传到服务器
+        if (distance > 30) {
+            [self uploadCurrentLoactionToServer];
+        }
     }
+}
+
+- (void)uploadCurrentLoactionToServer {
     OOSportNode *sportNode;
     NSString *createTime = [[OOAPPMgr sharedMgr] getDateString];
     NSString *intervalTime = [[OOAPPMgr sharedMgr] currentTimeStr];
     NSString *roadName = @"";
     CGFloat speed = 0;
-    CGFloat latitude = location.location.coordinate.latitude;
-    CGFloat longitude = location.location.coordinate.longitude;
-    // 如果大于5米 上传到服务器
-    if (distance > 20) {
-        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-        [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
-        [param setValue:@([OOXCMgr sharedMgr].unFinishedXCModel.xc_id) forKey:@"Xcid"];
+    CGFloat latitude = self.userLocation.location.coordinate.latitude;
+    CGFloat longitude = self.userLocation.location.coordinate.longitude;
+    
+    
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
+    [param setValue:@([OOXCMgr sharedMgr].unFinishedXCModel.xc_id) forKey:@"Xcid"];
+    
+    NSArray *points;
+    {
+        NSMutableDictionary *uploadLocation = [[NSMutableDictionary alloc] init];
+        [uploadLocation setValue:createTime forKey:@"createTime"];
+        [uploadLocation setValue:intervalTime forKey:@"locTime"];
+        [uploadLocation setValue:roadName forKey:@"roadName"];
+        [uploadLocation setValue:@(speed) forKey:@"speed"];
         
-        NSArray *points;
-        {
-            NSMutableDictionary *uploadLocation = [[NSMutableDictionary alloc] init];
-            [uploadLocation setValue:createTime forKey:@"createTime"];
-            [uploadLocation setValue:intervalTime forKey:@"locTime"];
-            [uploadLocation setValue:roadName forKey:@"roadName"];
-            [uploadLocation setValue:@(speed) forKey:@"speed"];
-            
-            NSMutableDictionary *longitudeAndLatitude = [[NSMutableDictionary alloc] init];
-            [longitudeAndLatitude setValue:@(latitude) forKey:@"latitude"];
-            [longitudeAndLatitude setValue:@(longitude) forKey:@"longitude"];
-            [uploadLocation setValue:longitudeAndLatitude forKey:@"location"];
-            
-            points = @[uploadLocation];
-        }
-        [param setValue:points forKey:@"points"];
+        NSMutableDictionary *longitudeAndLatitude = [[NSMutableDictionary alloc] init];
+        [longitudeAndLatitude setValue:@(latitude) forKey:@"latitude"];
+        [longitudeAndLatitude setValue:@(longitude) forKey:@"longitude"];
+        [uploadLocation setValue:longitudeAndLatitude forKey:@"location"];
         
-        [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_Upgps parameters:param options:nil block:^(BOOL success, id response) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:pref_key_notification_upload_location_success object:nil];
-            }
-        }];
-        
-        OOSportNode *node = [[OOSportNode alloc] init];
-        node.location = [NSString stringWithFormat:@"%lf",latitude];
-        node.location = [node.location stringByAppendingString:@","];
-        node.location = [node.location stringByAppendingFormat:@"%lf",longitude];
-        node.locTime = intervalTime;
-        node.speed = [NSString stringWithFormat:@"%lf",speed];
-        node.createTime = createTime;
-        node.roadName = roadName;
-        sportNode = node;
-        [[NSNotificationCenter defaultCenter] postNotificationName:pref_key_notification_upload_location_begin object:nil userInfo:@{@"sportNode":sportNode}];
+        points = @[uploadLocation];
     }
+    [param setValue:points forKey:@"points"];
+    
+    [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_Upgps parameters:param options:nil block:^(BOOL success, id response) {
+        if (success) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:pref_key_notification_upload_location_success object:nil];
+        }
+    }];
+    
+    OOSportNode *node = [[OOSportNode alloc] init];
+    node.location = [NSString stringWithFormat:@"%lf",latitude];
+    node.location = [node.location stringByAppendingString:@","];
+    node.location = [node.location stringByAppendingFormat:@"%lf",longitude];
+    node.locTime = intervalTime;
+    node.speed = [NSString stringWithFormat:@"%lf",speed];
+    node.createTime = createTime;
+    node.roadName = roadName;
+    sportNode = node;
+    [[NSNotificationCenter defaultCenter] postNotificationName:pref_key_notification_upload_location_begin object:nil userInfo:@{@"sportNode":sportNode}];
+    
+    self.preUploadLocation = self.userLocation.location;
 }
 
 // 定位SDK中，方向变更的回调
@@ -296,17 +231,11 @@
     [locationManager requestAlwaysAuthorization];
 }
 
-#pragma mark -- 定时器相关
-- (void)beginTimer {
-    [self.timer invalidate];
-    self.timer = nil;
+#pragma mark -- Setter
+- (void)setNotificationInterval:(NSInteger)notificationInterval {
+    _notificationInterval = notificationInterval;
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(requestLocation) userInfo:nil repeats:YES];
-}
-
-- (void)endTimer {
-    [self.timer invalidate];
-    self.timer = nil;
+    [[NSUserDefaults standardUserDefaults] setValue:@(notificationInterval) forKey:@"pref_key_notification_interval"];
 }
 
 #pragma mark -- lazy
@@ -318,11 +247,28 @@
     return _userLocation;
 }
 
-- (DouglasPeucker *)peucker {
-    if (!_peucker) {
-        _peucker = [[DouglasPeucker alloc] init];
-    }
-    return _peucker;
+- (NSArray *)reportTypeArray {
+    return @[@"四乱事件",@"污染事件",@"险情事件",@"巡查实况"];
 }
+
+- (NSArray *)SLCategoryArray {
+    return @[@"乱占",@"乱采",@"乱堆",@"乱建"];
+}
+
+- (NSArray *)WRCategoryArray {
+    return @[@"湖库",@"渠道",@"河段"];
+}
+
+- (NSArray *)XQCategoryArray {
+    return @[@"决口",@"裂缝",@"滑坡",@"损毁",@"坍塌",@"渗漏",@"漫溢",@"其他"];
+}
+
+
+
+
+
+
+
+
 
 @end

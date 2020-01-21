@@ -9,5 +9,16 @@
 #import "OOReportModel.h"
 
 @implementation OOReportModel
+- (NSMutableArray *)photoPathArray {
+    if (!_photoPathArray) {
+        _photoPathArray = [[NSMutableArray alloc] init];
+        [_photoPathArray addObject:@""];
+        
+        _uploadPhotoPathArray = [[NSMutableArray alloc] init];
+        
+        _serverReturnPhotoPathArray = [[NSMutableArray alloc] init];
+    }
+    return _photoPathArray;
+}
 
 @end

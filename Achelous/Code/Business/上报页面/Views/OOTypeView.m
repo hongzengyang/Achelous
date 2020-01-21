@@ -44,19 +44,27 @@
     [self addSubview:self.separater];
 }
 
+- (void)update {
+    if (self.type == OOTypeViewType_photo) {
+        self.rightLab.text = [NSString stringWithFormat:@"已选择%ld张照片",self.model.photoPathArray.count - 1];
+    }
+}
+
 - (void)tap {
     if (self.type == OOTypeViewType_category) {
-        NSMutableArray *array = [NSMutableArray new];
-        NSMutableArray *titles;
-        if ([self.model.typeText isEqualToString:@"四乱事件"]) {
-            [titles addObjectsFromArray:@[@"乱占",@"乱采",@"乱堆",@"乱建"]];
-        }else if ([self.model.typeText isEqualToString:@"污染事件"]) {
-            [titles addObjectsFromArray:@[@"湖库",@"渠道",@"河段"]];
-        }else if ([self.model.typeText isEqualToString:@"险情事件"]) {
-            
-        }else if ([self.model.typeText isEqualToString:@"巡查实况"]) {
-            
+        if (self.model.typeIndex == 3) {
+            return;
         }
+        NSMutableArray *array = [NSMutableArray new];
+        NSArray *titles;
+        if (self.model.typeIndex == 0) {
+            titles = [[OOXCMgr sharedMgr] SLCategoryArray];
+        }else if (self.model.typeIndex == 1) {
+            titles = [[OOXCMgr sharedMgr] WRCategoryArray];
+        }else if (self.model.typeIndex == 2) {
+            titles = [[OOXCMgr sharedMgr] XQCategoryArray];
+        }
+        __weak typeof(self) weakSelf = self;
         for (int i = 0; i < titles.count; i++) {
             LNActionSheetModel *model = [[LNActionSheetModel alloc]init];
             model.title = titles[i];
@@ -64,24 +72,30 @@
             model.itemType = LNActionSheetItemNoraml;
             
             model.actionBlock = ^{
-                [[MDPageMaster master] openUrl:@"xiaoying://oo_report_vc" action:^(MDUrlAction * _Nullable action) {
-                    [action setString:titles[i] forKey:@"typeText"];
-                }];
+                weakSelf.rightLab.text = titles[i];
+                weakSelf.model.categoryText = titles[i];
             };
             [array addObject:model];
         }
-        [LNActionSheet showWithDesc:@"上报类型" actionModels:[NSArray arrayWithArray:array] action:nil];
+        [LNActionSheet showWithDesc:@"事件分类" actionModels:[NSArray arrayWithArray:array] action:nil];
+    }
+    
+    if (self.type == OOTypeViewType_photo) {
+        [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_photo_vc" action:^(MDUrlAction * _Nullable action) {
+            [action setAnyObject:self.model forKey:@"reportModel"];
+        }];
     }
 }
 
 #pragma mark -- UITextField
 - (void)textFieldDidChange:(UITextField *)textField {
-//    [textField sizeToFit];
-//
-//    [self.textField setFrame:CGRectMake(self.width - 15 - textField.width, 0, textField.width, self.height)];
-//    [self.textField reloadInputViews];
+    if (self.type == OOTypeViewType_name) {
+        self.model.nameText = textField.text;
+    }
     
-    self.keyText = textField.text;
+    if (self.type == OOTypeViewType_place) {
+        self.model.placeText = textField.text;
+    }
 }
 
 - (UILabel *)titleLab {
@@ -114,7 +128,7 @@
         _rightLab.userInteractionEnabled = NO;
         
         if (self.type == OOTypeViewType_type) {
-            _rightLab.text = @"四乱事件";
+            _rightLab.text = [[[OOXCMgr sharedMgr] reportTypeArray] objectAtIndex:self.model.typeIndex];
         }else if (self.type == OOTypeViewType_category) {
             _rightLab.text = @"请选择";
         }else if (self.type == OOTypeViewType_name) {
@@ -122,7 +136,7 @@
         }else if (self.type == OOTypeViewType_place) {
             _rightLab.hidden = YES;
         }else if (self.type == OOTypeViewType_photo) {
-            _rightLab.text = @"请选择";
+            _rightLab.text = [NSString stringWithFormat:@"已选择%ld张照片",self.model.photoPathArray.count - 1];
         }
     }
     return _rightLab;

@@ -28,8 +28,9 @@
         self.dataSource = self;
         [self registerClass:[OOHomeCollectionCell class] forCellWithReuseIdentifier:@"OOHomeCollectionCell"];
         
+        __weak typeof(self) weakSelf = self;
         self.mj_header = [OORefreshHeader headerWithRefreshingBlock:^{
-            [self.homeModel fetchHomeData];
+            [weakSelf.homeModel fetchHomeData];
         }];
         self.mj_header.mj_w = self.width - self.contentInset.left - self.contentInset.right;
         
@@ -57,11 +58,23 @@
                 
             }];
         }
-    }
-    
-    if (indexPath.row == 1) {
+    }else if (indexPath.row == 1) {
         [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_track_page_vc" action:^(MDUrlAction * _Nullable action) {
             
+        }];
+    }else if (indexPath.row == 3 || indexPath.row == 10) {
+        OOHomeDataMenuModel *model = [self.homeModel.dataModel.menuList objectAtIndex:indexPath.row];
+        NSString *url = [NSString stringWithFormat:@"%@%@",model.url,[[OOUserMgr sharedMgr] loginUserInfo].UserId];
+        url = [url stringByReplacingOccurrencesOfString:@" " withString:@""];
+        [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_h5_vc" action:^(MDUrlAction * _Nullable action) {
+            [action setString:url forKey:@"linkUrl"];
+            [action setString:model.name forKey:@"titleText"];
+        }];
+    }else {
+        OOHomeDataMenuModel *model = [self.homeModel.dataModel.menuList objectAtIndex:indexPath.row];
+        [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_h5_vc" action:^(MDUrlAction * _Nullable action) {
+            [action setString:model.url forKey:@"linkUrl"];
+            [action setString:model.name forKey:@"titleText"];
         }];
     }
 }

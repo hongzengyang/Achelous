@@ -125,7 +125,7 @@
 
 - (OOUserInputView *)firstInputView {
     if (!_firstInputView) {
-        _firstInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.endTimeView.bottom + 10, self.view.width, 200)];
+        _firstInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.endTimeView.bottom + 10, self.view.width, 200) title:@"事件描述"];
         _firstInputView.backgroundColor = [UIColor whiteColor];
     }
     return _firstInputView;
@@ -133,7 +133,7 @@
 
 - (OOUserInputView *)secondInputView {
     if (!_secondInputView) {
-        _secondInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.firstInputView.bottom + 10, self.view.width, 200)];
+        _secondInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.firstInputView.bottom + 10, self.view.width, 200) title:@"情况分析"];
         _secondInputView.backgroundColor = [UIColor whiteColor];
     }
     return _secondInputView;

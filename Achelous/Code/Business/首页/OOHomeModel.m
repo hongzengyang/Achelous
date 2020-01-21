@@ -87,6 +87,12 @@
                     model.SJZ = [XC valueForKey:@"SJZ"];
                     
                     [OOXCMgr sharedMgr].unFinishedXCModel = model;
+                    
+                    if (model.status == OOXCStatus_ing) {
+                        [[OOXCMgr sharedMgr] startUpdatingLocation];
+                    }else {
+                        [[OOXCMgr sharedMgr] finishUpdatingLocation];
+                    }
                 }else {
                     [OOXCMgr sharedMgr].unFinishedXCModel = nil;
                 }

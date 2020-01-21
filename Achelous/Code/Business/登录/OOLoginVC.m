@@ -84,7 +84,7 @@
     }
     
     if (textField == self.passwordTextField) {
-        self.accountClearBtn.hidden = textField.text.length == 0 ? YES : NO;
+        self.passwordClearBtn.hidden = textField.text.length == 0 ? YES : NO;
     }
 }
 
@@ -98,6 +98,16 @@
 }
 
 - (void)clickLoginButton {
+    if ([NSString xy_isEmpty:self.accountTextField.text]) {
+        [SVProgressHUD showErrorWithStatus:@"请输入账号"];
+        return;
+    }
+    
+    if ([NSString xy_isEmpty:self.passwordTextField.text]) {
+        [SVProgressHUD showErrorWithStatus:@"请输入密码"];
+        return;
+    }
+    
     [SVProgressHUD showWithStatus:@"请等待..."];
     
     [[OOUserMgr sharedMgr] loginWithAccount:self.accountTextField.text password:self.passwordTextField.text completeBlock:^(BOOL complete) {
@@ -111,6 +121,11 @@
             [[MDPageMaster master] openUrl:@"xiaoying://oo_home_vc" action:^(MDUrlAction * _Nullable action) {
                 
             }];
+            
+            self.accountTextField.text = @"";
+            self.passwordTextField.text = @"";
+            self.accountClearBtn.hidden = YES;
+            self.passwordClearBtn.hidden = YES;
         }
     }];
 }
@@ -202,14 +217,14 @@
 - (UIView *)accountSeparater {
     if (!_accountSeparater) {
         _accountSeparater = [[UIView alloc] initWithFrame:CGRectMake(self.accountIcon.left, self.accountIcon.bottom + 2, self.accountClearBtn.right - self.accountIcon.left, 1)];
-        _accountSeparater.backgroundColor = [UIColor redColor];
+        _accountSeparater.backgroundColor = [UIColor appMainColor];
     }
     return _accountSeparater;
 }
 
 - (UIImageView *)passwordIcon {
     if (!_passwordIcon) {
-        _passwordIcon = [[UIImageView alloc] initWithFrame:CGRectMake(30, self.accountIcon.bottom + 10, 30, 30)];
+        _passwordIcon = [[UIImageView alloc] initWithFrame:CGRectMake(33, self.accountIcon.bottom + 10, 24, 24)];
         _passwordIcon.image = [UIImage imageNamed:@"oo_login_mima_icon"];
     }
     return _passwordIcon;
@@ -241,7 +256,7 @@
 - (UIView *)passwordSeparater {
     if (!_passwordSeparater) {
         _passwordSeparater = [[UIView alloc] initWithFrame:CGRectMake(self.passwordIcon.left, self.passwordIcon.bottom + 2, self.passwordClearBtn.right - self.passwordIcon.left, 1)];
-        _passwordSeparater.backgroundColor = [UIColor redColor];
+        _passwordSeparater.backgroundColor = [UIColor appMainColor];
     }
     return _passwordSeparater;
 }
@@ -252,7 +267,8 @@
         [_loginBtn addTarget:self action:@selector(clickLoginButton) forControlEvents:(UIControlEventTouchUpInside)];
         [_loginBtn setFrame:CGRectMake(self.accountIcon.left, self.passwordSeparater.bottom + 30, self.passwordSeparater.width, 44)];
         [_loginBtn setTitle:@"登录" forState:(UIControlStateNormal)];
-        _loginBtn.backgroundColor = [UIColor redColor];
+        _loginBtn.layer.cornerRadius = 8;
+        _loginBtn.backgroundColor = [UIColor appMainColor];
     }
     return _loginBtn;
 }

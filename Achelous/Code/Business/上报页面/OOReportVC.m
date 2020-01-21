@@ -9,6 +9,7 @@
 #import "OOReportVC.h"
 #import "OOReportModel.h"
 #import "OOTypeView.h"
+#import "OOUserInputView.h"
 
 @interface OOReportVC ()
 
@@ -21,12 +22,15 @@
 @property (nonatomic, strong) OOTypeView *placeView;
 @property (nonatomic, strong) OOTypeView *photoView;
 
+@property (nonatomic, strong) OOUserInputView *sjmsInputView;
+@property (nonatomic, strong) OOUserInputView *qkfxInputView;
+
 @end
 
 @implementation OOReportVC
 
 - (void)handleWithURLAction:(MDUrlAction *)urlAction {
-    self.model.typeText = [urlAction stringForKey:@"typeText"];
+    self.model.typeIndex = [urlAction integerForKey:@"typeIndex"];
 }
 
 - (void)viewDidLoad {
@@ -40,6 +44,15 @@
     [self.view addSubview:self.nameView];
     [self.view addSubview:self.placeView];
     [self.view addSubview:self.photoView];
+    
+    [self.view addSubview:self.sjmsInputView];
+    [self.view addSubview:self.qkfxInputView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.photoView update];
 }
 
 #pragma mark -- Click
@@ -48,6 +61,93 @@
 }
 
 - (void)clickShareButton {
+    if (self.model.typeIndex != 3) {
+        if ([NSString xy_isEmpty:self.model.categoryText]) {
+            [SVProgressHUD showErrorWithStatus:@"请输入事件分类"];
+            return;
+        }
+    }
+    
+    if ([NSString xy_isEmpty:self.model.nameText]) {
+        [SVProgressHUD showErrorWithStatus:@"请输入事件名称"];
+        return;
+    }
+    if ([NSString xy_isEmpty:self.model.placeText]) {
+        [SVProgressHUD showErrorWithStatus:@"请输入事件地点"];
+        return;
+    }
+    
+    if (self.model.photoPathArray.count <= 1) {
+        [SVProgressHUD showErrorWithStatus:@"请选择照片"];
+        return;
+    }
+    
+    if ([NSString xy_isEmpty:self.sjmsInputView.inputText]) {
+        [SVProgressHUD showErrorWithStatus:@"请输入事件描述"];
+        return;
+    }
+    
+    if ([NSString xy_isEmpty:self.qkfxInputView.inputText]) {
+        [SVProgressHUD showErrorWithStatus:@"请输入情况分析"];
+        return;
+    }
+    
+    
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
+    [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].AreaCode forKey:@"QYMC"];
+    [param setValue:@([OOXCMgr sharedMgr].unFinishedXCModel.xc_id) forKey:@"XCID"];
+    {
+        CGFloat latitude = [OOXCMgr sharedMgr].userLocation.location.coordinate.latitude;
+        CGFloat longitude = [OOXCMgr sharedMgr].userLocation.location.coordinate.longitude;
+        NSString *location = [NSString stringWithFormat:@"%lf",latitude];
+        location = [location stringByAppendingString:@","];
+        location = [location stringByAppendingFormat:@"%lf",longitude];
+        [param setValue:location forKey:@"SJJD"];
+    }
+    [param setValue:@(self.model.typeIndex + 1) forKey:@"SJLX"];
+    {
+        if (self.model.typeIndex == 0) {
+            [param setValue:@([[[OOXCMgr sharedMgr] SLCategoryArray] indexOfObject:self.model.categoryText]) forKey:@"XCLX"];
+        }
+        if (self.model.typeIndex == 1) {
+            [param setValue:@([[[OOXCMgr sharedMgr] WRCategoryArray] indexOfObject:self.model.categoryText]) forKey:@"XCLX"];
+        }
+        if (self.model.typeIndex == 2) {
+            [param setValue:@([[[OOXCMgr sharedMgr] XQCategoryArray] indexOfObject:self.model.categoryText]) forKey:@"XCLX"];
+        }
+        if (self.model.typeIndex == 3) {
+            [param setValue:@(100) forKey:@"XCLX"];
+        }
+    }
+    [param setValue:self.model.nameText forKey:@"SJMC"];
+    [param setValue:self.model.placeText forKey:@"SJDD"];
+    
+    
+    [param setValue:self.sjmsInputView.inputText forKey:@"SJMS"];
+    [param setValue:self.qkfxInputView.inputText forKey:@"QKFX"];
+    
+    __block NSString *sjzp = @"";
+    {
+        [self.model.serverReturnPhotoPathArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            sjzp = [sjzp stringByAppendingString:obj];
+            if (idx != self.model.serverReturnPhotoPathArray.count - 1) {
+                sjzp = [sjzp stringByAppendingString:@","];
+            }
+        }];
+    }
+    [param setValue:sjzp forKey:@"SJZP"];
+    
+    
+    [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
+    [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_Upsjinfo parameters:param options:nil block:^(BOOL success, id response) {
+        if (success) {
+            [SVProgressHUD showSuccessWithStatus:@"提交成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"提交失败"];
+        }
+    }];
 }
 
 #pragma mark -- lazy
@@ -74,7 +174,7 @@
         [_navBar addSubview:recordBtn];
         
         UILabel *titleLab = [[UILabel alloc] initWithFrame:CGRectMake(backBtn.right, SAFE_TOP, recordBtn.left - backBtn.right, 44)];
-        titleLab.text = self.model.typeText;
+        titleLab.text = [[[OOXCMgr sharedMgr] reportTypeArray] objectAtIndex:self.model.typeIndex];
         titleLab.font = [UIFont systemFontOfSize:16];
         titleLab.textColor = [UIColor whiteColor];
         titleLab.textAlignment = NSTextAlignmentCenter;
@@ -94,7 +194,14 @@
 
 - (OOTypeView *)categoryView {
     if (!_categoryView) {
-        _categoryView = [[OOTypeView alloc] initWithFrame:CGRectMake(0, self.typeView.bottom, self.view.width, 50) type:(OOTypeViewType_category) model:self.model];
+        CGFloat height = 50;
+        if (self.model.typeIndex == 3) {
+            height = 0.1;
+        }
+        _categoryView = [[OOTypeView alloc] initWithFrame:CGRectMake(0, self.typeView.bottom, self.view.width, height) type:(OOTypeViewType_category) model:self.model];
+        if (self.model.typeIndex == 3) {
+            _categoryView.hidden = YES;
+        }
     }
     return _categoryView;
 }
@@ -118,6 +225,20 @@
         _photoView = [[OOTypeView alloc] initWithFrame:CGRectMake(0, self.placeView.bottom, self.view.width, 50) type:(OOTypeViewType_photo) model:self.model];
     }
     return _photoView;
+}
+
+- (OOUserInputView *)sjmsInputView {
+    if (!_sjmsInputView) {
+        _sjmsInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.photoView.bottom + 10, self.view.width, 100) title:@"事件描述"];
+    }
+    return _sjmsInputView;
+}
+
+- (OOUserInputView *)qkfxInputView {
+    if (!_qkfxInputView) {
+        _qkfxInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.sjmsInputView.bottom + 10, self.view.width, 100) title:@"情况分析"];
+    }
+    return _qkfxInputView;
 }
 
 - (OOReportModel *)model {

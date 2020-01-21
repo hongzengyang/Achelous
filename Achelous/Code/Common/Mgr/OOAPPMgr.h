@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat safeTopArea;
 @property (nonatomic, assign) CGFloat safeBottomArea;
 
+
 + (OOAPPMgr *)sharedMgr;
 
 - (NSString *)deviceID;

@@ -30,7 +30,9 @@
 }
 
 - (void)clickSettingButton {
-    
+    [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_setting_vc" action:^(MDUrlAction * _Nullable action) {
+        
+    }];
 }
 
 - (UILabel *)titleLab {

@@ -39,4 +39,7 @@
  */
 - (NSArray*)douglasAlgorithm:(NSArray *)coordinateList threshold:(CGFloat)threshold;
 
+
++(CLLocationCoordinate2D)transformFromWGSToGCJ:(CLLocationCoordinate2D)wgsCoordinate;
+
 @end

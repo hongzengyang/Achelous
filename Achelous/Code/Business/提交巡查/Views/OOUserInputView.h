@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *inputText;
 
+- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title;
+
 @end
 
 NS_ASSUME_NONNULL_END

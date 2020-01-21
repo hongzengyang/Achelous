@@ -22,9 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OOTypeView : UIView
 
-@property (nonatomic, copy) NSString *keyText;
-
 - (instancetype)initWithFrame:(CGRect)frame type:(OOTypeViewType)type model:(OOReportModel *)model;
+
+- (void)update;
 
 @end
 

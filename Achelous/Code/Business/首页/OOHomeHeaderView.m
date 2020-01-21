@@ -31,9 +31,9 @@
 - (instancetype)initWithFrame:(CGRect)frame model:(nonnull OOHomeModel *)model {
     if (self = [super initWithFrame:frame]) {
         self.homeModel = model;
-        self.type_interval = 20;
+        self.type_interval = 25;
         self.type_width = ([UIScreen mainScreen].bounds.size.width - 30 - self.type_interval * 3) / 4;
-        self.type_height = ([UIScreen mainScreen].bounds.size.width - 30 - self.type_interval * 3) / 4;
+        self.type_height = 60;
         [self configUI];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeDataRefreshFinished) name:PREF_KEY_HOME_DATA_FRESH_FINISH object:nil];
@@ -58,6 +58,14 @@
 }
 
 #pragma mark -- Lazy
+- (UIImageView *)bgImageView {
+    if (!_bgImageView) {
+        _bgImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _bgImageView.image = [UIImage imageNamed:@"20190815085153249eljilb"];
+        _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    return _bgImageView;
+}
 - (OOHomeHeaderTypeView *)SLTypeView {
     if (!_SLTypeView) {
         _SLTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(15, self.height - 20 - self.type_height, self.type_width, self.type_height) title:@"四乱现象"];

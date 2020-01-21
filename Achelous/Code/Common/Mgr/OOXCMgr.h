@@ -56,12 +56,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) BMKUserLocation *userLocation;
 
+@property (nonatomic, assign) NSInteger notificationInterval;
+
 + (OOXCMgr *)sharedMgr;
 
+//定位(连续)
 - (void)startUpdatingLocation;
 - (void)finishUpdatingLocation;
 
-- (NSArray *)handleDouglasPeuckerWithArray:(NSArray <OOSportNode *>*)dataList;
+//定位(单次)
+- (void)requestLocation;
+
+//上传当前点到server
+- (void)uploadCurrentLoactionToServer;
+
+- (CGFloat)distanceFrompreUploadLocation;
+
+
+//四乱事件1 污染事件2 险情事件3 巡查实况4
+- (NSArray <NSString *>*)reportTypeArray;
+//乱占1 乱采2 乱堆3 乱建4
+- (NSArray <NSString *>*)SLCategoryArray;
+//湖库1，渠道2，河段3
+- (NSArray <NSString *>*)WRCategoryArray;
+//决口1，裂缝2，滑坡3，损毁4，坍塌5，渗漏6，漫溢7，其他8
+- (NSArray <NSString *>*)XQCategoryArray;
 
 
 @end

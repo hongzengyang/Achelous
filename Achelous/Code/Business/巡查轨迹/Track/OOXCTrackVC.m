@@ -10,6 +10,7 @@
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BMKLocationkit/BMKLocationComponent.h>
 #import <YYModel/YYModel.h>
+#import "DouglasPeucker.h"
 
 @interface OOXCTrackVC ()<BMKMapViewDelegate,BMKLocationManagerDelegate>
 
@@ -91,10 +92,6 @@
 /** 地图加载完成 */
 - (void)mapViewDidFinishLoading:(BMKMapView *)mapView {
     
-//    NSArray *temp = [[OOXCMgr sharedMgr] handleDouglasPeuckerWithArray:self.sportNodes];
-//    [self.sportNodes removeAllObjects];
-//    [self.sportNodes addObjectsFromArray:temp];
-    
     CLLocation *firstLocation;
     CLLocationCoordinate2D coors[self.sportNodes.count];
     for (NSInteger i = 0; i < self.sportNodes.count; i++) {
@@ -104,6 +101,8 @@
         if (coordinate.count == 2) {
             CLLocationCoordinate2D location = CLLocationCoordinate2DMake([[coordinate firstObject] floatValue], [[coordinate lastObject] floatValue]);
             coors[i] = location;
+//            CLLocationCoordinate2D new = [DouglasPeucker transformFromWGSToGCJ:location];
+//            coors[i] = new;
         }
         
         if (i == 0) {
