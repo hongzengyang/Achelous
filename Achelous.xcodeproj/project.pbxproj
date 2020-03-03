@@ -110,6 +110,7 @@
 		4460F46423D1EE4300DE7CC4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F46323D1EE4300DE7CC4 /* libc++.tbd */; };
 		4460F46623D1EE4900DE7CC4 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F46523D1EE4900DE7CC4 /* AdSupport.framework */; };
 		4460F46823D1F4DA00DE7CC4 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4460F46723D1F4D900DE7CC4 /* mapapi.bundle */; };
+		448F9472240E9CDD003B580A /* OOEditSecretVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 448F9471240E9CDD003B580A /* OOEditSecretVC.m */; };
 		4AB0696DE17B8B5BCFF08046 /* libPods-Achelous.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFED6BB4609DC60CD4BAF33B /* libPods-Achelous.a */; };
 /* End PBXBuildFile section */
 
@@ -331,6 +332,8 @@
 		4460F46323D1EE4300DE7CC4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		4460F46523D1EE4900DE7CC4 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4460F46723D1F4D900DE7CC4 /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = mapapi.bundle; path = Pods/BaiduMapKit/BaiduMapKit/BaiduMapAPI_Map.framework/mapapi.bundle; sourceTree = "<group>"; };
+		448F9470240E9CDD003B580A /* OOEditSecretVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOEditSecretVC.h; sourceTree = "<group>"; };
+		448F9471240E9CDD003B580A /* OOEditSecretVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOEditSecretVC.m; sourceTree = "<group>"; };
 		4A7E86C2E9AE47E23EB97C0E /* Pods-Achelous.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Achelous.debug.xcconfig"; path = "Target Support Files/Pods-Achelous/Pods-Achelous.debug.xcconfig"; sourceTree = "<group>"; };
 		ACB678F4D203D137A601AEA8 /* Pods-Achelous.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Achelous.release.xcconfig"; path = "Target Support Files/Pods-Achelous/Pods-Achelous.release.xcconfig"; sourceTree = "<group>"; };
 		AFED6BB4609DC60CD4BAF33B /* libPods-Achelous.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Achelous.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -584,6 +587,8 @@
 			children = (
 				44255B6E23D6ACEE00DF9465 /* OOSettingVC.h */,
 				44255B6F23D6ACEE00DF9465 /* OOSettingVC.m */,
+				448F9470240E9CDD003B580A /* OOEditSecretVC.h */,
+				448F9471240E9CDD003B580A /* OOEditSecretVC.m */,
 			);
 			path = "设置页面";
 			sourceTree = "<group>";
@@ -1091,6 +1096,7 @@
 				4460F40723CCA2CD00DE7CC4 /* NSData+XYAESEncrypt.m in Sources */,
 				4460F43923D1841900DE7CC4 /* OOCreateXCVC.m in Sources */,
 				4431E5C423CC359900FF57AC /* UIColor+XYStyle.m in Sources */,
+				448F9472240E9CDD003B580A /* OOEditSecretVC.m in Sources */,
 				441D609823B2119F00F07134 /* OOServerService.m in Sources */,
 				4460F3CC23CCA2AF00DE7CC4 /* UIDevice+XYInfo.m in Sources */,
 				4460F3C923CCA2AF00DE7CC4 /* UIImage+XYColor.m in Sources */,

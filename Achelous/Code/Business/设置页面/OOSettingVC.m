@@ -8,6 +8,7 @@
 
 #import "OOSettingVC.h"
 #import "LNActionSheet.h"
+#import "MDPageMaster.h"
 #import "JXTAlertManagerHeader.h"
 
 @interface OOSettingVC ()
@@ -15,6 +16,7 @@
 
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIView *notificationView;
+@property (nonatomic, strong) UIView *editSecretView;
 @property (nonatomic, strong) UIView *versionView;
 
 @property (nonatomic, strong) UIButton *logoutBtn;
@@ -32,6 +34,7 @@
     [self.view addSubview:self.navBar];
     [self.view addSubview:self.headerView];
     [self.view addSubview:self.notificationView];
+    [self.view addSubview:self.editSecretView];
     [self.view addSubview:self.versionView];
     [self.view addSubview:self.logoutBtn];
 }
@@ -95,6 +98,12 @@
         [array addObject:model];
     }
     [LNActionSheet showWithDesc:@"设置巡查提醒时间" actionModels:[NSArray arrayWithArray:array] action:nil];
+}
+
+- (void)clickEditSecret {
+    [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_secret_vc" action:^(MDUrlAction * _Nullable action) {
+        
+    }];
 }
 
 - (void)clickVersion {
@@ -184,9 +193,36 @@
     return _notificationView;
 }
 
+- (UIView *)editSecretView {
+    if (!_editSecretView) {
+        _editSecretView = [[UIView alloc] initWithFrame:CGRectMake(0, self.notificationView.bottom, SCREEN_WIDTH, 50)];
+        _editSecretView.backgroundColor = [UIColor whiteColor];
+        
+        UILabel *leftLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 0)];
+        leftLab.font = [UIFont systemFontOfSize:14 weight:(UIFontWeightMedium)];
+        leftLab.textColor = [UIColor appTextColor];
+        leftLab.text = @"修改密码";
+        [leftLab sizeToFit];
+        [leftLab setFrame:CGRectMake(15, (_editSecretView.height - leftLab.height)/2.0, leftLab.width, leftLab.height)];
+        [_editSecretView addSubview:leftLab];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mini_common_arrow_right_n"]];
+        [imageView setFrame:CGRectMake(SCREEN_WIDTH - 15 - imageView.width, (_editSecretView.height - imageView.height)/2.0, imageView.width, imageView.height)];
+        [_editSecretView addSubview:imageView];
+        
+        UIView *separater = [[UIView alloc] initWithFrame:CGRectMake(0, _editSecretView.height - 0.5, SCREEN_WIDTH, 0.5)];
+        separater.backgroundColor = [UIColor xycColorWithHex:0xF0F1F5 alpha:0.7];
+        [_editSecretView addSubview:separater];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickEditSecret)];
+        [_editSecretView addGestureRecognizer:tap];
+    }
+    return _editSecretView;
+}
+
 - (UIView *)versionView {
     if (!_versionView) {
-        _versionView = [[UIView alloc] initWithFrame:CGRectMake(0, self.notificationView.bottom, SCREEN_WIDTH, 50)];
+        _versionView = [[UIView alloc] initWithFrame:CGRectMake(0, self.editSecretView.bottom, SCREEN_WIDTH, 50)];
         _versionView.backgroundColor = [UIColor whiteColor];
         
         UILabel *leftLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 0)];

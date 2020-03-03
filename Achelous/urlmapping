@@ -13,3 +13,4 @@ oo_xc_finish_vc            :OOXCFinishVC
 oo_xc_photo_vc             :MDPhotoPickVC
 oo_xc_h5_vc                :OOH5VC
 oo_xc_setting_vc           :OOSettingVC
+oo_xc_secret_vc           :OOEditSecretVC

@@ -236,7 +236,6 @@
         _passwordTextField.delegate = self;
         _passwordTextField.font = [UIFont systemFontOfSize:14];
         [_passwordTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-        _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _passwordTextField;
 }
