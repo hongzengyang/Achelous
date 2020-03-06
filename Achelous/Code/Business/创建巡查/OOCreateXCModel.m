@@ -8,7 +8,9 @@
 
 #import "OOCreateXCModel.h"
 #import <YYModel/YYModel.h>
+@implementation OOXCAreaModel
 
+@end
 
 @implementation OOXCObjectModel
 
@@ -20,14 +22,23 @@
 
 @end
 
+@implementation OOXCJoinPartModel
+
+
+@end
+
+@implementation OOXCJoinPeopleModel
+
+
+@end
+
 @implementation OOCreateXCModel
 - (instancetype)init {
     if (self = [super init]) {
-        self.xc_type = OOCreateTypeSubType_none;
-        self.xc_objectList = [[NSMutableArray alloc] init];
-        
-        self.xc_people = @"app测试";
-        self.xc_owner = @"app测试";
+        self.weatherList = @[@"晴",@"阴",@"降雨",@"降雪"];
+        self.lakeTypeList = @[@"湖库",@"渠道",@"河段",@"坝塘"];
+        self.selectjoinPartList = [[NSMutableArray alloc] init];
+        self.selectjoinPeopleList = [[NSMutableArray alloc] init];
     }
     return self;
 }

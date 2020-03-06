@@ -11,6 +11,8 @@
 #ifndef OOAppCommonDef_h
 #define OOAppCommonDef_h
 
+#define Part_height   50
+
 typedef void(^OOCompleteBlock)(BOOL complete);
 
 #define SAFE_TOP                         [OOAPPMgr sharedMgr].safeTopArea

@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, OOCreateTypeSubType) {
-    OOCreateTypeSubType_none = -1,
-    OOCreateTypeSubType_huku = 0,
-    OOCreateTypeSubType_qudao = 1,
-    OOCreateTypeSubType_heduan = 2,
-};
+@interface OOXCAreaModel : NSObject
+
+@property (nonatomic, copy) NSString *ADNM; //武定县辖区
+@property (nonatomic, copy) NSString *ADID; //532329009000000
+
+@end
 
 @interface OOXCObjectModel : NSObject
 
@@ -22,29 +22,44 @@ typedef NS_ENUM(NSUInteger, OOCreateTypeSubType) {
 
 @end
 
-typedef NS_ENUM(NSUInteger, OOCreateXCType) {
-    OOCreateXCType_default,
-    OOCreateXCType_type,
-    OOCreateXCType_object,
-    OOCreateXCType_name,
-    OOCreateXCType_people,
-    OOCreateXCType_startTime,
-    OOCreateXCType_owner,
-};
+@interface OOXCJoinPartModel : NSObject
+
+@property (nonatomic, copy) NSString *Dpcode; //100001
+@property (nonatomic, copy) NSString *Dpnm; //县委
+
+@end
+
+@interface OOXCJoinPeopleModel : NSObject
+
+@property (nonatomic, copy) NSString *UserId;
+@property (nonatomic, copy) NSString *RealName; //县委
+
+@end
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OOCreateXCModel : NSObject
+@property (nonatomic, strong) NSArray *weatherList;
+@property (nonatomic, copy) NSString *weather;
 
-@property (nonatomic, assign) OOCreateXCType currentSelectType;
+@property (nonatomic, strong) NSArray *lakeTypeList;
+@property (nonatomic, copy) NSString *lakeType;
 
-@property (nonatomic, strong) NSMutableArray <OOXCObjectModel *>*xc_objectList;
+@property (nonatomic, strong) NSArray <OOXCAreaModel *>*xcAreaList;
+@property (nonatomic, strong) OOXCAreaModel *xcAreaModel;
 
-@property (nonatomic, assign) OOCreateTypeSubType xc_type;
-@property (nonatomic, strong) OOXCObjectModel *xc_object;
-@property (nonatomic, copy) NSString *xc_name;
-@property (nonatomic, copy) NSString *xc_people;
-@property (nonatomic, copy) NSString *xc_owner;
+@property (nonatomic, strong) NSArray <OOXCObjectModel *>*xcObjectList;
+@property (nonatomic, strong) OOXCObjectModel *xcObject;
+
+@property (nonatomic, copy) NSString *xcName;
+
+@property (nonatomic, copy) NSString *xcContent;
+
+@property (nonatomic, strong) NSArray <OOXCJoinPartModel *>*joinPartList;
+@property (nonatomic, strong) NSMutableArray <OOXCJoinPartModel *>*selectjoinPartList;
+
+@property (nonatomic, strong) NSArray <OOXCJoinPeopleModel *>*joinPeopleList;
+@property (nonatomic, strong) NSMutableArray <OOXCJoinPeopleModel *>*selectjoinPeopleList;
 
 @end
 

@@ -17,6 +17,7 @@ pod 'YYModel' ,'1.0.4'
 pod 'AFNetworking','3.2.1'
 pod 'Mantle', '2.1.0'
 pod 'MJRefresh', '3.1.15'
+pod 'WMZDialog'
 pod 'LookinServer', '0.9.4', :configurations => ['Debug']
 pod 'HYBUnicodeReadable', '1.1'
 pod 'MLeaksFinder','1.0.0', :configurations => ['Debug']

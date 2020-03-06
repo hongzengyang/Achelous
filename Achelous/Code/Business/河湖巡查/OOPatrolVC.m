@@ -23,6 +23,10 @@
 @property (nonatomic, strong) UIButton *beginBtn;
 @property (nonatomic, strong) UIButton *endBtn;
 
+@property (nonatomic, strong) UIView *timerView;
+@property (nonatomic, strong) UILabel *timerLab;
+@property (nonatomic, strong) NSTimer *timer;
+
 @property (nonatomic, strong) UITextView *debugTextView;
 
 @end
@@ -73,6 +77,8 @@
     
     [self.view addSubview:self.beginBtn];
     [self.view addSubview:self.endBtn];
+    
+    [self.view addSubview:self.timerView];
 }
 
 #pragma mark -- 前期数据准备
@@ -185,9 +191,13 @@
         model.itemType = LNActionSheetItemNoraml;
         
         model.actionBlock = ^{
-            [[MDPageMaster master] openUrl:@"xiaoying://oo_report_vc" action:^(MDUrlAction * _Nullable action) {
-                [action setInteger:i forKey:@"typeIndex"];
-            }];
+            if (i == 0) {
+                [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_find_question_vc" action:^(MDUrlAction * _Nullable action) {
+                }];
+            }else {
+                [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_live_vc" action:^(MDUrlAction * _Nullable action) {
+                }];
+            }
         };
         [array addObject:model];
     }
@@ -374,6 +384,23 @@
     return _navBar;
 }
 
+- (UIView *)timerView {
+    if (!_timerView) {
+        _timerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navBar.bottom, SCREEN_WIDTH, 44)];
+        _timerView.backgroundColor =[UIColor whiteColor];
+        _timerView.layer.shadowColor = [UIColor blackColor].CGColor;
+        _timerView.layer.shadowOpacity = 0.2;
+        _timerView.layer.shadowOffset = CGSizeMake(0, 3);
+        
+        UILabel *timelab = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, _timerView.width - 20, _timerView.height)];
+        timelab.textColor = [UIColor appMainColor];
+        timelab.textAlignment = NSTextAlignmentCenter;
+        [_timerView addSubview:timelab];
+        self.timerLab = timelab;
+    }
+    return _timerView;
+}
+
 - (BMKMapView *)mapView {
     if (!_mapView) {
         _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, self.navBar.bottom, self.view.width, self.view.height - SAFE_BOTTOM - self.navBar.bottom)];
@@ -423,7 +450,7 @@
 
 - (UITextView *)debugTextView {
     if (!_debugTextView) {
-        _debugTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 100)];
+        _debugTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 500, SCREEN_WIDTH, 100)];
         _debugTextView.font = [UIFont systemFontOfSize:14];
         _debugTextView.backgroundColor = [UIColor whiteColor];
         _debugTextView.editable = NO;

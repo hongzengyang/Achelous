@@ -14,3 +14,5 @@ oo_xc_photo_vc             :MDPhotoPickVC
 oo_xc_h5_vc                :OOH5VC
 oo_xc_setting_vc           :OOSettingVC
 oo_xc_secret_vc           :OOEditSecretVC
+oo_xc_find_question_vc    :OOFindQuestionVC
+oo_xc_live_vc             :OOXCLiveVC

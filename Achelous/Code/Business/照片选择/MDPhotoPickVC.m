@@ -7,16 +7,16 @@
 //
 
 #import "MDPhotoPickVC.h"
-#import "OOReportModel.h"
+#import "OOPhotoPickModel.h"
 #import "OOPhotoPickCell.h"
 #import "OOPhotoPickEnterCell.h"
 #import "LNActionSheet.h"
 #import <AFNetworking/AFNetworking.h>
 #import "NSFileManager+XYProperty.h"
 
-@interface MDPhotoPickVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate>
+@interface MDPhotoPickVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
-@property (nonatomic, strong) OOReportModel *reportModel;
+@property (nonatomic, strong) OOPhotoPickModel *model;
 @property (nonatomic, strong) UIView *navBar;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
@@ -25,7 +25,7 @@
 @implementation MDPhotoPickVC
 
 - (void)handleWithURLAction:(MDUrlAction *)urlAction {
-    self.reportModel = [urlAction anyObjectForKey:@"reportModel"];
+    self.model = [urlAction anyObjectForKey:@"photoPickModel"];
 }
 
 - (void)viewDidLoad {
@@ -47,32 +47,29 @@
     [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
     __block NSInteger index = 0;
     __weak typeof(self) weakSelf = self;
-    NSArray *phtotArray = [self.reportModel.photoPathArray subarrayWithRange:NSMakeRange(0, self.reportModel.photoPathArray.count - 1)];
-    [phtotArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([weakSelf.reportModel.uploadPhotoPathArray containsObject:obj]) {
+    NSArray <OOAssetModel *>*phototArray = [self.model.assetsArray subarrayWithRange:NSMakeRange(0, self.model.assetsArray.count - 1)];
+    [phototArray enumerateObjectsUsingBlock:^(OOAssetModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![NSString xy_isEmpty:obj.remoteUrl]) {
             index++;
-            if (index == phtotArray.count) {
+            if (index == phototArray.count) {
                 [SVProgressHUD dismiss];
                 [[MDPageMaster master].navigationContorller popViewControllerAnimated:YES];
             }
         }else {
-            [self uploadPhoto:obj completeBlock:^(BOOL success, id response) {
-                if (success) {
-                    [weakSelf.reportModel.uploadPhotoPathArray addObject:obj];
-                    
-                    if ([response isKindOfClass:[NSDictionary class]]) {
-                        NSDictionary *d = (NSDictionary *)response;
-                        NSDictionary *data = [d xyDictionaryForKey:@"data"];
-                        NSString *uploadImageUrl = [data valueForKey:@"Url"];
-                        if (![weakSelf.reportModel.serverReturnPhotoPathArray containsObject:uploadImageUrl]) {
-                            [weakSelf.reportModel.serverReturnPhotoPathArray addObject:uploadImageUrl];
-                        }
-                    }
-                }
+            [weakSelf uploadAssetModel:obj completeBlock:^(BOOL success, id response) {
                 index++;
-                if (index == phtotArray.count) {
+                if (index == phototArray.count) {
                     [SVProgressHUD dismiss];
                     [[MDPageMaster master].navigationContorller popViewControllerAnimated:YES];
+                    
+                    [self.model.assetsArray enumerateObjectsUsingBlock:^(OOAssetModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if (idx != self.model.assetsArray.count - 1) {
+                            if ([NSString xy_isEmpty:obj.remoteUrl]) {
+                                [SVProgressHUD showErrorWithStatus:@"图片/视频 未全部上传"];
+                                *stop = YES;
+                            }
+                        }
+                    }];
                 }
             }];
         }
@@ -80,12 +77,8 @@
 }
 
 
-- (void)uploadPhoto:(NSString *)photoPath completeBlock:(OO_SERVER_BLOCK)completeBlock {
-    NSDictionary *params = @{
-                             @"file" : photoPath,
-                             @"UserId":[[OOUserMgr sharedMgr] loginUserInfo].UserId
-                             };
-    NSString *fileName = [NSFileManager xy_getFileNameFromPath:photoPath];
+- (void)uploadAssetModel:(OOAssetModel *)assetModel completeBlock:(OO_SERVER_BLOCK)completeBlock {
+    NSString *fileName = [NSFileManager xy_getFileNameFromPath:assetModel.localCopyPath];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",
@@ -94,6 +87,8 @@
                                                          
                                                          @"image/jpeg",
                                                          
+                                                         @"video/mp4",
+                                                         
                                                          @"image/png",
                                                          
                                                          @"application/octet-stream",
@@ -101,14 +96,17 @@
                                                          @"text/json",
                                                          
                                                          nil];
-    
+    //http://119.148.161.111:8008   http://wd.km363.com
     [manager.requestSerializer setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
-    
-    [manager POST:@"http://wd.km363.com/api/api/ImgUpload" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        
+    [manager POST:@"http://119.148.161.111:8008/api/api/ImgUpload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         //给定数据流的数据名，文件名，文件类型（以图片为例）
-        NSData *data = [NSData dataWithContentsOfFile:photoPath];
-        [formData appendPartWithFileData:data name:@"image" fileName:fileName mimeType:@"image/png"];
+        NSData *data = [NSData dataWithContentsOfFile:assetModel.localCopyPath];
+        if (assetModel.asset.mediaType == PHAssetMediaTypeImage) {
+            [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:@"image/jpeg"];
+        }
+        if (assetModel.asset.mediaType == PHAssetMediaTypeVideo) {
+            [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:@"video/quicktime"];
+        }
         
         /*常用数据流类型：
          @"image/png" 图片
@@ -119,60 +117,57 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *resDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if (completeBlock) {
-            completeBlock(YES,resDict);
+        
+        if ([resDict isKindOfClass:[NSDictionary class]]) {
+            BOOL success = [[resDict xyStringForKey:@"Succeed"] boolValue];
+            if (success) {
+                NSDictionary *d = (NSDictionary *)resDict;
+                NSDictionary *data = [d xyDictionaryForKey:@"data"];
+                NSString *remoteUrl = [data valueForKey:@"Url"];
+                assetModel.remoteUrl = remoteUrl;
+                if (completeBlock) {
+                    completeBlock(YES,resDict);
+                }
+            }else {
+                if (completeBlock) {
+                    completeBlock(NO,nil);
+                }
+            }
+        }else {
+            if (completeBlock) {
+                completeBlock(NO,nil);
+            }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (completeBlock) {
             completeBlock(NO,nil);
         }
     }];
+
 }
 
 #pragma mark -- UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == self.reportModel.photoPathArray.count - 1) {
+    if (indexPath.row == self.model.assetsArray.count - 1) {
         [self pickPhoto];
-        return;
-        
-        NSMutableArray *array = [NSMutableArray new];
-        NSArray *titles = @[@"相册",@"相机"];
-        for (int i = 0; i < titles.count; i++) {
-            LNActionSheetModel *model = [[LNActionSheetModel alloc]init];
-            model.title = titles[i];
-            model.sheetId = i;
-            model.itemType = LNActionSheetItemNoraml;
-            
-            __weak typeof(self) weakSelf = self;
-            model.actionBlock = ^{
-                if (i == 0) {
-                    [weakSelf pickPhoto];
-                }
-                if (i == 1) {
-                    [weakSelf enterCamera];
-                }
-            };
-            [array addObject:model];
-        }
-        [LNActionSheet showWithDesc:@"请选择" actionModels:[NSArray arrayWithArray:array] action:nil];
-        return;
     }
 }
 
 #pragma mark -- 相机 相册
 - (void)pickPhoto {
     //创建ImagePickController
-    UIImagePickerController *myPicker = [[UIImagePickerController alloc]init];
+    UIImagePickerController *myPicker = [[UIImagePickerController alloc] init];
     //创建源类型
     UIImagePickerControllerSourceType mySourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     myPicker.sourceType = mySourceType;
+    myPicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:mySourceType];
     //设置代理
     myPicker.delegate = self;
     //设置可编辑
     myPicker.allowsEditing = NO;
     //通过模态的方式推出系统相册
     [self presentViewController:myPicker animated:YES completion:^{
-        NSLog(@"进入相册");
+        
     }];
 }
 
@@ -183,47 +178,62 @@
 #pragma mark -- UIImagePickerControllerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    //取得所选取的图片,原大小,可编辑等，info是选取的图片的信息字典
-    UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSData *imgData = UIImageJPEGRepresentation(selectImage, 0.3);
-
-    NSString * path = NSTemporaryDirectory();
-
-    NSString *timeString = [[OOAPPMgr sharedMgr] currentTimeStr];
-    NSString * Pathimg = [path stringByAppendingFormat:@"%@.png",timeString];
+    OOAssetModel *assetModel = [[OOAssetModel alloc] init];
     
-//    Pathimg = [path stringByAppendingPathComponent:@"RZUserData.png"];;
-//    [path stringByAppendingPathComponent:@"RZUserData.data"];
-
-    BOOL success = [imgData writeToFile:Pathimg atomically:YES];
-    if (success) {
-        [self.reportModel.photoPathArray insertObject:Pathimg atIndex:0];
-        [self.collectionView reloadData];
+    NSURL *imageAssetUrl = [info objectForKey:UIImagePickerControllerReferenceURL];
+    PHFetchResult *result = [PHAsset fetchAssetsWithALAssetURLs:@[imageAssetUrl] options:nil];
+    PHAsset *asset = [result firstObject];
+    assetModel.asset = asset;
+    
+    
+    if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*)kUTTypeImage]) {
+        UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSData *imgData = UIImageJPEGRepresentation(selectImage, 0.3);
+        NSString * path = NSTemporaryDirectory();
+        NSString *timeString = [[OOAPPMgr sharedMgr] currentTimeStr];
+        NSString * Pathimg = [path stringByAppendingFormat:@"%@.png",timeString];
+        BOOL success = [imgData writeToFile:Pathimg atomically:YES];
+        if (success) {
+            assetModel.localCopyPath = Pathimg;
+            [self.model.assetsArray insertObject:assetModel atIndex:0];
+        }
+    }else if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*)kUTTypeMovie]) {
+        NSString *mediaPath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
+        NSData *vedioData = [NSData dataWithContentsOfFile:mediaPath];
+        NSString * path = NSTemporaryDirectory();
+        NSString *timeString = [[OOAPPMgr sharedMgr] currentTimeStr];
+        NSString * Pathimg = [path stringByAppendingFormat:@"%@.mp4",timeString];
+        BOOL success = [vedioData writeToFile:Pathimg atomically:YES];
+        if (success) {
+          assetModel.localCopyPath = Pathimg;
+          [self.model.assetsArray insertObject:assetModel atIndex:0];
+        }
     }
-    //设置图片进相框
+//    //设置图片进相框
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];
+    [self.collectionView reloadData];
 }
 
 #pragma mark -- UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.reportModel.photoPathArray.count;
+    return self.model.assetsArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == self.reportModel.photoPathArray.count - 1) {
+    if (indexPath.row == self.model.assetsArray.count - 1) {
         OOPhotoPickEnterCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OOPhotoPickEnterCell" forIndexPath:indexPath];
         return cell;
     }else {
         OOPhotoPickCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OOPhotoPickCell" forIndexPath:indexPath];
         __weak typeof(self) weakSelf = self;
         cell.clickCloseBlock = ^{
-            [weakSelf.reportModel.photoPathArray removeObjectAtIndex:indexPath.row];
+            [weakSelf.model.assetsArray removeObjectAtIndex:indexPath.row];
             [weakSelf.collectionView reloadData];
         };
-        NSString *path = [self.reportModel.photoPathArray objectAtIndex:indexPath.row];
-        [cell configCellWithPath:path];
+        OOAssetModel *model = [self.model.assetsArray objectAtIndex:indexPath.row];
+        [cell configCellWithAsset:model.asset];
         
         return cell;
     }

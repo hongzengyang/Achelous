@@ -45,14 +45,22 @@
 - (void)clickShareButton {
     [self.view endEditing:YES];
     
+//    if ([NSString xy_isEmpty:self.firstInputView.inputText]) {
+//        [SVProgressHUD showErrorWithStatus:@"请输入交办问题"];
+//        return;
+//    }
+//
+//    if ([NSString xy_isEmpty:self.secondInputView.inputText]) {
+//        [SVProgressHUD showErrorWithStatus:@"请输入河长意见"];
+//        return;
+//    }
+    
     if ([NSString xy_isEmpty:self.firstInputView.inputText]) {
-        [SVProgressHUD showErrorWithStatus:@"请输入情况描述"];
-        return;
+        self.firstInputView.inputText = @"";
     }
     
     if ([NSString xy_isEmpty:self.secondInputView.inputText]) {
-        [SVProgressHUD showErrorWithStatus:@"请输入情况描述"];
-        return;
+        self.secondInputView.inputText = @"";
     }
     
 //    __weak typeof(self) weakSelf = self;
@@ -76,6 +84,8 @@
             }];
             
             [[OOXCMgr sharedMgr] finishUpdatingLocation];
+        }else {
+            [SVProgressHUD showErrorWithStatus:TIP_TEXT_NETWORK_ERRROE];
         }
     }];
 }
@@ -125,7 +135,7 @@
 
 - (OOUserInputView *)firstInputView {
     if (!_firstInputView) {
-        _firstInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.endTimeView.bottom + 10, self.view.width, 200) title:@"事件描述"];
+        _firstInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.endTimeView.bottom + 10, self.view.width, Part_height * 2) title:@"交办问题"];
         _firstInputView.backgroundColor = [UIColor whiteColor];
     }
     return _firstInputView;
@@ -133,7 +143,7 @@
 
 - (OOUserInputView *)secondInputView {
     if (!_secondInputView) {
-        _secondInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.firstInputView.bottom + 10, self.view.width, 200) title:@"情况分析"];
+        _secondInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.firstInputView.bottom + 10, self.view.width, Part_height * 2) title:@"河长意见"];
         _secondInputView.backgroundColor = [UIColor whiteColor];
     }
     return _secondInputView;

@@ -43,7 +43,59 @@
 }
 
 - (void)clickOKButton {
+    NSString *originalSecret = self.originalTextField.text;
+    NSString *secret = self.secretTextField.text;
+    NSString *confirmSecret = self.confirmTextField.text;
     
+    if ([NSString xy_isEmpty:originalSecret]) {
+        [SVProgressHUD showErrorWithStatus:@"请输入源密码"];
+        return;
+    }
+    
+    if ([NSString xy_isEmpty:secret]) {
+        [SVProgressHUD showErrorWithStatus:@"请输入新密码"];
+        return;
+    }
+    
+    if ([NSString xy_isEmpty:confirmSecret]) {
+        [SVProgressHUD showErrorWithStatus:@"请再次输入新密码"];
+        return;
+    }
+    
+    if (![OOTools checkPassword:originalSecret]) {
+        [SVProgressHUD showErrorWithStatus:@"原密码格式错误"];
+        return;
+    }
+    
+    if (![OOTools checkPassword:secret]) {
+        [SVProgressHUD showErrorWithStatus:@"新密码格式错误"];
+        return;
+    }
+    
+    if (![secret isEqualToString:confirmSecret]) {
+        [SVProgressHUD showErrorWithStatus:@"新密码不匹配"];
+        return;
+    }
+    
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setValue:secret forKey:@"Newpass"];
+    [param setValue:originalSecret forKey:@"Oldpass"];
+    [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
+    [[OOServerService sharedInstance] postWithUrlKey:kApi_Repassword parameters:param options:nil block:^(BOOL success, id response) {
+        if (success) {
+            [SVProgressHUD showSuccessWithStatus:@"修改成功，请重新登录"];
+            
+            [[OOUserMgr sharedMgr] logout];
+            [[MDPageMaster master].navigationContorller.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([NSStringFromClass([obj class]) isEqualToString:@"OOLoginVC"]) {
+                    [[MDPageMaster master].navigationContorller popToViewController:obj withAnimation:YES];
+                    *stop = YES;
+                }
+            }];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"网络错误"];
+        }
+    }];
 }
 
 - (void)textFieldDidChange:(UITextField *)textField {

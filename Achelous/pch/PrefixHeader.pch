@@ -13,6 +13,8 @@
 #import "OOAPPMgr.h"
 #import "OOUserMgr.h"
 #import "OOXCMgr.h"
+#import "OOLocalNotificationMgr.h"
+#import "OOTools.h"
 #import "UIView+OOEasyFrames.h"
 #import "UIColor+XYStyle.h"
 #import "MDPageMaster.h"

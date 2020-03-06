@@ -18,15 +18,14 @@
 
 @property (nonatomic, strong) UILabel *titleLab;
 
-@property (nonatomic, strong) UIImageView *accountIcon;
+
+@property (nonatomic, strong) UIView *accountView;
 @property (nonatomic, strong) UITextField *accountTextField;
 @property (nonatomic, strong) UIButton *accountClearBtn;
-@property (nonatomic, strong) UIView *accountSeparater;
 
-@property (nonatomic, strong) UIImageView *passwordIcon;
+@property (nonatomic, strong) UIView *passwordView;
 @property (nonatomic, strong) UITextField *passwordTextField;
 @property (nonatomic, strong) UIButton *passwordClearBtn;
-@property (nonatomic, strong) UIView *passwordSeparater;
 
 @property (nonatomic, strong) UIButton *loginBtn;
 
@@ -38,6 +37,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [OOLocalNotificationMgr sharedMgr];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    
+    if (self.accountTextField) {
+        if (![[OOUserMgr sharedMgr] isLogin]) {
+            [self.accountTextField becomeFirstResponder];
+        }
+    }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -61,19 +73,15 @@
     }
     
     [self.view addSubview:self.titleLab];
-    [self.view addSubview:self.accountIcon];
-    [self.view addSubview:self.accountTextField];
-    [self.view addSubview:self.accountClearBtn];
-    [self.view addSubview:self.accountSeparater];
-    [self.view addSubview:self.passwordIcon];
-    [self.view addSubview:self.passwordTextField];
-    [self.view addSubview:self.passwordClearBtn];
-    [self.view addSubview:self.passwordSeparater];
+    [self.view addSubview:self.accountView];
+    [self.view addSubview:self.passwordView];
     
     [self.view addSubview:self.loginBtn];
     
     if ([[OOUserMgr sharedMgr] isLogin]) {
         [self.navigationController pushViewController:[[OOHomeVC alloc] init] animated:NO];
+    }else {
+        [self.accountTextField becomeFirstResponder];
     }
 }
 
@@ -90,11 +98,11 @@
 
 #pragma mark -- Click
 - (void)clickAccountClearButton {
-    
+    self.accountTextField.text = @"";
 }
 
 - (void)clickPasswordClearButton {
-    
+    self.passwordTextField.text = @"";
 }
 
 - (void)clickLoginButton {
@@ -105,6 +113,11 @@
     
     if ([NSString xy_isEmpty:self.passwordTextField.text]) {
         [SVProgressHUD showErrorWithStatus:@"请输入密码"];
+        return;
+    }
+    
+    if (![OOTools checkPassword:self.passwordTextField.text]) {
+        [SVProgressHUD showErrorWithStatus:@"密码格式错误"];
         return;
     }
     
@@ -176,95 +189,91 @@
 - (UILabel *)titleLab {
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] initWithFrame:CGRectMake(10, SAFE_TOP + 100, SCREEN_WIDTH - 20, 30)];
-        _titleLab.textColor = [UIColor blackColor];
+        _titleLab.textColor = [UIColor appMainColor];
+        _titleLab.font = [UIFont systemFontOfSize:20 weight:(UIFontWeightMedium)];
         _titleLab.textAlignment = NSTextAlignmentCenter;
         _titleLab.text = @"河湖长制综合信息管理平台";
     }
     return _titleLab;
 }
 
-- (UIImageView *)accountIcon {
-    if (!_accountIcon) {
-        _accountIcon = [[UIImageView alloc] initWithFrame:CGRectMake(30, self.titleLab.bottom + 30, 30, 30)];
-        _accountIcon.image = [UIImage imageNamed:@"oo_login_account_icon"];
+- (UIView *)accountView {
+    if (!_accountView) {
+        _accountView = [[UIView alloc] initWithFrame:CGRectMake(30, self.titleLab.bottom + 50, self.view.width - 60, 50)];
+        _accountView.backgroundColor = [UIColor whiteColor];
+        
+        UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"oo_login_account_icon"]];
+        [icon sizeToFit];
+        [icon setSize:CGSizeMake(22, 22)];
+        [icon setFrame:CGRectMake(0, (_accountView.height - icon.height)/2.0, icon.width, icon.height)];
+        [_accountView addSubview:icon];
+        
+        UIView *separater = [[UIView alloc] initWithFrame:CGRectMake(0, _accountView.height - 0.5, _accountView.width, 0.5)];
+        separater.backgroundColor = [UIColor xycColorWithHex:0xF0F1F5 alpha:0.7];
+        [_accountView addSubview:separater];
+        
+        UIButton *clearBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [clearBtn setImage:[UIImage imageNamed:@"mini_searchpage_clear_icon"] forState:(UIControlStateNormal)];
+        [clearBtn sizeToFit];
+        [clearBtn addTarget:self action:@selector(clickAccountClearButton) forControlEvents:(UIControlEventTouchUpInside)];
+        [clearBtn setFrame:CGRectMake(_accountView.width - clearBtn.width, (_accountView.height - clearBtn.height)/2.0, clearBtn.width, clearBtn.height)];
+        clearBtn.hidden = YES;
+        [_accountView addSubview:clearBtn];
+        self.accountClearBtn = clearBtn;
+        
+        UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(icon.right + 10, 0, clearBtn.left - icon.right - 10, _accountView.height)];
+        textField.delegate = self;
+        textField.placeholder = @"请输入账号";
+        textField.font = [UIFont systemFontOfSize:14];
+        [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+        [_accountView addSubview:textField];
+        self.accountTextField = textField;
     }
-    return _accountIcon;
+    return _accountView;
 }
 
-- (UITextField *)accountTextField {
-    if (!_accountTextField) {
-        _accountTextField = [[UITextField alloc] initWithFrame:CGRectMake(self.accountIcon.right + 10, self.accountIcon.top, 250, self.accountIcon.height)];
-        _accountTextField.delegate = self;
-        _accountTextField.font = [UIFont systemFontOfSize:14];
-        [_accountTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-        _accountTextField.keyboardType = UIKeyboardTypeNumberPad;
-    }
-    return _accountTextField;
-}
 
-- (UIButton *)accountClearBtn {
-    if (!_accountClearBtn) {
-        _accountClearBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_accountClearBtn addTarget:self action:@selector(clickAccountClearButton) forControlEvents:(UIControlEventTouchUpInside)];
-        [_accountClearBtn setFrame:CGRectMake(SCREEN_WIDTH - 30 - 20, 0, 20, 20)];
-        _accountClearBtn.centerY = self.accountIcon.centerY;
-        [_accountClearBtn setImage:[UIImage imageNamed:@"mini_searchpage_clear_icon"] forState:(UIControlStateNormal)];
-        _accountClearBtn.hidden = YES;
+- (UIView *)passwordView {
+    if (!_passwordView) {
+        _passwordView = [[UIView alloc] initWithFrame:CGRectMake(30, self.accountView.bottom + 10, self.view.width - 60, 50)];
+        _passwordView.backgroundColor = [UIColor whiteColor];
+        
+        UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"oo_login_mima_icon"]];
+        [icon sizeToFit];
+        [icon setSize:CGSizeMake(22, 22)];
+        [icon setFrame:CGRectMake(0, (_passwordView.height - icon.height)/2.0, icon.width, icon.height)];
+        [_passwordView addSubview:icon];
+        
+        UIView *separater = [[UIView alloc] initWithFrame:CGRectMake(0, _passwordView.height - 0.5, _passwordView.width, 0.5)];
+        separater.backgroundColor = [UIColor xycColorWithHex:0xF0F1F5 alpha:0.7];
+        [_passwordView addSubview:separater];
+        
+        UIButton *clearBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [clearBtn setImage:[UIImage imageNamed:@"mini_searchpage_clear_icon"] forState:(UIControlStateNormal)];
+        [clearBtn sizeToFit];
+        [clearBtn addTarget:self action:@selector(clickPasswordClearButton) forControlEvents:(UIControlEventTouchUpInside)];
+        [clearBtn setFrame:CGRectMake(_passwordView.width - clearBtn.width, (_passwordView.height - clearBtn.height)/2.0, clearBtn.width, clearBtn.height)];
+        clearBtn.hidden = YES;
+        [_passwordView addSubview:clearBtn];
+        self.passwordClearBtn = clearBtn;
+        
+        UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(icon.right + 10, 0, clearBtn.left - icon.right - 10, _passwordView.height)];
+        textField.delegate = self;
+        textField.placeholder = @"请输入密码";
+        textField.font = [UIFont systemFontOfSize:14];
+        [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        [_passwordView addSubview:textField];
+        self.passwordTextField = textField;
     }
-    return _accountClearBtn;
-}
-
-- (UIView *)accountSeparater {
-    if (!_accountSeparater) {
-        _accountSeparater = [[UIView alloc] initWithFrame:CGRectMake(self.accountIcon.left, self.accountIcon.bottom + 2, self.accountClearBtn.right - self.accountIcon.left, 1)];
-        _accountSeparater.backgroundColor = [UIColor appMainColor];
-    }
-    return _accountSeparater;
-}
-
-- (UIImageView *)passwordIcon {
-    if (!_passwordIcon) {
-        _passwordIcon = [[UIImageView alloc] initWithFrame:CGRectMake(33, self.accountIcon.bottom + 10, 24, 24)];
-        _passwordIcon.image = [UIImage imageNamed:@"oo_login_mima_icon"];
-    }
-    return _passwordIcon;
-}
-
-- (UITextField *)passwordTextField {
-    if (!_passwordTextField) {
-        _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(self.passwordIcon.right + 10, self.passwordIcon.top, 250, self.passwordIcon.height)];
-        _passwordTextField.delegate = self;
-        _passwordTextField.font = [UIFont systemFontOfSize:14];
-        [_passwordTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    }
-    return _passwordTextField;
-}
-
-- (UIButton *)passwordClearBtn {
-    if (!_passwordClearBtn) {
-        _passwordClearBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_passwordClearBtn addTarget:self action:@selector(clickPasswordClearButton) forControlEvents:(UIControlEventTouchUpInside)];
-        [_passwordClearBtn setFrame:CGRectMake(SCREEN_WIDTH - 30 - 20, 0, 20, 20)];
-        _passwordClearBtn.centerY = self.passwordIcon.centerY;
-        [_passwordClearBtn setImage:[UIImage imageNamed:@"mini_searchpage_clear_icon"] forState:(UIControlStateNormal)];
-        _passwordClearBtn.hidden = YES;
-    }
-    return _passwordClearBtn;
-}
-
-- (UIView *)passwordSeparater {
-    if (!_passwordSeparater) {
-        _passwordSeparater = [[UIView alloc] initWithFrame:CGRectMake(self.passwordIcon.left, self.passwordIcon.bottom + 2, self.passwordClearBtn.right - self.passwordIcon.left, 1)];
-        _passwordSeparater.backgroundColor = [UIColor appMainColor];
-    }
-    return _passwordSeparater;
+    return _passwordView;
 }
 
 - (UIButton *)loginBtn {
     if (!_loginBtn) {
         _loginBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_loginBtn addTarget:self action:@selector(clickLoginButton) forControlEvents:(UIControlEventTouchUpInside)];
-        [_loginBtn setFrame:CGRectMake(self.accountIcon.left, self.passwordSeparater.bottom + 30, self.passwordSeparater.width, 44)];
+        [_loginBtn setFrame:CGRectMake((self.view.width - 200)/2.0, self.passwordView.bottom + 30, 200, 44)];
         [_loginBtn setTitle:@"登录" forState:(UIControlStateNormal)];
         _loginBtn.layer.cornerRadius = 8;
         _loginBtn.backgroundColor = [UIColor appMainColor];

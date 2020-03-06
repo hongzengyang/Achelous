@@ -15,10 +15,10 @@
 @property (nonatomic, strong) OOHomeModel *homeModel;
 
 @property (nonatomic, strong) UIImageView *bgImageView;
-@property (nonatomic, strong) OOHomeHeaderTypeView *SLTypeView;
-@property (nonatomic, strong) OOHomeHeaderTypeView *WRTypeView;
-@property (nonatomic, strong) OOHomeHeaderTypeView *XQTypeView;
-@property (nonatomic, strong) OOHomeHeaderTypeView *JBTypeView;
+@property (nonatomic, strong) OOHomeHeaderTypeView *SLTypeView;//巡查总数
+@property (nonatomic, strong) OOHomeHeaderTypeView *WRTypeView;//本月巡查
+@property (nonatomic, strong) OOHomeHeaderTypeView *XQTypeView;//发现问题
+@property (nonatomic, strong) OOHomeHeaderTypeView *JBTypeView;//处理问题
 
 @property (nonatomic, assign) CGFloat type_width;
 @property (nonatomic, assign) CGFloat type_height;
@@ -68,28 +68,28 @@
 }
 - (OOHomeHeaderTypeView *)SLTypeView {
     if (!_SLTypeView) {
-        _SLTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(15, self.height - 20 - self.type_height, self.type_width, self.type_height) title:@"四乱现象"];
+        _SLTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(15, self.height - 20 - self.type_height, self.type_width, self.type_height) title:@"巡查总数"];
     }
     return _SLTypeView;
 }
 
 - (OOHomeHeaderTypeView *)WRTypeView {
     if (!_WRTypeView) {
-        _WRTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.SLTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"污染现象"];
+        _WRTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.SLTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"本月巡查"];
     }
     return _WRTypeView;
 }
 
 - (OOHomeHeaderTypeView *)XQTypeView {
     if (!_XQTypeView) {
-        _XQTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.WRTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"险情现象"];
+        _XQTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.WRTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"发现问题"];
     }
     return _XQTypeView;
 }
 
 - (OOHomeHeaderTypeView *)JBTypeView {
     if (!_JBTypeView) {
-        _JBTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.XQTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"上报现象"];
+        _JBTypeView = [[OOHomeHeaderTypeView alloc] initWithFrame:CGRectMake(self.XQTypeView.right + self.type_interval, self.SLTypeView.top, self.type_width, self.type_height) title:@"处理问题"];
     }
     return _JBTypeView;
 }

@@ -30,7 +30,7 @@
         _titleLab = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 150, self.height)];
         _titleLab.textAlignment = NSTextAlignmentLeft;
         _titleLab.textColor = [UIColor appTextColor];
-        _titleLab.font = [UIFont systemFontOfSize:15 weight:(UIFontWeightRegular)];
+        _titleLab.font = [UIFont systemFontOfSize:16 weight:(UIFontWeightMedium)];
         _titleLab.text = @"结束时间";
         _titleLab.userInteractionEnabled = NO;
     }
@@ -43,7 +43,7 @@
         _rightLab.textAlignment = NSTextAlignmentRight;
         _rightLab.font = [UIFont systemFontOfSize:15 weight:(UIFontWeightRegular)];
         _rightLab.userInteractionEnabled = NO;
-        
+        _rightLab.textColor = [UIColor appGrayTextColor];
         _rightLab.text = [[OOAPPMgr sharedMgr] getDateString];
     }
     return _rightLab;

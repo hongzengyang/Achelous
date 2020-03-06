@@ -40,7 +40,7 @@
         [_titleLab setFrame:CGRectMake(15, 15, _titleLab.width, _titleLab.height)];
         _titleLab.textColor = [UIColor appTextColor];
         _titleLab.textAlignment = NSTextAlignmentLeft;
-        _titleLab.font = [UIFont systemFontOfSize:15 weight:(UIFontWeightRegular)];
+        _titleLab.font = [UIFont systemFontOfSize:16 weight:(UIFontWeightMedium)];
     }
     return _titleLab;
 }
@@ -50,6 +50,7 @@
         _textView = [[UITextView alloc] initWithFrame:CGRectMake(self.titleLab.right + 5, self.titleLab.top - 5, self.width - 15 - self.titleLab.right - 5, self.height - self.titleLab.top - 10)];
         _textView.textColor = [UIColor appTextColor];
         _textView.font = [UIFont systemFontOfSize:14];
+        _textView.textAlignment = NSTextAlignmentRight;
         _textView.delegate = self;
     }
     return _textView;

@@ -248,7 +248,7 @@
 }
 
 - (NSArray *)reportTypeArray {
-    return @[@"四乱事件",@"污染事件",@"险情事件",@"巡查实况"];
+    return @[@"发现问题",@"巡查实况"];
 }
 
 - (NSArray *)SLCategoryArray {
