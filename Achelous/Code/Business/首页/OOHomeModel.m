@@ -50,6 +50,9 @@
         [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
         [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_Appmenu parameters:param options:nil block:^(BOOL success, id response) {
             if (success) {
+                self.Uname = [response valueForKey:@"Uname"];
+                self.Uzw = [response valueForKey:@"Uzw"];
+                
                 NSDictionary *data = [response xyDictionaryForKey:@"data"];
                 self.dataModel.SLinfo = [data xyStringForKey:@"SLinfo"];
                 self.dataModel.WRinfo = [data xyStringForKey:@"WRinfo"];

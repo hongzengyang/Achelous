@@ -106,11 +106,7 @@
     }];
 }
 
-- (void)clickVersion {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[OOLocalNotificationMgr sharedMgr] sendNotification];
-    });
-    
+- (void)clickVersion {    
     [SVProgressHUD showImage:nil status:@"已是最新版本"];
 }
 
@@ -160,6 +156,13 @@
     if (!_headerView) {
         _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navBar.bottom, SCREEN_WIDTH, 200)];
         _headerView.backgroundColor = [UIColor clearColor];
+        
+        UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"oo_app_icon"]];
+        [imageview sizeToFit];
+        [imageview setFrame:CGRectMake((_headerView.width - imageview.width)/2.0, (_headerView.height - imageview.height)/2.0, imageview.width, imageview.height)];
+        imageview.layer.cornerRadius = 8;
+        imageview.layer.masksToBounds = YES;
+        [_headerView addSubview:imageview];
     }
     return _headerView;
 }

@@ -57,7 +57,7 @@
     
     NSString *title = @"河长制";
     NSString *subtitle = nil;
-    NSString *body = [NSString stringWithFormat:@"巡查已经进行了%lu分钟",minute];
+    NSString *body = [NSString stringWithFormat:@"巡查已经进行了%ld分钟",(long)minute];
     NSInteger badge = 1;
     NSInteger timeInteval = 1;
     NSDictionary *userInfo = @{@"id":@"LOCAL_NOTIFY_SCHEDULE_ID"};
@@ -76,7 +76,7 @@
 
         // 2.设置通知附件内容
         NSError *error = nil;
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"temp_app_icon@2x" ofType:@"png"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"oo_app_not__icon@2x" ofType:@"png"];
         UNNotificationAttachment *att = [UNNotificationAttachment attachmentWithIdentifier:@"att1" URL:[NSURL fileURLWithPath:path] options:nil error:&error];
         if (error) {
             NSLog(@"attachment error %@", error);

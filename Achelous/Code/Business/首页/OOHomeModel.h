@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OOHomeModel : NSObject
 
 @property (nonatomic, strong) OOHomeDataModel *dataModel;
+@property (nonatomic, copy) NSString *Uzw;
+@property (nonatomic, copy) NSString *Uname;
 
 - (void)fetchHomeData;
 
