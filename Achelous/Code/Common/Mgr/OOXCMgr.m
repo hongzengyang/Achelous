@@ -60,10 +60,6 @@
     [self initLocationManager];
     [self initCompleteBlock];
     [self requestLocation];
-    
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"pref_key_notification_interval"]) {
-        self.notificationInterval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"pref_key_notification_interval"] integerValue];
-    }
 }
 
 - (void)initLocationManager {
@@ -231,13 +227,6 @@
     [locationManager requestAlwaysAuthorization];
 }
 
-#pragma mark -- Setter
-- (void)setNotificationInterval:(NSInteger)notificationInterval {
-    _notificationInterval = notificationInterval;
-    
-    [[NSUserDefaults standardUserDefaults] setValue:@(notificationInterval) forKey:@"pref_key_notification_interval"];
-}
-
 #pragma mark -- lazy
 - (BMKUserLocation *)userLocation {
     if (!_userLocation) {
@@ -251,19 +240,64 @@
     return @[@"发现问题",@"巡查实况"];
 }
 
-- (NSArray *)SLCategoryArray {
-    return @[@"乱占",@"乱采",@"乱堆",@"乱建"];
+- (void)setXcDuration:(NSInteger)xcDuration {
+    _xcDuration = xcDuration;
+    
+    NSInteger notificationInterval = [OOLocalNotificationMgr sharedMgr].notificationInterval;
+    if (notificationInterval == 0) {
+        return;
+    }
+    
+    notificationInterval = notificationInterval * 60;
+    if (xcDuration >= notificationInterval) {
+        NSInteger c = xcDuration % notificationInterval;
+        if (c == 0) {
+            [[OOLocalNotificationMgr sharedMgr] sendNotification];
+        }
+    }
 }
 
-- (NSArray *)WRCategoryArray {
-    return @[@"湖库",@"渠道",@"河段"];
+- (void)fetchCurentUnfinishedXCModelWithCompleteHandle:(void (^)(BOOL))completeHandle {
+    if (![[OOUserMgr sharedMgr] isLogin]) {
+        if (completeHandle) {
+            completeHandle(YES);
+        }
+        return;
+    }
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
+    [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_getUserInfo parameters:param options:nil block:^(BOOL success, id response) {
+        if (success) {
+            NSDictionary *data = [response xyDictionaryForKey:@"data"];
+            NSDictionary *XC = [data xyDictionaryForKey:@"XC"];
+            if ([XC valueForKey:@"id"]) {
+                OOUnFinishedXCModel *model = [[OOUnFinishedXCModel alloc] init];
+                model.xc_id = [[XC valueForKey:@"id"] integerValue];
+                model.XCMC = [XC valueForKey:@"XCMC"];
+                model.XCR = [XC valueForKey:@"XCR"];
+                model.status = [[XC valueForKey:@"Status"] integerValue];
+                model.SJQ = [XC valueForKey:@"SJQ"];
+                model.SJZ = [XC valueForKey:@"SJZ"];
+                model.Stoptime = [XC valueForKey:@"Stoptime"];
+//                model.Stoptime = nil;
+                
+                [OOXCMgr sharedMgr].unFinishedXCModel = model;
+                
+                if (model.status == OOXCStatus_ing) {
+                    [[OOXCMgr sharedMgr] startUpdatingLocation];
+                }else {
+                    [[OOXCMgr sharedMgr] finishUpdatingLocation];
+                }
+            }else {
+                [OOXCMgr sharedMgr].unFinishedXCModel = nil;
+            }
+        }
+        
+        if (completeHandle) {
+            completeHandle(YES);
+        }
+    }];
 }
-
-- (NSArray *)XQCategoryArray {
-    return @[@"决口",@"裂缝",@"滑坡",@"损毁",@"坍塌",@"渗漏",@"漫溢",@"其他"];
-}
-
-
 
 
 

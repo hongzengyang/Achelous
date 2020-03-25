@@ -166,6 +166,8 @@
         titleLab.text = @"历史巡查";
         titleLab.font = [UIFont systemFontOfSize:16];
         titleLab.textColor = [UIColor whiteColor];
+        titleLab.textAlignment = NSTextAlignmentCenter;
+        [_navBar addSubview:titleLab];
         
         _navBar.backgroundColor = [UIColor appMainColor];
     }

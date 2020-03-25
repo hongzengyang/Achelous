@@ -55,13 +55,13 @@
         __weak typeof(self) weakSelf = self;
         model.actionBlock = ^{
             if (i == 0) {
-                [OOXCMgr sharedMgr].notificationInterval = 30;
+                [OOLocalNotificationMgr sharedMgr].notificationInterval = 30;
                 [SVProgressHUD showSuccessWithStatus:@"设置成功"];
             }else if (i == 1) {
-                [OOXCMgr sharedMgr].notificationInterval = 45;
+                [OOLocalNotificationMgr sharedMgr].notificationInterval = 45;
                 [SVProgressHUD showSuccessWithStatus:@"设置成功"];
             }else if (i == 2) {
-                [OOXCMgr sharedMgr].notificationInterval = 60;
+                [OOLocalNotificationMgr sharedMgr].notificationInterval = 60;
                 [SVProgressHUD showSuccessWithStatus:@"设置成功"];
             }else if (i == 3) {
                 [weakSelf jxt_showAlertWithTitle:@"设置巡查提醒时间" message:nil appearanceProcess:^(JXTAlertController * _Nonnull alertMaker) {
@@ -86,12 +86,12 @@
                             return;
                         }
                         
-                        [OOXCMgr sharedMgr].notificationInterval = [text integerValue];
+                        [OOLocalNotificationMgr sharedMgr].notificationInterval = [text integerValue];
                         [SVProgressHUD showSuccessWithStatus:@"设置成功"];
                     }
                 }];
             }else {
-                [OOXCMgr sharedMgr].notificationInterval = 0;
+                [OOLocalNotificationMgr sharedMgr].notificationInterval = 0;
                 [SVProgressHUD showSuccessWithStatus:@"设置成功"];
             }
         };

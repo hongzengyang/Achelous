@@ -63,6 +63,8 @@
     [self.window makeKeyAndVisible];
     [self setupPageMaster];
     
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
     return YES;
 }
 

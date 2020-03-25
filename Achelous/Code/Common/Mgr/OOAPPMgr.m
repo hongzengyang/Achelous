@@ -110,4 +110,35 @@
     return currentDateStr;
 }
 
+- (NSTimeInterval)timeIntervalSinceDate:(NSString *)createAt {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *timeDate = [dateFormatter dateFromString:createAt];
+    //八小时时区
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate:timeDate];
+    NSDate *mydate = [timeDate dateByAddingTimeInterval:interval];
+    NSDate *nowDate = [[NSDate date]dateByAddingTimeInterval:interval];
+    //两个时间间隔
+    NSTimeInterval timeInterval = [mydate timeIntervalSinceDate:nowDate];
+    timeInterval = -timeInterval;
+    
+    return timeInterval;
+}
+
+- (NSString *)getMMSSFromSS:(NSInteger)seconds {
+    if (seconds <= 0) {
+        return @"00:00:00";
+    }
+    //format of hour
+    NSString *str_hour = [NSString stringWithFormat:@"%02ld",seconds/3600];
+    //format of minute
+    NSString *str_minute = [NSString stringWithFormat:@"%02ld",(seconds%3600)/60];
+    //format of second
+    NSString *str_second = [NSString stringWithFormat:@"%02ld",seconds%60];
+    //format of time
+    NSString *format_time = [NSString stringWithFormat:@"%@:%@:%@",str_hour,str_minute,str_second];
+    return format_time;
+}
+
 @end

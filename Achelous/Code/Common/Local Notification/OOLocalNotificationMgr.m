@@ -30,6 +30,10 @@
 - (void)initLocalNotification {
     self.localNotiReqIdentifer = @"localNotiReqIdentifer";
     
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"pref_key_notification_interval"]) {
+        self.notificationInterval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"pref_key_notification_interval"] integerValue];
+    }
+    
     [self registerLocalNotification];
 }
 
@@ -49,9 +53,11 @@
 }
 
 - (void)sendNotification {
+    NSInteger minute = [OOXCMgr sharedMgr].xcDuration / 60;
+    
     NSString *title = @"河长制";
     NSString *subtitle = nil;
-    NSString *body = @"巡查已经进行了5分钟";
+    NSString *body = [NSString stringWithFormat:@"巡查已经进行了%lu分钟",minute];
     NSInteger badge = 1;
     NSInteger timeInteval = 1;
     NSDictionary *userInfo = @{@"id":@"LOCAL_NOTIFY_SCHEDULE_ID"};
@@ -115,6 +121,13 @@
         // 6.立即触发一个通知
         [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     }
+}
+
+#pragma mark -- Setter
+- (void)setNotificationInterval:(NSInteger)notificationInterval {
+    _notificationInterval = notificationInterval;
+    
+    [[NSUserDefaults standardUserDefaults] setValue:@(notificationInterval) forKey:@"pref_key_notification_interval"];
 }
 
 #pragma mark - UNUserNotificationCenterDelegate

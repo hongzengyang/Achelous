@@ -33,6 +33,11 @@ NS_ASSUME_NONNULL_BEGIN
 // 时间戳转时间,时间戳为13位是精确到毫秒的，10位精确到秒
 - (NSString *)getDateString;
 
+//
+- (NSTimeInterval)timeIntervalSinceDate:(NSString *)createAt;
+
+- (NSString *)getMMSSFromSS:(NSInteger)seconds;
+
 @end
 
 NS_ASSUME_NONNULL_END

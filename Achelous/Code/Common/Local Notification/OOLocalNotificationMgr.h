@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OOLocalNotificationMgr : NSObject
 
+@property (nonatomic, assign) NSInteger notificationInterval;
+
 + (OOLocalNotificationMgr *)sharedMgr;
 
 - (void)sendNotification;

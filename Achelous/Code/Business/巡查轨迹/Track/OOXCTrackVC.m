@@ -193,7 +193,7 @@
         [backBtn setFrame:CGRectMake(15, SAFE_TOP + (44 - backBtn.height) / 2.0,backBtn.width , backBtn.height)];
         [_navBar addSubview:backBtn];
         
-        UILabel *titleLab = [[UILabel alloc] initWithFrame:CGRectMake((self.view.width - 200)/2.0, SAFE_TOP, 200, 44)];
+        UILabel *titleLab = [[UILabel alloc] initWithFrame:CGRectMake(backBtn.right + 10, SAFE_TOP, _navBar.width - (backBtn.right + 10) - (backBtn.right + 10), 44)];
         titleLab.text = [NSString stringWithFormat:@"%@回放)",self.titleText];
         titleLab.font = [UIFont systemFontOfSize:16];
         titleLab.textColor = [UIColor whiteColor];

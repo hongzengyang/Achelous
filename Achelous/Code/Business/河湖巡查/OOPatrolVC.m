@@ -36,6 +36,11 @@
     if (_mapView) {
         _mapView = nil;
     }
+    
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -64,11 +69,19 @@
     _mapView.baseIndoorMapEnabled = YES;
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _mapView.showsUserLocation = YES;
+    
+    if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_ing) {
+        [self beginTimer];
+    }else {
+        [self stopTimer];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
+    
+    [self stopTimer];
 }
 
 - (void)initViews {
@@ -206,82 +219,68 @@
 
 - (void)clickBeginButton {
     __weak typeof(self) weakSelf = self;
-    
     if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_notBegin) {
         jxt_showAlertTwoButton(@"提示",@"是否开始巡查", @"取消", ^(NSInteger buttonIndex) {
-            
         }, @"确定", ^(NSInteger buttonIndex) {
-            [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
-            NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-            [param setValue:@(OOXCStatus_ing) forKey:@"Status"];
-            [param setValue:@([OOXCMgr sharedMgr].unFinishedXCModel.xc_id) forKey:@"Xcid"];
-            [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_updateXcStatus parameters:param options:nil block:^(BOOL success, id response) {
-                if (success) {
-                    [OOXCMgr sharedMgr].unFinishedXCModel.status = OOXCStatus_ing;
-                    
-                    [[OOXCMgr sharedMgr] startUpdatingLocation];
-                    [weakSelf updateButtonUI];
-                    [[OOXCMgr sharedMgr] uploadCurrentLoactionToServer];
-                }
-                
-                [SVProgressHUD dismiss];
-            }];
+            [weakSelf handleUserClickActionWithXCStatus:OOXCStatus_notBegin];
         });
     }
     
     if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_pause) {
         jxt_showAlertTwoButton(@"提示",@"是否继续巡查", @"取消", ^(NSInteger buttonIndex) {
-            
         }, @"确定", ^(NSInteger buttonIndex) {
-            [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
-            NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-            [param setValue:@(OOXCStatus_ing) forKey:@"Status"];
-            [param setValue:@([OOXCMgr sharedMgr].unFinishedXCModel.xc_id) forKey:@"Xcid"];
-            [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_updateXcStatus parameters:param options:nil block:^(BOOL success, id response) {
-                if (success) {
-                    [OOXCMgr sharedMgr].unFinishedXCModel.status = OOXCStatus_ing;
-                    
-                    [[OOXCMgr sharedMgr] startUpdatingLocation];
-                    [weakSelf updateButtonUI];
-                }
-                
-                [SVProgressHUD dismiss];
-            }];
+            [weakSelf handleUserClickActionWithXCStatus:OOXCStatus_pause];
         });
     }
     
     if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_ing) {
         jxt_showAlertTwoButton(@"提示",@"是否暂停巡查", @"取消", ^(NSInteger buttonIndex) {
-            
         }, @"确定", ^(NSInteger buttonIndex) {
-            [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
-            NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-            [param setValue:@(OOXCStatus_pause) forKey:@"Status"];
-            [param setValue:@([OOXCMgr sharedMgr].unFinishedXCModel.xc_id) forKey:@"Xcid"];
-            [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_updateXcStatus parameters:param options:nil block:^(BOOL success, id response) {
-                if (success) {
-                    [OOXCMgr sharedMgr].unFinishedXCModel.status = OOXCStatus_pause;
-                    
-                    [[OOXCMgr sharedMgr] finishUpdatingLocation];
-                    [weakSelf updateButtonUI];
-                }
-                
-                [SVProgressHUD dismiss];
-            }];
+            [weakSelf handleUserClickActionWithXCStatus:OOXCStatus_ing];
         });
     }
 }
 
 - (void)clickEndButton {
     jxt_showAlertTwoButton(@"提示",@"是否结束巡查", @"取消", ^(NSInteger buttonIndex) {
-        
     }, @"确定", ^(NSInteger buttonIndex) {
         [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_finish_vc" action:^(MDUrlAction * _Nullable action) {
-            
         }];
-        
         [[OOXCMgr sharedMgr] uploadCurrentLoactionToServer];
     });
+}
+
+- (void)handleUserClickActionWithXCStatus:(OOXCStatus)status {
+    [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    if (status == OOXCStatus_notBegin || status == OOXCStatus_pause) {
+        [param setValue:@(OOXCStatus_ing) forKey:@"Status"];
+    }else if (status == OOXCStatus_ing) {
+        [param setValue:@(OOXCStatus_pause) forKey:@"Status"];
+    }
+    [param setValue:@([OOXCMgr sharedMgr].unFinishedXCModel.xc_id) forKey:@"Xcid"];
+    __weak typeof(self) weakSelf = self;
+    [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_updateXcStatus parameters:param options:nil block:^(BOOL success, id response) {
+        if (success) {
+            [[OOXCMgr sharedMgr] fetchCurentUnfinishedXCModelWithCompleteHandle:^(BOOL complete) {
+                OOUnFinishedXCModel *unfinishedModel = [OOXCMgr sharedMgr].unFinishedXCModel;
+                if (unfinishedModel.status == OOXCStatus_ing) {
+                    [[OOXCMgr sharedMgr] startUpdatingLocation];
+                    [[OOXCMgr sharedMgr] uploadCurrentLoactionToServer];
+                    [weakSelf updateButtonUI];
+                    [weakSelf beginTimer];
+                }
+                
+                if (unfinishedModel.status == OOXCStatus_pause) {
+                    [[OOXCMgr sharedMgr] finishUpdatingLocation];
+                    [weakSelf updateButtonUI];
+                    [weakSelf stopTimer];
+                }
+            }];
+        }
+        
+        [SVProgressHUD dismiss];
+    }];
 }
 
 
@@ -325,6 +324,70 @@
     }
     
     return nil;
+}
+
+#pragma mark -- 定时器
+- (void)beginTimer {
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
+    
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+}
+
+- (void)stopTimer {
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
+    
+    if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_notBegin) {
+        self.timerLab.text = @"已巡查时间:00:00:00";
+    }else if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_pause) {
+        OOUnFinishedXCModel *model = [OOXCMgr sharedMgr].unFinishedXCModel;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSDate *startDate = [dateFormatter dateFromString:model.SJQ];
+        NSDate *stopDate = [dateFormatter dateFromString:model.SJZ];
+        NSInteger timeInterval = [stopDate timeIntervalSinceDate:startDate];
+        timeInterval = timeInterval - [model.Stoptime integerValue];
+        NSString *text = [[OOAPPMgr sharedMgr] getMMSSFromSS:timeInterval];
+        self.timerLab.text = [NSString stringWithFormat:@"已巡查时间:%@",text];
+    }
+}
+
+- (void)timerAction {
+    if ([OOXCMgr sharedMgr].unFinishedXCModel.status != OOXCStatus_ing) {
+        return;
+    }
+    OOUnFinishedXCModel *model = [OOXCMgr sharedMgr].unFinishedXCModel;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *startDate = [dateFormatter dateFromString:model.SJQ];
+    
+    NSString *currentTimeString = [[OOAPPMgr sharedMgr] currentTimeStr];
+    NSTimeInterval time = [currentTimeString doubleValue] / 1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
+    NSDate *currentDate = [NSDate dateWithTimeIntervalSince1970:time];
+    
+    NSInteger timeInterval = [currentDate timeIntervalSinceDate:startDate];
+    timeInterval = timeInterval - [model.Stoptime integerValue];
+    NSString *text = [[OOAPPMgr sharedMgr] getMMSSFromSS:timeInterval];
+    self.timerLab.text = [NSString stringWithFormat:@"已巡查时间:%@",text];
+    [OOXCMgr sharedMgr].xcDuration = timeInterval;
+}
+
+- (void)updateCurrentUnFinishedXCModel {
+    __weak typeof(self) weakSelf = self;
+    [[OOXCMgr sharedMgr] fetchCurentUnfinishedXCModelWithCompleteHandle:^(BOOL complete) {
+        if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_ing) {
+            [weakSelf beginTimer];
+        }
+        
+        if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_pause) {
+            [weakSelf stopTimer];
+        }
+    }];
 }
 
 #pragma mark -- 更新按钮UI
@@ -395,7 +458,9 @@
         UILabel *timelab = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, _timerView.width - 20, _timerView.height)];
         timelab.textColor = [UIColor appMainColor];
         timelab.textAlignment = NSTextAlignmentCenter;
+        timelab.font = [UIFont systemFontOfSize:16 weight:(UIFontWeightMedium)];
         [_timerView addSubview:timelab];
+        timelab.text = @"已巡查时间:00:00:00";
         self.timerLab = timelab;
     }
     return _timerView;
@@ -454,6 +519,7 @@
         _debugTextView.font = [UIFont systemFontOfSize:14];
         _debugTextView.backgroundColor = [UIColor whiteColor];
         _debugTextView.editable = NO;
+        _debugTextView.hidden = YES;
     }
     return _debugTextView;
 }
