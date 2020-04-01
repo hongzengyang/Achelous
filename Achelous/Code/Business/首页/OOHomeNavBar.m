@@ -52,6 +52,7 @@
         [_settingBtn addTarget:self action:@selector(clickSettingButton) forControlEvents:(UIControlEventTouchUpInside)];
         [_settingBtn setFrame:CGRectMake(self.width - 15 - 26, 9, 26, 26)];
         [_settingBtn setImage:[UIImage imageNamed:@"mini_usercenter_setting_black_icon"] forState:(UIControlStateNormal)];
+        _settingBtn.hidden = YES;
     }
     return _settingBtn;
 }

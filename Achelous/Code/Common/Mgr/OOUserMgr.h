@@ -13,8 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OOUserInfo : NSObject
 
 @property (nonatomic, copy) NSString *UserId;
+@property (nonatomic, copy) NSString *Uzw;
 @property (nonatomic, copy) NSString *RealName;
 @property (nonatomic, copy) NSString *AreaCode;
+@property (nonatomic, copy) NSString *UserName;
+@property (nonatomic, copy) NSString *ADNM;
 
 @end
 
@@ -26,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)logout;
 
 - (void)loginWithAccount:(NSString *)account password:(NSString *)password completeBlock:(OOCompleteBlock)completeBlock;
+
+- (void)refreshUserInfoWithCompleteHandle:(void(^)(BOOL complete))completeHandle;
 
 @end
 

@@ -175,6 +175,8 @@
         titleLab.text = @"巡查实况";
         titleLab.font = [UIFont systemFontOfSize:16];
         titleLab.textColor = [UIColor whiteColor];
+        titleLab.textAlignment = NSTextAlignmentCenter;
+        [_navBar addSubview:titleLab];
         
         _navBar.backgroundColor = [UIColor appMainColor];
     }

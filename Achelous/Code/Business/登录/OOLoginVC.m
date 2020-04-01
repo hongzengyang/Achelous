@@ -10,7 +10,7 @@
 #import "OOUserMgr.h"
 #import "OOAPPMgr.h"
 #import "MDPageMaster.h"
-#import "OOHomeVC.h"
+#import "OOTabBarVC.h"
 #import <CoreLocation/CoreLocation.h>
 
 
@@ -79,7 +79,7 @@
     [self.view addSubview:self.loginBtn];
     
     if ([[OOUserMgr sharedMgr] isLogin]) {
-        [self.navigationController pushViewController:[[OOHomeVC alloc] init] animated:NO];
+        [self.navigationController pushViewController:[[OOTabBarVC alloc] init] animated:NO];
     }else {
         [self.accountTextField becomeFirstResponder];
     }
@@ -131,9 +131,7 @@
         }
         
         if (complete) {
-            [[MDPageMaster master] openUrl:@"xiaoying://oo_home_vc" action:^(MDUrlAction * _Nullable action) {
-                
-            }];
+            [self.navigationController pushViewController:[[OOTabBarVC alloc] init] animated:NO];
             
             self.accountTextField.text = @"";
             self.passwordTextField.text = @"";

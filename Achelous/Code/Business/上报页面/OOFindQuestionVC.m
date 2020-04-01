@@ -181,6 +181,7 @@
         UILabel *titleLab = [[UILabel alloc] initWithFrame:CGRectMake(backBtn.right, SAFE_TOP, recordBtn.left - backBtn.right, 44)];
         titleLab.text = @"发现问题";
         titleLab.font = [UIFont systemFontOfSize:16];
+        titleLab.textAlignment = NSTextAlignmentCenter;
         titleLab.textColor = [UIColor whiteColor];
         [_navBar addSubview:titleLab];
         

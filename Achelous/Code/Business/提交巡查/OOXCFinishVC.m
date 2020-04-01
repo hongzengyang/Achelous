@@ -17,6 +17,7 @@
 @property (nonatomic, strong) OOEndTimeView *endTimeView;
 @property (nonatomic, strong) OOUserInputView *firstInputView;
 @property (nonatomic, strong) OOUserInputView *secondInputView;
+@property (nonatomic, strong) OOUserInputView *thirdInputView;
 
 @end
 
@@ -35,6 +36,7 @@
     [self.view addSubview:self.endTimeView];
     [self.view addSubview:self.firstInputView];
     [self.view addSubview:self.secondInputView];
+    [self.view addSubview:self.thirdInputView];
 }
 
 #pragma mark -- Click
@@ -45,16 +47,6 @@
 - (void)clickShareButton {
     [self.view endEditing:YES];
     
-//    if ([NSString xy_isEmpty:self.firstInputView.inputText]) {
-//        [SVProgressHUD showErrorWithStatus:@"请输入交办问题"];
-//        return;
-//    }
-//
-//    if ([NSString xy_isEmpty:self.secondInputView.inputText]) {
-//        [SVProgressHUD showErrorWithStatus:@"请输入河长意见"];
-//        return;
-//    }
-    
     if ([NSString xy_isEmpty:self.firstInputView.inputText]) {
         self.firstInputView.inputText = @"";
     }
@@ -63,7 +55,10 @@
         self.secondInputView.inputText = @"";
     }
     
-//    __weak typeof(self) weakSelf = self;
+    if ([NSString xy_isEmpty:self.thirdInputView.inputText]) {
+        self.thirdInputView.inputText = @"";
+    }
+    
     [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
@@ -71,13 +66,14 @@
     [param setValue:@([OOXCMgr sharedMgr].unFinishedXCModel.xc_id) forKey:@"XCID"];
     [param setValue:self.firstInputView.inputText forKey:@"Xctitle"];
     [param setValue:self.secondInputView.inputText forKey:@"Xcinfo"];
+    [param setValue:self.thirdInputView.inputText forKey:@"Lastxc"];
     [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_Endxc parameters:param options:nil block:^(BOOL success, id response) {
         if (success) {
             [SVProgressHUD showSuccessWithStatus:@"巡查提交成功"];
             [OOXCMgr sharedMgr].unFinishedXCModel = nil;
             
             [[MDPageMaster master].navigationContorller.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([NSStringFromClass([obj class]) isEqualToString:@"OOHomeVC"]) {
+                if ([NSStringFromClass([obj class]) isEqualToString:@"OOTabBarVC"]) {
                     [[MDPageMaster master].navigationContorller popToViewController:obj withAnimation:YES];
                     *stop = YES;
                 }
@@ -147,6 +143,14 @@
         _secondInputView.backgroundColor = [UIColor whiteColor];
     }
     return _secondInputView;
+}
+
+- (OOUserInputView *)thirdInputView {
+    if (!_thirdInputView) {
+        _thirdInputView = [[OOUserInputView alloc] initWithFrame:CGRectMake(0, self.secondInputView.bottom + 10, self.view.width, Part_height * 2) title:@"上次巡查落实情况"];
+        _thirdInputView.backgroundColor = [UIColor whiteColor];
+    }
+    return _thirdInputView;
 }
 
 @end

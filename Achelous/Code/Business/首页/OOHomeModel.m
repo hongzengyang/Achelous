@@ -73,7 +73,7 @@
         }];
     }
     
-    [[OOXCMgr sharedMgr] fetchCurentUnfinishedXCModelWithCompleteHandle:^(BOOL complete) {
+    [[OOUserMgr sharedMgr] refreshUserInfoWithCompleteHandle:^(BOOL complete) {
         
     }];
 }

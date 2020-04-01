@@ -29,6 +29,13 @@
 
 @end
 
+@interface OOXCContentModel : NSObject
+
+@property (nonatomic, copy) NSString *contentID; 
+@property (nonatomic, copy) NSString *XCNR;
+
+@end
+
 @interface OOXCJoinPeopleModel : NSObject
 
 @property (nonatomic, copy) NSString *UserId;
@@ -53,7 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *xcName;
 
-@property (nonatomic, copy) NSString *xcContent;
+@property (nonatomic, strong) NSArray <OOXCContentModel *>*contentList;
+@property (nonatomic, strong) NSMutableArray <OOXCContentModel *>*selectContentList;
 
 @property (nonatomic, strong) NSArray <OOXCJoinPartModel *>*joinPartList;
 @property (nonatomic, strong) NSMutableArray <OOXCJoinPartModel *>*selectjoinPartList;

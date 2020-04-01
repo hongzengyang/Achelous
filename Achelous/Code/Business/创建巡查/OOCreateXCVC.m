@@ -27,12 +27,14 @@
 @property (nonatomic, strong) UILabel *xcObjectLab;
 @property (nonatomic, strong) UIView *xcNameView;    //巡查名称
 @property (nonatomic, strong) UITextField *xcNameTextField;
-@property (nonatomic, strong) UIView *xcContentView; //巡查内容
-@property (nonatomic, strong) UITextView *xcContentTextView;
+@property (nonatomic, strong) UIView *xcContentView;  //巡查内容
+@property (nonatomic, strong) UILabel *xcContentLab;
 @property (nonatomic, strong) UIView *joinPartView;  //参与单位
 @property (nonatomic, strong) UILabel *joinPartLab;
 @property (nonatomic, strong) UIView *joinPeopleView;//参与人员
 @property (nonatomic, strong) UILabel *joinPeopleLab;
+@property (nonatomic, strong) UIView *xcQTPeopleView; //巡查内容
+@property (nonatomic, strong) UITextView *xcQTPeopleTextView;
 @property (nonatomic, strong) UIView *startTimeView; //开始时间
 @property (nonatomic, strong) UILabel *startTimeLab;
 @property (nonatomic, strong) OOCreateXCModel *model;
@@ -64,6 +66,7 @@
     [self.scrollView addSubview:self.xcContentView];
     [self.scrollView addSubview:self.joinPartView];
     [self.scrollView addSubview:self.joinPeopleView];
+    [self.scrollView addSubview:self.xcQTPeopleView];
     [self.scrollView addSubview:self.startTimeView];
     [self.scrollView setContentSize:CGSizeMake(self.view.width, self.startTimeView.bottom)];
     
@@ -98,8 +101,9 @@
         [SVProgressHUD showErrorWithStatus:@"请输入巡查名称"];
         return;
     }
-    if ([NSString xy_isEmpty:self.model.xcContent]) {
-        [SVProgressHUD showErrorWithStatus:@"请输入巡查内容"];
+    
+    if (self.model.selectContentList.count == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请选择巡查内容"];
         return;
     }
     
@@ -112,8 +116,20 @@
     [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
     [param setValue:@([self.model.weatherList indexOfObject:self.model.weather]) forKey:@"Weather"];
     [param setValue:self.model.xcName forKey:@"XCname"];
-    [param setValue:self.model.xcContent forKey:@"Xccontent"];
     [param setValue:@([self.model.lakeTypeList indexOfObject:self.model.lakeType]) forKey:@"Xclx"];
+    [param setValue:self.xcQTPeopleTextView.text forKey:@"Qtuser"];
+    
+    {
+        //巡查内容
+        __block NSString *contentID = @"";
+        [self.model.selectContentList enumerateObjectsUsingBlock:^(OOXCContentModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            contentID = [contentID stringByAppendingString:obj.contentID];
+            if (idx != self.model.selectContentList.count - 1) {
+                contentID = [contentID stringByAppendingString:@","];
+            }
+        }];
+        [param setValue:contentID forKey:@"Xccontent"];
+    }
     
     {
         //参与单位
@@ -167,7 +183,7 @@
 
 #pragma mark -- Tap
 - (void)clickWeather {
-    if ([self.xcNameTextField isFirstResponder] || [self.xcContentTextView isFirstResponder]) {
+    if ([self.xcNameTextField isFirstResponder] || [self.xcQTPeopleTextView isFirstResponder]) {
         [self.view endEditing:YES];
     }
 
@@ -189,7 +205,7 @@
 }
 
 - (void)clickLakeType {
-    if ([self.xcNameTextField isFirstResponder] || [self.xcContentTextView isFirstResponder]) {
+    if ([self.xcNameTextField isFirstResponder] || [self.xcQTPeopleTextView isFirstResponder]) {
         [self.view endEditing:YES];
     }
     if ([NSString xy_isEmpty:self.model.weather]) {
@@ -215,7 +231,7 @@
 }
 
 - (void)clickXcArea {
-    if ([self.xcNameTextField isFirstResponder] || [self.xcContentTextView isFirstResponder]) {
+    if ([self.xcNameTextField isFirstResponder] || [self.xcQTPeopleTextView isFirstResponder]) {
         [self.view endEditing:YES];
     }
     if ([NSString xy_isEmpty:self.model.weather]) {
@@ -266,7 +282,7 @@
 }
 
 - (void)clickXcObject {
-    if ([self.xcNameTextField isFirstResponder] || [self.xcContentTextView isFirstResponder]) {
+    if ([self.xcNameTextField isFirstResponder] || [self.xcQTPeopleTextView isFirstResponder]) {
         [self.view endEditing:YES];
     }
     if ([NSString xy_isEmpty:self.model.weather]) {
@@ -349,8 +365,80 @@
     
 }
 
-- (void)clickXcContent {
+- (void)clickContent {
+    __weak typeof(self) weakSelf = self;
+    void(^actionSheetBlock)(void) = ^ {
+        NSMutableArray *array = [NSMutableArray new];
+        NSMutableArray *titles = [[NSMutableArray alloc] init];
+        [weakSelf.model.contentList enumerateObjectsUsingBlock:^(OOXCContentModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [titles addObject:obj.XCNR];
+        }];
+        if (titles.count > 0) {
+            __weak typeof(self) weakSelf = self;
+            Dialog()
+            .wTypeSet(DialogTypeSelect)
+            .wEventOKFinishSet(^(id anyID, id otherData) {
+                if ([anyID isKindOfClass:[NSArray class]]) {
+                    [weakSelf.model.selectContentList removeAllObjects];
+                    NSArray *array = (NSArray *)anyID;
+                    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if ([obj isKindOfClass:[NSString class]]) {
+                            NSString *string = (NSString *)obj;
+                            [weakSelf.model.contentList enumerateObjectsUsingBlock:^(OOXCContentModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                                if ([obj.XCNR isEqualToString:string]) {
+                                    [weakSelf.model.selectContentList addObject:obj];
+                                }
+                            }];
+                        }
+                    }];
+                }
+                [weakSelf updateData];
+            })
+            .wTitleSet(@"巡查内容")
+            .wTitleColorSet([UIColor blackColor])
+            .wTitleFontSet(16.0)
+            .wMessageSet(@"")
+            .wMessageColorSet([UIColor appTextColor])
+            .wMessageFontSet(15.0)
+            .wMultipleSelectionSet(YES)
+            .wSelectShowCheckedSet(YES)
+            .wDataSet(titles)
+            .wStart();
+        }
+    };
     
+    if (self.model.contentList.count == 0) {
+        [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
+        [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_ReturnXC parameters:param options:nil block:^(BOOL success, id response) {
+            if (success) {
+                [SVProgressHUD dismiss];
+                if ([response isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *dic = (NSDictionary *)response;
+                    NSArray *data = [dic xyArrayForKey:@"data"];
+                    
+                    if (data.count > 0) {
+                        NSMutableArray *muArray = [[NSMutableArray alloc] init];
+                        [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if ([obj isKindOfClass:[NSDictionary class]]) {
+                                NSDictionary *d = (NSDictionary *)obj;
+                                OOXCContentModel *model = [OOXCContentModel yy_modelWithJSON:d];
+                                [muArray addObject:model];
+                            }
+                        }];
+                        weakSelf.model.contentList = [muArray copy];
+                    }
+                }
+                
+                actionSheetBlock();
+            }else {
+                [SVProgressHUD showErrorWithStatus:TIP_TEXT_NETWORK_ERRROE];
+            }
+        }];
+    }else {
+        actionSheetBlock();
+    }
 }
 
 - (void)clickJoinPart {
@@ -556,6 +644,22 @@
         }
     }
     
+    if (self.model.selectContentList.count == 0) {
+        self.xcContentLab.textColor = [UIColor appGrayTextColor];
+        self.xcContentLab.text = @"请选择";
+    }else {
+        self.xcContentLab.textColor = [UIColor appTextColor];
+        
+        __block NSString *text = @"";
+        [self.model.selectContentList enumerateObjectsUsingBlock:^(OOXCContentModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            text = [text stringByAppendingString:obj.XCNR];
+            if (idx != self.model.selectContentList.count - 1) {
+                text = [text stringByAppendingString:@","];
+            }
+        }];
+        self.xcContentLab.text = text;
+    }
+    
     if (self.model.selectjoinPartList.count == 0) {
         self.joinPartLab.textColor = [UIColor appGrayTextColor];
         self.joinPartLab.text = @"请选择";
@@ -644,7 +748,7 @@
 
 #pragma mark -- UITextViewDelegate
 - (void)textViewDidChange:(UITextView *)textView {
-    self.model.xcContent = textView.text;
+    
 }
 
 #pragma mark -- lazy
@@ -882,7 +986,7 @@
 
 - (UIView *)xcContentView {
     if (!_xcContentView) {
-        _xcContentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.xcNameView.bottom, self.scrollView.width, Part_height*2)];
+        _xcContentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.xcNameView.bottom, self.scrollView.width, Part_height)];
         
         UILabel *titleLab = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 80, Part_height)];
         NSString *string = @"巡查内容*";
@@ -891,21 +995,28 @@
         [attr addAttribute:NSForegroundColorAttributeName value:[UIColor appTextColor] range:NSMakeRange(0, [string length])];
         [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:@"*"]];
         titleLab.attributedText = attr;
+        titleLab.userInteractionEnabled = NO;
         [_xcContentView addSubview:titleLab];
         
-        UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(titleLab.right + 10, 0, _xcContentView.width - 11 - titleLab.right - 10, _xcContentView.height)];
-        textView.textAlignment = NSTextAlignmentRight;
-        textView.font = self.contentFont;
-        textView.delegate = self;
-        [_xcContentView addSubview:textView];
-        self.xcContentTextView = textView;
+        UIImageView *arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mini_common_arrow_right_n"]];
+        [arrowImageView sizeToFit];
+        [arrowImageView setFrame:CGRectMake(_xcContentView.width - 15 - arrowImageView.width, (_xcContentView.height - arrowImageView.height) / 2.0, arrowImageView.width, arrowImageView.height)];
+        arrowImageView.userInteractionEnabled = NO;
+        [_xcContentView addSubview:arrowImageView];
         
-        UIView *separater = [[UIView alloc] initWithFrame:CGRectMake(titleLab.left, _xcContentView.height - 0.5, textView.right - titleLab.left, 0.5)];
+        UILabel *rightLab = [[UILabel alloc] initWithFrame:CGRectMake(titleLab.right+10, 0, arrowImageView.left - 5 - titleLab.right - 10, Part_height)];
+        rightLab.textAlignment = NSTextAlignmentRight;
+        rightLab.font = self.contentFont;
+        rightLab.userInteractionEnabled = NO;
+        [_xcContentView addSubview:rightLab];
+        self.xcContentLab = rightLab;
+        
+        UIView *separater = [[UIView alloc] initWithFrame:CGRectMake(titleLab.left, Part_height - 0.5, arrowImageView.right - titleLab.left, 0.5)];
         separater.backgroundColor = [UIColor xycColorWithHex:0xF0F1F5 alpha:0.7];
         [_xcContentView addSubview:separater];
         
-//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickXcObject)];
-//        [_xcObjectView addGestureRecognizer:tap];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickContent)];
+        [_xcContentView addGestureRecognizer:tap];
     }
     return _xcContentView;
 }
@@ -984,9 +1095,37 @@
     return _joinPeopleView;
 }
 
+- (UIView *)xcQTPeopleView {
+    if (!_xcQTPeopleView) {
+        _xcQTPeopleView = [[UIView alloc] initWithFrame:CGRectMake(0, self.joinPeopleView.bottom, self.scrollView.width, Part_height*2)];
+        
+        UILabel *titleLab = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 80, Part_height)];
+        NSString *string = @"其他人员";
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:string];
+        [attr addAttribute:NSFontAttributeName value:self.titleFont range:NSMakeRange(0, [string length])];
+        [attr addAttribute:NSForegroundColorAttributeName value:[UIColor appTextColor] range:NSMakeRange(0, [string length])];
+        [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:@"*"]];
+        titleLab.attributedText = attr;
+        [_xcQTPeopleView addSubview:titleLab];
+        
+        UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(titleLab.right + 10, 0, _xcQTPeopleView.width - 11 - titleLab.right - 10, _xcQTPeopleView.height)];
+        textView.textAlignment = NSTextAlignmentRight;
+        textView.font = self.contentFont;
+        textView.delegate = self;
+        [_xcQTPeopleView addSubview:textView];
+        self.xcQTPeopleTextView = textView;
+        
+        UIView *separater = [[UIView alloc] initWithFrame:CGRectMake(titleLab.left, _xcQTPeopleView.height - 0.5, textView.right - titleLab.left, 0.5)];
+        separater.backgroundColor = [UIColor xycColorWithHex:0xF0F1F5 alpha:0.7];
+        [_xcQTPeopleView addSubview:separater];
+    }
+    return _xcQTPeopleView;
+}
+
+
 - (UIView *)startTimeView {
     if (!_startTimeView) {
-        _startTimeView = [[UIView alloc] initWithFrame:CGRectMake(0, self.joinPeopleView.bottom, self.scrollView.width, Part_height)];
+        _startTimeView = [[UIView alloc] initWithFrame:CGRectMake(0, self.xcQTPeopleView.bottom, self.scrollView.width, Part_height)];
         
         UILabel *titleLab = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 80, Part_height)];
         NSString *string = @"开始时间";

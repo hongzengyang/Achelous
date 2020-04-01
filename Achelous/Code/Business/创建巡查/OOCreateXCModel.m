@@ -27,6 +27,16 @@
 
 @end
 
+@implementation OOXCContentModel
+
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{@"contentID" : @"ID",
+             @"XCNR" : @"XCNR"
+    };
+}
+
+@end
+
 @implementation OOXCJoinPeopleModel
 
 
@@ -39,6 +49,7 @@
         self.lakeTypeList = @[@"湖库",@"渠道",@"河段",@"坝塘"];
         self.selectjoinPartList = [[NSMutableArray alloc] init];
         self.selectjoinPeopleList = [[NSMutableArray alloc] init];
+        self.selectContentList = [[NSMutableArray alloc] init];
     }
     return self;
 }

@@ -73,8 +73,6 @@ NS_ASSUME_NONNULL_BEGIN
 //发现问题 巡查实况
 - (NSArray <NSString *>*)reportTypeArray;
 
-- (void)fetchCurentUnfinishedXCModelWithCompleteHandle:(void(^)(BOOL complete))completeHandle;
-
 @end
 
 NS_ASSUME_NONNULL_END

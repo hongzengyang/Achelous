@@ -257,52 +257,5 @@
     }
 }
 
-- (void)fetchCurentUnfinishedXCModelWithCompleteHandle:(void (^)(BOOL))completeHandle {
-    if (![[OOUserMgr sharedMgr] isLogin]) {
-        if (completeHandle) {
-            completeHandle(YES);
-        }
-        return;
-    }
-    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
-    [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_getUserInfo parameters:param options:nil block:^(BOOL success, id response) {
-        if (success) {
-            NSDictionary *data = [response xyDictionaryForKey:@"data"];
-            NSDictionary *XC = [data xyDictionaryForKey:@"XC"];
-            if ([XC valueForKey:@"id"]) {
-                OOUnFinishedXCModel *model = [[OOUnFinishedXCModel alloc] init];
-                model.xc_id = [[XC valueForKey:@"id"] integerValue];
-                model.XCMC = [XC valueForKey:@"XCMC"];
-                model.XCR = [XC valueForKey:@"XCR"];
-                model.status = [[XC valueForKey:@"Status"] integerValue];
-                model.SJQ = [XC valueForKey:@"SJQ"];
-                model.SJZ = [XC valueForKey:@"SJZ"];
-                model.Stoptime = [XC valueForKey:@"Stoptime"];
-//                model.Stoptime = nil;
-                
-                [OOXCMgr sharedMgr].unFinishedXCModel = model;
-                
-                if (model.status == OOXCStatus_ing) {
-                    [[OOXCMgr sharedMgr] startUpdatingLocation];
-                }else {
-                    [[OOXCMgr sharedMgr] finishUpdatingLocation];
-                }
-            }else {
-                [OOXCMgr sharedMgr].unFinishedXCModel = nil;
-            }
-        }
-        
-        if (completeHandle) {
-            completeHandle(YES);
-        }
-    }];
-}
-
-
-
-
-
-
 
 @end

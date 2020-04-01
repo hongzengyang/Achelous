@@ -76,7 +76,7 @@
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        _collectionView = [[OOHomeCollectionView alloc] initWithFrame:CGRectMake(0, self.headerView.bottom, SCREEN_WIDTH, SCREEN_HEIGHT - self.headerView.bottom - SAFE_BOTTOM) collectionViewLayout:layout model:self.homeModel];
+        _collectionView = [[OOHomeCollectionView alloc] initWithFrame:CGRectMake(0, self.headerView.bottom, SCREEN_WIDTH, SCREEN_HEIGHT - self.headerView.bottom - SAFE_BOTTOM - TABBAR_HEIGHT) collectionViewLayout:layout model:self.homeModel];
         _collectionView.backgroundColor = [UIColor xycColorWithHex:0xF0F1F5];
     }
     return _collectionView;

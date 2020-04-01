@@ -112,6 +112,11 @@
 		4460F46423D1EE4300DE7CC4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F46323D1EE4300DE7CC4 /* libc++.tbd */; };
 		4460F46623D1EE4900DE7CC4 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4460F46523D1EE4900DE7CC4 /* AdSupport.framework */; };
 		4460F46823D1F4DA00DE7CC4 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4460F46723D1F4D900DE7CC4 /* mapapi.bundle */; };
+		447A380B2434664E0069F1F7 /* OOTabBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 447A380A2434664E0069F1F7 /* OOTabBarVC.m */; };
+		447A380F2434734F0069F1F7 /* OOTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 447A380E2434734F0069F1F7 /* OOTabBar.m */; };
+		447A3812243473E90069F1F7 /* UIButton+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 447A3810243473E90069F1F7 /* UIButton+Layout.m */; };
+		447A3815243476600069F1F7 /* OOUserCenterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 447A3814243476600069F1F7 /* OOUserCenterVC.m */; };
+		447A381824347C6A0069F1F7 /* OOUserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 447A381724347C6A0069F1F7 /* OOUserHeaderView.m */; };
 		448354C7242B190600042FBE /* oo_app_not__icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 448354C6242B190600042FBE /* oo_app_not__icon@2x.png */; };
 		448F9472240E9CDD003B580A /* OOEditSecretVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 448F9471240E9CDD003B580A /* OOEditSecretVC.m */; };
 		4AB0696DE17B8B5BCFF08046 /* libPods-Achelous.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFED6BB4609DC60CD4BAF33B /* libPods-Achelous.a */; };
@@ -340,6 +345,16 @@
 		4460F46323D1EE4300DE7CC4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		4460F46523D1EE4900DE7CC4 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4460F46723D1F4D900DE7CC4 /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = mapapi.bundle; path = Pods/BaiduMapKit/BaiduMapKit/BaiduMapAPI_Map.framework/mapapi.bundle; sourceTree = "<group>"; };
+		447A38092434664E0069F1F7 /* OOTabBarVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOTabBarVC.h; sourceTree = "<group>"; };
+		447A380A2434664E0069F1F7 /* OOTabBarVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOTabBarVC.m; sourceTree = "<group>"; };
+		447A380D2434734F0069F1F7 /* OOTabBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOTabBar.h; sourceTree = "<group>"; };
+		447A380E2434734F0069F1F7 /* OOTabBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOTabBar.m; sourceTree = "<group>"; };
+		447A3810243473E90069F1F7 /* UIButton+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Layout.m"; sourceTree = "<group>"; };
+		447A3811243473E90069F1F7 /* UIButton+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Layout.h"; sourceTree = "<group>"; };
+		447A3813243476600069F1F7 /* OOUserCenterVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOUserCenterVC.h; sourceTree = "<group>"; };
+		447A3814243476600069F1F7 /* OOUserCenterVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOUserCenterVC.m; sourceTree = "<group>"; };
+		447A381624347C6A0069F1F7 /* OOUserHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOUserHeaderView.h; sourceTree = "<group>"; };
+		447A381724347C6A0069F1F7 /* OOUserHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOUserHeaderView.m; sourceTree = "<group>"; };
 		448354C6242B190600042FBE /* oo_app_not__icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oo_app_not__icon@2x.png"; sourceTree = "<group>"; };
 		448F9470240E9CDD003B580A /* OOEditSecretVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOEditSecretVC.h; sourceTree = "<group>"; };
 		448F9471240E9CDD003B580A /* OOEditSecretVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOEditSecretVC.m; sourceTree = "<group>"; };
@@ -456,6 +471,8 @@
 		441D608223B20EC200F07134 /* Business */ = {
 			isa = PBXGroup;
 			children = (
+				447A380C243467490069F1F7 /* 个人页面 */,
+				447A38082434662D0069F1F7 /* Tab bar */,
 				4431E5C523CC42FD00FF57AC /* 登录 */,
 				4460F42823D0594E00DE7CC4 /* 首页 */,
 				4460F43623D183FE00DE7CC4 /* 创建巡查 */,
@@ -733,6 +750,8 @@
 				4460F3C323CCA2AF00DE7CC4 /* UINib+XYInit.m */,
 				4460F3C423CCA2AF00DE7CC4 /* UIViewController+XYiPad.h */,
 				4460F3C523CCA2AF00DE7CC4 /* UIApplication+XYState.m */,
+				447A3811243473E90069F1F7 /* UIButton+Layout.h */,
+				447A3810243473E90069F1F7 /* UIButton+Layout.m */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -868,6 +887,28 @@
 				44459A612410A0CC00793D40 /* OOXCLiveModel.m */,
 			);
 			path = "上报页面";
+			sourceTree = "<group>";
+		};
+		447A38082434662D0069F1F7 /* Tab bar */ = {
+			isa = PBXGroup;
+			children = (
+				447A38092434664E0069F1F7 /* OOTabBarVC.h */,
+				447A380A2434664E0069F1F7 /* OOTabBarVC.m */,
+				447A380D2434734F0069F1F7 /* OOTabBar.h */,
+				447A380E2434734F0069F1F7 /* OOTabBar.m */,
+			);
+			path = "Tab bar";
+			sourceTree = "<group>";
+		};
+		447A380C243467490069F1F7 /* 个人页面 */ = {
+			isa = PBXGroup;
+			children = (
+				447A3813243476600069F1F7 /* OOUserCenterVC.h */,
+				447A3814243476600069F1F7 /* OOUserCenterVC.m */,
+				447A381624347C6A0069F1F7 /* OOUserHeaderView.h */,
+				447A381724347C6A0069F1F7 /* OOUserHeaderView.m */,
+			);
+			path = "个人页面";
 			sourceTree = "<group>";
 		};
 		4AC1F9D4CA901CC1E175C83D /* Pods */ = {
@@ -1132,6 +1173,7 @@
 				441D608D23B20EC200F07134 /* OONavigationController.m in Sources */,
 				4460F40E23CCA2CD00DE7CC4 /* NSString+XYHTMLEscape.m in Sources */,
 				44255B6123D5506200DF9465 /* MDPhotoPickVC.m in Sources */,
+				447A380F2434734F0069F1F7 /* OOTabBar.m in Sources */,
 				4438AF2F23D153F3002F66B3 /* OOHomeHeaderTypeView.m in Sources */,
 				4460F3C623CCA2AF00DE7CC4 /* UIImage+XYInit.m in Sources */,
 				4460F40A23CCA2CD00DE7CC4 /* NSData+XYMD5.m in Sources */,
@@ -1148,6 +1190,7 @@
 				44255B4C23D3F77800DF9465 /* OOXCMgr.m in Sources */,
 				4460F41223CCA2CD00DE7CC4 /* NSString+XYMD5.m in Sources */,
 				44255B5023D4114D00DF9465 /* OOXCFinishVC.m in Sources */,
+				447A380B2434664E0069F1F7 /* OOTabBarVC.m in Sources */,
 				4431E5B923CC2C0000FF57AC /* OOUserMgr.m in Sources */,
 				441D609523B2117700F07134 /* OOServerApiName.m in Sources */,
 				4460F40823CCA2CD00DE7CC4 /* NSData+XYString.m in Sources */,
@@ -1166,7 +1209,10 @@
 				4460F42E23D05A4300DE7CC4 /* OOHomeNavBar.m in Sources */,
 				4460F3C823CCA2AF00DE7CC4 /* UIView+XYBlur.m in Sources */,
 				4431E5B023CC120F00FF57AC /* UIViewController+MDPageMaster.m in Sources */,
+				447A381824347C6A0069F1F7 /* OOUserHeaderView.m in Sources */,
+				447A3815243476600069F1F7 /* OOUserCenterVC.m in Sources */,
 				44255B3823D2DB8600DF9465 /* OOXCTrackPageVC.m in Sources */,
+				447A3812243473E90069F1F7 /* UIButton+Layout.m in Sources */,
 				4460F42B23D0597C00DE7CC4 /* OOHomeHeaderView.m in Sources */,
 				4460F41923CCA2CD00DE7CC4 /* NSString+XYBase64.m in Sources */,
 				4431E5A723CC0E4400FF57AC /* MDPageMaster.m in Sources */,
@@ -1367,7 +1413,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lwj.achelous;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lwj.achelouse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1395,7 +1441,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lwj.achelous;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lwj.achelouse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

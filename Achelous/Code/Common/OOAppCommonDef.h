@@ -18,6 +18,8 @@ typedef void(^OOCompleteBlock)(BOOL complete);
 #define SAFE_TOP                         [OOAPPMgr sharedMgr].safeTopArea
 #define SAFE_BOTTOM                      [OOAPPMgr sharedMgr].safeBottomArea
 
+#define TABBAR_HEIGHT   49
+
 #define SCREEN_SIZE     [UIScreen mainScreen].bounds.size
 #define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height

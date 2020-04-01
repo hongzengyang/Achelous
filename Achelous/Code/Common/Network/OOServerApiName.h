@@ -26,6 +26,7 @@ static NSString *const kApi_patrol_updateXcStatus   = @"/api/api/updateXcStatus"
 static NSString *const kApi_patrol_Appqy            = @"/api/api/Appqy";
 static NSString *const kApi_patrol_Xccy             = @"/api/api/Xccy";
 static NSString *const kApi_patrol_Xcuser           = @"/api/api/Xcuser";
+static NSString *const kApi_patrol_ReturnXC         = @"/api/api/ReturnXC";
 
 
 //菜单列表接口

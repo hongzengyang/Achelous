@@ -187,7 +187,7 @@
 #pragma mark -- Click
 - (void)clickBackButton {
     [[MDPageMaster master].navigationContorller.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([NSStringFromClass([obj class]) isEqualToString:@"OOHomeVC"]) {
+        if ([NSStringFromClass([obj class]) isEqualToString:@"OOTabBarVC"]) {
             [[MDPageMaster master].navigationContorller popToViewController:obj withAnimation:YES];
             *stop = YES;
         }
@@ -262,7 +262,7 @@
     __weak typeof(self) weakSelf = self;
     [[OOServerService sharedInstance] postWithUrlKey:kApi_patrol_updateXcStatus parameters:param options:nil block:^(BOOL success, id response) {
         if (success) {
-            [[OOXCMgr sharedMgr] fetchCurentUnfinishedXCModelWithCompleteHandle:^(BOOL complete) {
+            [[OOUserMgr sharedMgr] refreshUserInfoWithCompleteHandle:^(BOOL complete) {
                 OOUnFinishedXCModel *unfinishedModel = [OOXCMgr sharedMgr].unFinishedXCModel;
                 if (unfinishedModel.status == OOXCStatus_ing) {
                     [[OOXCMgr sharedMgr] startUpdatingLocation];
@@ -379,7 +379,7 @@
 
 - (void)updateCurrentUnFinishedXCModel {
     __weak typeof(self) weakSelf = self;
-    [[OOXCMgr sharedMgr] fetchCurentUnfinishedXCModelWithCompleteHandle:^(BOOL complete) {
+    [[OOUserMgr sharedMgr] refreshUserInfoWithCompleteHandle:^(BOOL complete) {
         if ([OOXCMgr sharedMgr].unFinishedXCModel.status == OOXCStatus_ing) {
             [weakSelf beginTimer];
         }
