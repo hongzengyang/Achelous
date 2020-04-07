@@ -16,6 +16,8 @@
 
 @interface OOLoginVC ()<UITextFieldDelegate>
 
+@property (nonatomic, strong) UIImageView *bgImageView;
+
 @property (nonatomic, strong) UILabel *titleLab;
 
 
@@ -72,7 +74,8 @@
         return;
     }
     
-    [self.view addSubview:self.titleLab];
+    [self.view addSubview:self.bgImageView];
+//    [self.view addSubview:self.titleLab];
     [self.view addSubview:self.accountView];
     [self.view addSubview:self.passwordView];
     
@@ -83,6 +86,9 @@
     }else {
         [self.accountTextField becomeFirstResponder];
     }
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+    [self.view addGestureRecognizer:tap];
 }
 
 
@@ -93,6 +99,13 @@
     
     if (textField == self.passwordTextField) {
         self.passwordClearBtn.hidden = textField.text.length == 0 ? YES : NO;
+    }
+}
+
+#pragma mark -- Tap
+- (void)tapAction {
+    if ([self.accountTextField isFirstResponder] || [self.passwordTextField isFirstResponder]) {
+        [self.view endEditing:YES];
     }
 }
 
@@ -184,6 +197,14 @@
 }
 
 #pragma mark -- Lazy
+- (UIImageView *)bgImageView {
+    if (!_bgImageView) {
+        _bgImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        _bgImageView.image = [UIImage imageNamed:@"login"];
+    }
+    return _bgImageView;
+}
+
 - (UILabel *)titleLab {
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] initWithFrame:CGRectMake(10, SAFE_TOP + 100, SCREEN_WIDTH - 20, 30)];
@@ -197,24 +218,22 @@
 
 - (UIView *)accountView {
     if (!_accountView) {
-        _accountView = [[UIView alloc] initWithFrame:CGRectMake(30, self.titleLab.bottom + 50, self.view.width - 60, 50)];
+        _accountView = [[UIView alloc] initWithFrame:CGRectMake(30, 250, self.view.width - 60, 50)];
         _accountView.backgroundColor = [UIColor whiteColor];
+        _accountView.layer.cornerRadius = 8;
+        _accountView.layer.masksToBounds = YES;
         
         UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"oo_login_account_icon"]];
         [icon sizeToFit];
         [icon setSize:CGSizeMake(22, 22)];
-        [icon setFrame:CGRectMake(0, (_accountView.height - icon.height)/2.0, icon.width, icon.height)];
+        [icon setFrame:CGRectMake(10, (_accountView.height - icon.height)/2.0, icon.width, icon.height)];
         [_accountView addSubview:icon];
-        
-        UIView *separater = [[UIView alloc] initWithFrame:CGRectMake(0, _accountView.height - 0.5, _accountView.width, 0.5)];
-        separater.backgroundColor = [UIColor xycColorWithHex:0xF0F1F5 alpha:0.7];
-        [_accountView addSubview:separater];
         
         UIButton *clearBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [clearBtn setImage:[UIImage imageNamed:@"mini_searchpage_clear_icon"] forState:(UIControlStateNormal)];
         [clearBtn sizeToFit];
         [clearBtn addTarget:self action:@selector(clickAccountClearButton) forControlEvents:(UIControlEventTouchUpInside)];
-        [clearBtn setFrame:CGRectMake(_accountView.width - clearBtn.width, (_accountView.height - clearBtn.height)/2.0, clearBtn.width, clearBtn.height)];
+        [clearBtn setFrame:CGRectMake(_accountView.width - clearBtn.width - 10, (_accountView.height - clearBtn.height)/2.0, clearBtn.width, clearBtn.height)];
         clearBtn.hidden = YES;
         [_accountView addSubview:clearBtn];
         self.accountClearBtn = clearBtn;
@@ -236,28 +255,27 @@
     if (!_passwordView) {
         _passwordView = [[UIView alloc] initWithFrame:CGRectMake(30, self.accountView.bottom + 10, self.view.width - 60, 50)];
         _passwordView.backgroundColor = [UIColor whiteColor];
+        _passwordView.layer.cornerRadius = 8;
+        _passwordView.layer.masksToBounds = YES;
         
         UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"oo_login_mima_icon"]];
         [icon sizeToFit];
         [icon setSize:CGSizeMake(22, 22)];
-        [icon setFrame:CGRectMake(0, (_passwordView.height - icon.height)/2.0, icon.width, icon.height)];
+        [icon setFrame:CGRectMake(10, (_passwordView.height - icon.height)/2.0, icon.width, icon.height)];
         [_passwordView addSubview:icon];
-        
-        UIView *separater = [[UIView alloc] initWithFrame:CGRectMake(0, _passwordView.height - 0.5, _passwordView.width, 0.5)];
-        separater.backgroundColor = [UIColor xycColorWithHex:0xF0F1F5 alpha:0.7];
-        [_passwordView addSubview:separater];
         
         UIButton *clearBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [clearBtn setImage:[UIImage imageNamed:@"mini_searchpage_clear_icon"] forState:(UIControlStateNormal)];
         [clearBtn sizeToFit];
         [clearBtn addTarget:self action:@selector(clickPasswordClearButton) forControlEvents:(UIControlEventTouchUpInside)];
-        [clearBtn setFrame:CGRectMake(_passwordView.width - clearBtn.width, (_passwordView.height - clearBtn.height)/2.0, clearBtn.width, clearBtn.height)];
+        [clearBtn setFrame:CGRectMake(_passwordView.width - clearBtn.width - 10, (_passwordView.height - clearBtn.height)/2.0, clearBtn.width, clearBtn.height)];
         clearBtn.hidden = YES;
         [_passwordView addSubview:clearBtn];
         self.passwordClearBtn = clearBtn;
         
         UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(icon.right + 10, 0, clearBtn.left - icon.right - 10, _passwordView.height)];
         textField.delegate = self;
+        textField.secureTextEntry = YES;
         textField.placeholder = @"请输入密码";
         textField.font = [UIFont systemFontOfSize:14];
         [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -272,9 +290,11 @@
         _loginBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_loginBtn addTarget:self action:@selector(clickLoginButton) forControlEvents:(UIControlEventTouchUpInside)];
         [_loginBtn setFrame:CGRectMake((self.view.width - 200)/2.0, self.passwordView.bottom + 30, 200, 44)];
+        _loginBtn.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         [_loginBtn setTitle:@"登录" forState:(UIControlStateNormal)];
+        [_loginBtn setTitleColor:[UIColor appMainColor] forState:(UIControlStateNormal)];
         _loginBtn.layer.cornerRadius = 8;
-        _loginBtn.backgroundColor = [UIColor appMainColor];
+        _loginBtn.backgroundColor = [UIColor whiteColor];
     }
     return _loginBtn;
 }

@@ -66,7 +66,8 @@
 
 - (OOHomeHeaderView *)headerView  {
     if (!_headerView) {
-        _headerView = [[OOHomeHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 250) model:self.homeModel];
+        CGFloat height = self.view.width * 809.0 / 1075.0;
+        _headerView = [[OOHomeHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height) model:self.homeModel];
         _headerView.backgroundColor = [UIColor grayColor];
     }
     return _headerView;

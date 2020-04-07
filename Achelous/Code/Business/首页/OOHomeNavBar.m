@@ -39,7 +39,7 @@
     if (!_titleLab) {
         _titleLab = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 150, self.height)];
         _titleLab.textAlignment = NSTextAlignmentLeft;
-        _titleLab.text = @"河湖长制综合信息管理平台";
+        _titleLab.text = @"河湖长制综合信息管理平台移动端";
         _titleLab.textColor = [UIColor whiteColor];
         _titleLab.font = [UIFont systemFontOfSize:17 weight:(UIFontWeightMedium)];
     }

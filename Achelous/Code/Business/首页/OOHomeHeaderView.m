@@ -61,7 +61,7 @@
 - (UIImageView *)bgImageView {
     if (!_bgImageView) {
         _bgImageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        _bgImageView.image = [UIImage imageNamed:@"20190815085153249eljilb"];
+        _bgImageView.image = [UIImage imageNamed:@"main"];
         _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     return _bgImageView;
