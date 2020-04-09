@@ -29,6 +29,12 @@
 }
 
 - (void)initAPP {
+    self.county = OOCountyNone;
+    id cache = [[NSUserDefaults standardUserDefaults] valueForKey:@"pref_key_county"];
+    if (cache && [cache isKindOfClass:[NSNumber class]]) {
+        self.county = [cache integerValue];
+    }
+    
     [self startMonitorNetwork];
 }
 
@@ -42,7 +48,10 @@
     return version;
 }
 
-
+- (void)setCounty:(OOCounty)county {
+    _county = county;
+    [[NSUserDefaults standardUserDefaults] setValue:@(county) forKey:@"pref_key_county"];
+}
 
 #pragma mark -- 网络监听
 - (void)startMonitorNetwork {

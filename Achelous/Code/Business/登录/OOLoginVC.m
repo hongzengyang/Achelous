@@ -12,6 +12,7 @@
 #import "MDPageMaster.h"
 #import "OOTabBarVC.h"
 #import <CoreLocation/CoreLocation.h>
+#import <WMZDialog/WMZDialog.h>
 
 
 @interface OOLoginVC ()<UITextFieldDelegate>
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) UILabel *titleLab;
 
 
+@property (nonatomic, strong) UILabel *countyLab;
 @property (nonatomic, strong) UIView *accountView;
 @property (nonatomic, strong) UITextField *accountTextField;
 @property (nonatomic, strong) UIButton *accountClearBtn;
@@ -52,6 +54,8 @@
             [self.accountTextField becomeFirstResponder];
         }
     }
+    
+    [self updateCountyLab];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -78,6 +82,8 @@
 //    [self.view addSubview:self.titleLab];
     [self.view addSubview:self.accountView];
     [self.view addSubview:self.passwordView];
+    [self.view addSubview:self.countyLab];
+    [self.view addSubview:self.countyLab];
     
     [self.view addSubview:self.loginBtn];
     
@@ -102,6 +108,23 @@
     }
 }
 
+- (void)updateCountyLab {
+    NSString *text;
+    if ([OOAPPMgr sharedMgr].county == OOCountyWD) {
+        text = @"武定县 >";
+    }else if ([OOAPPMgr sharedMgr].county == OOCountyDY) {
+        text = @"大姚县 >";
+    }else if ([OOAPPMgr sharedMgr].county == OOCountyNH) {
+        text = @"南华县 >";
+    }else if ([OOAPPMgr sharedMgr].county == OOCountyYA) {
+        text = @"姚安县 >";
+    }else if ([OOAPPMgr sharedMgr].county == OOCountyDebug) {
+        text = @"开发调试 >";
+    }else {
+        text = @"请选择区县 >";
+    }
+    self.countyLab.text = text;
+}
 #pragma mark -- Tap
 - (void)tapAction {
     if ([self.accountTextField isFirstResponder] || [self.passwordTextField isFirstResponder]) {
@@ -118,7 +141,34 @@
     self.passwordTextField.text = @"";
 }
 
+- (void)clickCountyButton {
+    
+    NSArray <NSString *>*countylist = @[@"武定县",@"大姚县",@"南华县",@"姚安县",@"开发调试"];
+    __weak typeof(self) weakSelf = self;
+    Dialog()
+    .wTypeSet(DialogTypeSelect)
+    .wEventFinishSet(^(id anyID, NSIndexPath *path, DialogType type) {
+        NSString *str = anyID;
+        OOCounty county = (OOCounty)[countylist indexOfObject:str];
+        [OOAPPMgr sharedMgr].county = county;
+        [weakSelf updateCountyLab];
+    })
+    .wTitleSet(@"请选择区域")
+    .wTitleColorSet([UIColor blackColor])
+    .wTitleFontSet(16.0)
+    .wMessageSet(@"")
+    .wMessageColorSet([UIColor appTextColor])
+    .wMessageFontSet(15.0)
+    .wDataSet(countylist)
+    .wStart();
+}
+
 - (void)clickLoginButton {
+    if ([OOAPPMgr sharedMgr].county == OOCountyNone) {
+        [SVProgressHUD showErrorWithStatus:@"请选择区县"];
+        return;
+    }
+    
     if ([NSString xy_isEmpty:self.accountTextField.text]) {
         [SVProgressHUD showErrorWithStatus:@"请输入账号"];
         return;
@@ -218,7 +268,8 @@
 
 - (UIView *)accountView {
     if (!_accountView) {
-        _accountView = [[UIView alloc] initWithFrame:CGRectMake(30, 250, self.view.width - 60, 50)];
+        CGFloat top = self.view.height * 610.0 / 1882.0;
+        _accountView = [[UIView alloc] initWithFrame:CGRectMake(30, top, self.view.width - 60, 50)];
         _accountView.backgroundColor = [UIColor whiteColor];
         _accountView.layer.cornerRadius = 8;
         _accountView.layer.masksToBounds = YES;
@@ -297,6 +348,25 @@
         _loginBtn.backgroundColor = [UIColor whiteColor];
     }
     return _loginBtn;
+}
+
+- (UILabel *)countyLab {
+    if (!_countyLab) {
+        _countyLab = [[UILabel alloc] initWithFrame:CGRectMake(self.accountView.left, self.accountView.top - 5 - 34, 100, 34)];
+        _countyLab.backgroundColor = [UIColor whiteColor];
+        _countyLab.layer.cornerRadius = 4;
+        _countyLab.layer.masksToBounds = YES;
+        _countyLab.textColor = [UIColor blackColor];
+        _countyLab.font = [UIFont systemFontOfSize:14 weight:(UIFontWeightRegular)];
+        _countyLab.textAlignment = NSTextAlignmentCenter;
+        
+        UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [btn setFrame:_countyLab.frame];
+        btn.backgroundColor = [UIColor clearColor];
+        [btn addTarget:self action:@selector(clickCountyButton) forControlEvents:(UIControlEventTouchUpInside)];
+        [self.view addSubview:btn];
+    }
+    return _countyLab;
 }
 
 @end

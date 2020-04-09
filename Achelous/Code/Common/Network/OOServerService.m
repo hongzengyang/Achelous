@@ -160,7 +160,17 @@ NSString *urlEncode(NSString *paramString) {
 }
 
 - (NSString *)baseUrl {
-    return @"http://119.148.161.111:8008";
+    if ([OOAPPMgr sharedMgr].county == OOCountyWD) {
+        return @"http://wd.km363.com";
+    }else if ([OOAPPMgr sharedMgr].county == OOCountyDY) {
+        return @"http://dy.km363.com";
+    }else if ([OOAPPMgr sharedMgr].county == OOCountyNH) {
+        return @"http://nh.km363.com";
+    }else if ([OOAPPMgr sharedMgr].county == OOCountyYA) {
+        return @"http://ya.km363.com";
+    }else {
+        return @"http://119.148.161.111:8008";
+    }
 }
 
 
