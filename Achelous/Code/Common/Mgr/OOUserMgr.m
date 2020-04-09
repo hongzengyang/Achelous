@@ -117,7 +117,8 @@
             }
             //user
             {
-                
+                self.userInfo.UserName = [data valueForKey:@"UserName"];
+                self.userInfo.Uzw = [data valueForKey:@"Uzw"];
             }
         }
         

@@ -48,7 +48,8 @@
 
 #pragma mark -- UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
+    OOHomeDataMenuModel *model = [self.homeModel.dataModel.menuList objectAtIndex:indexPath.row];
+    if (model.type == 1) {
         if ([OOXCMgr sharedMgr].unFinishedXCModel) {
             [[MDPageMaster master] openUrl:@"xiaoying://oo_patrol_vc" action:^(MDUrlAction * _Nullable action) {
                 
@@ -58,20 +59,21 @@
                 
             }];
         }
-    }else if (indexPath.row == 1) {
+    }else if (model.type == 2) {
         [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_track_page_vc" action:^(MDUrlAction * _Nullable action) {
             
         }];
-    }else if (indexPath.row == 3 || indexPath.row == 10) {
-        OOHomeDataMenuModel *model = [self.homeModel.dataModel.menuList objectAtIndex:indexPath.row];
-        NSString *url = [NSString stringWithFormat:@"%@%@",model.url,[[OOUserMgr sharedMgr] loginUserInfo].UserId];
-        url = [url stringByReplacingOccurrencesOfString:@" " withString:@""];
-        [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_h5_vc" action:^(MDUrlAction * _Nullable action) {
-            [action setString:url forKey:@"linkUrl"];
-            [action setString:model.name forKey:@"titleText"];
+    }else if (model.type == 3) {
+        [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_find_question_vc" action:^(MDUrlAction * _Nullable action) {
         }];
     }else {
-        OOHomeDataMenuModel *model = [self.homeModel.dataModel.menuList objectAtIndex:indexPath.row];
+//        OOHomeDataMenuModel *model = [self.homeModel.dataModel.menuList objectAtIndex:indexPath.row];
+//        model.url = [NSString stringWithFormat:@"%@%@",model.url,[[OOUserMgr sharedMgr] loginUserInfo].UserId];
+//        model.url = [model.url stringByReplacingOccurrencesOfString:@" " withString:@""];
+//        [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_h5_vc" action:^(MDUrlAction * _Nullable action) {
+//            [action setString:url forKey:@"linkUrl"];
+//            [action setString:model.name forKey:@"titleText"];
+//        }];
         [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_h5_vc" action:^(MDUrlAction * _Nullable action) {
             [action setString:model.url forKey:@"linkUrl"];
             [action setString:model.name forKey:@"titleText"];
