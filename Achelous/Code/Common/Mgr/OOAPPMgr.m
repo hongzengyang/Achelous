@@ -29,10 +29,11 @@
 }
 
 - (void)initAPP {
-    self.county = OOCountyNone;
     id cache = [[NSUserDefaults standardUserDefaults] valueForKey:@"pref_key_county"];
     if (cache && [cache isKindOfClass:[NSNumber class]]) {
-        self.county = [cache integerValue];
+        self.county = (OOCounty)[cache integerValue];
+    }else {
+        self.county = OOCountyNone;
     }
     
     [self startMonitorNetwork];

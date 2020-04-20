@@ -13,6 +13,7 @@
 #import "LNActionSheet.h"
 #import <AFNetworking/AFNetworking.h>
 #import "NSFileManager+XYProperty.h"
+#import <WMZDialog/WMZDialog.h>
 
 @interface MDPhotoPickVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -44,10 +45,14 @@
 }
 
 - (void)clickShareButton {
-    [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
     __block NSInteger index = 0;
     __weak typeof(self) weakSelf = self;
     NSArray <OOAssetModel *>*phototArray = [self.model.assetsArray subarrayWithRange:NSMakeRange(0, self.model.assetsArray.count - 1)];
+    
+    if (phototArray.count == 0) {
+        return;
+    }
+    [SVProgressHUD showWithStatus:TIP_TEXT_WATING];
     [phototArray enumerateObjectsUsingBlock:^(OOAssetModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (![NSString xy_isEmpty:obj.remoteUrl]) {
             index++;
@@ -98,13 +103,17 @@
                                                          nil];
     //http://119.148.161.111:8008   http://wd.km363.com
     [manager.requestSerializer setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:@"http://119.148.161.111:8008/api/api/ImgUpload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    
+    NSString *baseUrl = [[OOServerService sharedInstance] baseUrl];
+    NSString *url = [NSString stringWithFormat:@"%@/api/api/ImgUpload",baseUrl];
+    
+    [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         //给定数据流的数据名，文件名，文件类型（以图片为例）
         NSData *data = [NSData dataWithContentsOfFile:assetModel.localCopyPath];
-        if (assetModel.asset.mediaType == PHAssetMediaTypeImage) {
+        if (assetModel.assetType == PHAssetMediaTypeImage) {
             [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:@"image/jpeg"];
         }
-        if (assetModel.asset.mediaType == PHAssetMediaTypeVideo) {
+        if (assetModel.assetType == PHAssetMediaTypeVideo) {
             [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:@"video/quicktime"];
         }
         
@@ -149,7 +158,7 @@
 #pragma mark -- UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == self.model.assetsArray.count - 1) {
-        [self pickPhoto];
+        [self vvvvvvvvv];
     }
 }
 
@@ -175,15 +184,63 @@
     
 }
 
+- (void)vvvvvvvvv {
+    //创建UIImagePickerController对象，并设置代理和可编辑
+    UIImagePickerController * imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.editing = YES;
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = NO;
+
+    //创建sheet提示框，提示选择相机还是相册
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"请选择打开方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+    //相机选项
+    UIAlertAction * camera = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+        //选择相机时，设置UIImagePickerController对象相关属性
+        imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
+        imagePicker.modalPresentationStyle = UIModalPresentationFullScreen;
+        imagePicker.mediaTypes = @[(NSString *)kUTTypeMovie,(NSString *)kUTTypeImage];
+        imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+        //跳转到UIImagePickerController控制器弹出相机
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }];
+
+    //相册选项
+    UIAlertAction * photo = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+        //选择相册时，设置UIImagePickerController对象相关属性
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imagePicker.sourceType];
+        imagePicker.allowsEditing = NO;
+        //跳转到UIImagePickerController控制器弹出相册
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }];
+
+    //取消按钮
+    UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+
+    //添加各个按钮事件
+    [alert addAction:camera];
+    [alert addAction:photo];
+    [alert addAction:cancel];
+
+    //弹出sheet提示框
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 #pragma mark -- UIImagePickerControllerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     OOAssetModel *assetModel = [[OOAssetModel alloc] init];
     
-    NSURL *imageAssetUrl = [info objectForKey:UIImagePickerControllerReferenceURL];
-    PHFetchResult *result = [PHAsset fetchAssetsWithALAssetURLs:@[imageAssetUrl] options:nil];
-    PHAsset *asset = [result firstObject];
-    assetModel.asset = asset;
+//    NSURL *imageAssetUrl = [info objectForKey:UIImagePickerControllerReferenceURL];
+//    PHFetchResult *result = [PHAsset fetchAssetsWithALAssetURLs:@[imageAssetUrl] options:nil];
+//    PHAsset *asset = [result firstObject];
+//    assetModel.asset = asset;
     
     
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*)kUTTypeImage]) {
@@ -195,6 +252,7 @@
         BOOL success = [imgData writeToFile:Pathimg atomically:YES];
         if (success) {
             assetModel.localCopyPath = Pathimg;
+            assetModel.assetType = PHAssetMediaTypeImage;
             [self.model.assetsArray insertObject:assetModel atIndex:0];
         }
     }else if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*)kUTTypeMovie]) {
@@ -206,6 +264,7 @@
         BOOL success = [vedioData writeToFile:Pathimg atomically:YES];
         if (success) {
           assetModel.localCopyPath = Pathimg;
+            assetModel.assetType = PHAssetMediaTypeVideo;
           [self.model.assetsArray insertObject:assetModel atIndex:0];
         }
     }
@@ -233,7 +292,7 @@
             [weakSelf.collectionView reloadData];
         };
         OOAssetModel *model = [self.model.assetsArray objectAtIndex:indexPath.row];
-        [cell configCellWithAsset:model.asset];
+        [cell configCellWithAsset:model];
         
         return cell;
     }

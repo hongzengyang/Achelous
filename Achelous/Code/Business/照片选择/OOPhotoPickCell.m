@@ -28,22 +28,16 @@
     [self addSubview:self.closeBtn];
 }
 
-- (void)configCellWithAsset:(PHAsset *)asset {
+- (void)configCellWithAsset:(OOAssetModel *)model {
     [self.iconImageView setFrame:CGRectMake(12, 12, self.width - 24, self.height - 24)];
     [self.closeBtn setSize:CGSizeMake(24, 24)];
     [self.closeBtn setCenter:CGPointMake(self.iconImageView.right, self.iconImageView.top)];
     
-    __weak typeof(self) weakSelf = self;
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    [[PHImageManager defaultManager] requestImageForAsset:asset
-                                               targetSize:CGSizeMake(self.width*2, self.height*2)
-                                              contentMode:PHImageContentModeAspectFill
-                                                  options:options
-                                            resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        if (result) {
-            weakSelf.iconImageView.image = result;
-        }
-    }];
+    if (model.assetType == PHAssetMediaTypeImage) {
+        self.iconImageView.image = [UIImage imageWithContentsOfFile:model.localCopyPath];
+    }else {
+        self.iconImageView.image = [self thumbnailImageForVideoPath:model.localCopyPath atTime:0.1];
+    }
 }
 
 - (void)clickCloseButton {
@@ -68,6 +62,34 @@
         [_closeBtn setImage:[UIImage imageNamed:@"oo_close_photo_icon"] forState:(UIControlStateNormal)];
     }
     return _closeBtn;
+}
+
+
+//videoURL:本地视频路径(如果想获取网络图片，只要替换NSURL方式即可)    time：用来控制视频播放的时间点图片截取
+- (UIImage *)thumbnailImageForVideoPath:(NSString *)videoPath atTime:(NSTimeInterval)time {
+    NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
+    if (!asset) {
+        return nil;
+    };
+    AVAssetImageGenerator *assetImageGenerator =[[AVAssetImageGenerator alloc] initWithAsset:asset];
+    assetImageGenerator.appliesPreferredTrackTransform = YES;
+    assetImageGenerator.apertureMode = AVAssetImageGeneratorApertureModeEncodedPixels;
+    assetImageGenerator.requestedTimeToleranceAfter = kCMTimeZero;
+    assetImageGenerator.requestedTimeToleranceBefore = kCMTimeZero;
+
+    CGImageRef thumbnailImageRef = NULL;
+    CFTimeInterval thumbnailImageTime = time;
+    NSError *thumbnailImageGenerationError = nil;
+    thumbnailImageRef = [assetImageGenerator copyCGImageAtTime:CMTimeMakeWithSeconds(thumbnailImageTime, 60) actualTime:NULL error:&thumbnailImageGenerationError];
+
+    if(!thumbnailImageRef) {
+        NSLog(@"thumbnailImageGenerationError %@",thumbnailImageGenerationError);
+    }
+
+    UIImage *thumbnailImage = thumbnailImageRef ? [[UIImage alloc]initWithCGImage: thumbnailImageRef] : nil;
+
+    return thumbnailImage;
 }
 
 @end

@@ -56,6 +56,8 @@
 		44459A622410A0CC00793D40 /* OOXCLiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44459A612410A0CC00793D40 /* OOXCLiveModel.m */; };
 		44459AE22410D50C00793D40 /* OOPhotoPickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44459AE12410D50C00793D40 /* OOPhotoPickModel.m */; };
 		44459AF024127B3000793D40 /* OOLocalNotificationMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 44459AEF24127B2F00793D40 /* OOLocalNotificationMgr.m */; };
+		444BCC662446B045003C51ED /* OOCheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 444BCC652446B045003C51ED /* OOCheckBox.m */; };
+		444BCC692446B4E6003C51ED /* OOCheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 444BCC682446B4E6003C51ED /* OOCheckBoxCell.m */; };
 		4460F3C623CCA2AF00DE7CC4 /* UIImage+XYInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F3A423CCA2AF00DE7CC4 /* UIImage+XYInit.m */; };
 		4460F3C723CCA2AF00DE7CC4 /* UIFont+XYLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F3A823CCA2AF00DE7CC4 /* UIFont+XYLoad.m */; };
 		4460F3C823CCA2AF00DE7CC4 /* UIView+XYBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 4460F3A923CCA2AF00DE7CC4 /* UIView+XYBlur.m */; };
@@ -241,6 +243,10 @@
 		44459AEE24127B2F00793D40 /* OOLocalNotificationMgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOLocalNotificationMgr.h; sourceTree = "<group>"; };
 		44459AEF24127B2F00793D40 /* OOLocalNotificationMgr.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOLocalNotificationMgr.m; sourceTree = "<group>"; };
 		44459AF32412853300793D40 /* Achelous.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Achelous.entitlements; sourceTree = "<group>"; };
+		444BCC642446B045003C51ED /* OOCheckBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOCheckBox.h; sourceTree = "<group>"; };
+		444BCC652446B045003C51ED /* OOCheckBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOCheckBox.m; sourceTree = "<group>"; };
+		444BCC672446B4E6003C51ED /* OOCheckBoxCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OOCheckBoxCell.h; sourceTree = "<group>"; };
+		444BCC682446B4E6003C51ED /* OOCheckBoxCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OOCheckBoxCell.m; sourceTree = "<group>"; };
 		4460F3A423CCA2AF00DE7CC4 /* UIImage+XYInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+XYInit.m"; sourceTree = "<group>"; };
 		4460F3A523CCA2AF00DE7CC4 /* UIDevice+XYInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+XYInfo.h"; sourceTree = "<group>"; };
 		4460F3A623CCA2AF00DE7CC4 /* UIApplication+XYAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+XYAppInfo.h"; sourceTree = "<group>"; };
@@ -490,6 +496,7 @@
 		441D608523B20EC200F07134 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				445992842446A5BC004D3232 /* Check Box */,
 				44459AED24127B1A00793D40 /* Local Notification */,
 				44255B5823D46EB200DF9465 /* 抽稀处理 */,
 				441D609923B211E100F07134 /* OOAppCommonDef.h */,
@@ -711,6 +718,17 @@
 				44459AEF24127B2F00793D40 /* OOLocalNotificationMgr.m */,
 			);
 			path = "Local Notification";
+			sourceTree = "<group>";
+		};
+		445992842446A5BC004D3232 /* Check Box */ = {
+			isa = PBXGroup;
+			children = (
+				444BCC642446B045003C51ED /* OOCheckBox.h */,
+				444BCC652446B045003C51ED /* OOCheckBox.m */,
+				444BCC672446B4E6003C51ED /* OOCheckBoxCell.h */,
+				444BCC682446B4E6003C51ED /* OOCheckBoxCell.m */,
+			);
+			path = "Check Box";
 			sourceTree = "<group>";
 		};
 		4460F3A323CCA2AF00DE7CC4 /* UIKit */ = {
@@ -1139,6 +1157,7 @@
 				4460F3CF23CCA2AF00DE7CC4 /* UIColor+XYInit.m in Sources */,
 				4460F43123D060A100DE7CC4 /* OOHomeModel.m in Sources */,
 				44255B6723D5535700DF9465 /* OOPhotoPickEnterCell.m in Sources */,
+				444BCC692446B4E6003C51ED /* OOCheckBoxCell.m in Sources */,
 				44459A622410A0CC00793D40 /* OOXCLiveModel.m in Sources */,
 				4431E5A623CC0E4400FF57AC /* MDUrlAction.m in Sources */,
 				4460F43F23D188C400DE7CC4 /* OOCreateXCModel.m in Sources */,
@@ -1161,6 +1180,7 @@
 				4460F3CC23CCA2AF00DE7CC4 /* UIDevice+XYInfo.m in Sources */,
 				4460F3C923CCA2AF00DE7CC4 /* UIImage+XYColor.m in Sources */,
 				4460F41723CCA2CD00DE7CC4 /* NSDictionary+XYContainerConvertor.m in Sources */,
+				444BCC662446B045003C51ED /* OOCheckBox.m in Sources */,
 				4460F40B23CCA2CD00DE7CC4 /* NSFileManager+XYProperty.m in Sources */,
 				4460F40923CCA2CD00DE7CC4 /* NSObject+XYParameter.m in Sources */,
 				4460F3D423CCA2AF00DE7CC4 /* UIImage+XYResize.m in Sources */,

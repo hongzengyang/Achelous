@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Photos/Photos.h>
+#import "OOPhotoPickModel.h"
 
 typedef void(^ClickCloseBtnBlock)(void);
 
@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) ClickCloseBtnBlock clickCloseBlock;
 
-- (void)configCellWithAsset:(PHAsset *)asset;
+- (void)configCellWithAsset:(OOAssetModel *)model;
 
 @end
 

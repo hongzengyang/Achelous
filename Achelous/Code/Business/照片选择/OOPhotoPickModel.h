@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OOAssetModel : NSObject
 
-@property (nonatomic, strong) PHAsset *asset;
+//@property (nonatomic, strong) PHAsset *asset;
+@property (nonatomic, assign) PHAssetMediaType assetType;
 @property (nonatomic, copy) NSString *localCopyPath;
 @property (nonatomic, copy) NSString *remoteUrl;
 

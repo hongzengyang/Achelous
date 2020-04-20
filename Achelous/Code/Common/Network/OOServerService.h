@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (OOServerService *)sharedInstance;
 
+- (NSString *)baseUrl;
+
 //多了客户端业务选项参数 比如 是否需要缓存 而且如果发现存在缓存就同步返回
 - (NSDictionary *)postWithUrlKey:(NSString *)urlKey
                       parameters:(NSDictionary *)parameters

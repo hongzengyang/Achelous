@@ -11,6 +11,7 @@
 #import "OOPatrolVC.h"
 #import <YYModel/YYModel.h>
 #import <WMZDialog/WMZDialog.h>
+#import "OOCheckBox.h"
 
 @interface OOCreateXCVC ()<UITextViewDelegate>
 
@@ -114,7 +115,7 @@
     [param setValue:self.model.xcObject.SKMC forKey:@"Hkname"];
     [param setValue:@(self.model.xcObject.objectID) forKey:@"ID"];
     [param setValue:[[OOUserMgr sharedMgr] loginUserInfo].UserId forKey:@"UserId"];
-    [param setValue:@([self.model.weatherList indexOfObject:self.model.weather]) forKey:@"Weather"];
+    [param setValue:@([self.model.weatherList indexOfObject:self.model.weather] + 1) forKey:@"Weather"];
     [param setValue:self.model.xcName forKey:@"XCname"];
     [param setValue:@([self.model.lakeTypeList indexOfObject:self.model.lakeType]) forKey:@"Xclx"];
     [param setValue:self.xcQTPeopleTextView.text forKey:@"Qtuser"];
@@ -188,20 +189,12 @@
     }
 
     __weak typeof(self) weakSelf = self;
-    Dialog()
-    .wTypeSet(DialogTypeSelect)
-    .wEventFinishSet(^(id anyID, NSIndexPath *path, DialogType type) {
-        weakSelf.model.weather = anyID;
-        [weakSelf updateData];
-    })
-    .wTitleSet(@"天气情况")
-    .wTitleColorSet([UIColor blackColor])
-    .wTitleFontSet(16.0)
-    .wMessageSet(@"")
-    .wMessageColorSet([UIColor appTextColor])
-    .wMessageFontSet(15.0)
-    .wDataSet(self.model.weatherList)
-    .wStart();
+    [OOCheckBox configWithDataList:self.model.weatherList multiSelect:NO selectedDataList:@[] boxTitle:@"天气情况" dismissBlock:^(NSArray<NSString *> *selectDataList) {
+        if (selectDataList.count > 0) {
+            weakSelf.model.weather = [selectDataList firstObject];
+            [weakSelf updateData];
+        }
+    }];
 }
 
 - (void)clickLakeType {
@@ -214,20 +207,12 @@
     }
     
     __weak typeof(self) weakSelf = self;
-    Dialog()
-    .wTypeSet(DialogTypeSelect)
-    .wEventFinishSet(^(id anyID, NSIndexPath *path, DialogType type) {
-        weakSelf.model.lakeType = anyID;
-        [weakSelf updateData];
-    })
-    .wTitleSet(@"河湖类型")
-    .wTitleColorSet([UIColor blackColor])
-    .wTitleFontSet(16.0)
-    .wMessageSet(@"")
-    .wMessageColorSet([UIColor appTextColor])
-    .wMessageFontSet(15.0)
-    .wDataSet(self.model.lakeTypeList)
-    .wStart();
+    [OOCheckBox configWithDataList:self.model.lakeTypeList multiSelect:NO selectedDataList:@[] boxTitle:@"河湖类型" dismissBlock:^(NSArray<NSString *> *selectDataList) {
+        if (selectDataList.count > 0) {
+            weakSelf.model.lakeType = [selectDataList firstObject];
+            [weakSelf updateData];
+        }
+    }];
 }
 
 - (void)clickXcArea {
@@ -252,20 +237,18 @@
         
         if (titles.count > 0) {
             __weak typeof(self) weakSelf = self;
-            Dialog()
-            .wTypeSet(DialogTypeSelect)
-            .wEventFinishSet(^(id anyID, NSIndexPath *path, DialogType type) {
-                weakSelf.model.xcAreaModel = weakSelf.model.xcAreaList[path.row];
-                [weakSelf updateData];
-            })
-            .wTitleSet(@"巡查区域")
-            .wTitleColorSet([UIColor blackColor])
-            .wTitleFontSet(16.0)
-            .wMessageSet(@"")
-            .wMessageColorSet([UIColor appTextColor])
-            .wMessageFontSet(15.0)
-            .wDataSet(titles)
-            .wStart();
+            [OOCheckBox configWithDataList:titles multiSelect:NO selectedDataList:@[] boxTitle:@"巡查区域" dismissBlock:^(NSArray<NSString *> *selectDataList) {
+                if (selectDataList.count > 0) {
+                    __block OOXCAreaModel *model;
+                    [weakSelf.model.xcAreaList enumerateObjectsUsingBlock:^(OOXCAreaModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if ([obj.ADNM isEqualToString:[selectDataList firstObject]] ) {
+                            model = obj;
+                        }
+                    }];
+                    weakSelf.model.xcAreaModel = model;
+                    [weakSelf updateData];
+                }
+            }];
         }
     };
     
@@ -308,20 +291,18 @@
         
         if (titles.count > 0) {
             __weak typeof(self) weakSelf = self;
-            Dialog()
-            .wTypeSet(DialogTypeSelect)
-            .wEventFinishSet(^(id anyID, NSIndexPath *path, DialogType type) {
-                weakSelf.model.xcObject = weakSelf.model.xcObjectList[path.row];
-                [weakSelf updateData];
-            })
-            .wTitleSet(@"巡查对象")
-            .wTitleColorSet([UIColor blackColor])
-            .wTitleFontSet(16.0)
-            .wMessageSet(@"")
-            .wMessageColorSet([UIColor appTextColor])
-            .wMessageFontSet(15.0)
-            .wDataSet(titles)
-            .wStart();
+            [OOCheckBox configWithDataList:titles multiSelect:NO selectedDataList:@[] boxTitle:@"巡查对象" dismissBlock:^(NSArray<NSString *> *selectDataList) {
+                if (selectDataList.count > 0) {
+                    __block OOXCObjectModel *model;
+                    [weakSelf.model.xcObjectList enumerateObjectsUsingBlock:^(OOXCObjectModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if ([obj.SKMC isEqualToString:[selectDataList firstObject]] ) {
+                            model = obj;
+                        }
+                    }];
+                    weakSelf.model.xcObject = model;
+                    [weakSelf updateData];
+                }
+            }];
         }
     };
     
@@ -368,42 +349,30 @@
 - (void)clickContent {
     __weak typeof(self) weakSelf = self;
     void(^actionSheetBlock)(void) = ^ {
-        NSMutableArray *array = [NSMutableArray new];
         NSMutableArray *titles = [[NSMutableArray alloc] init];
         [weakSelf.model.contentList enumerateObjectsUsingBlock:^(OOXCContentModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [titles addObject:obj.XCNR];
         }];
+        NSMutableArray *selectedTitles = [[NSMutableArray alloc] init];
+        [weakSelf.model.selectContentList enumerateObjectsUsingBlock:^(OOXCContentModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [selectedTitles addObject:obj.XCNR];
+        }];
         if (titles.count > 0) {
             __weak typeof(self) weakSelf = self;
-            Dialog()
-            .wTypeSet(DialogTypeSelect)
-            .wEventOKFinishSet(^(id anyID, id otherData) {
-                if ([anyID isKindOfClass:[NSArray class]]) {
-                    [weakSelf.model.selectContentList removeAllObjects];
-                    NSArray *array = (NSArray *)anyID;
-                    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        if ([obj isKindOfClass:[NSString class]]) {
-                            NSString *string = (NSString *)obj;
-                            [weakSelf.model.contentList enumerateObjectsUsingBlock:^(OOXCContentModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                                if ([obj.XCNR isEqualToString:string]) {
-                                    [weakSelf.model.selectContentList addObject:obj];
-                                }
-                            }];
-                        }
+            [OOCheckBox configWithDataList:titles multiSelect:YES selectedDataList:selectedTitles boxTitle:@"巡查内容" dismissBlock:^(NSArray<NSString *> *selectDataList) {
+                [weakSelf.model.selectContentList removeAllObjects];
+                if (selectDataList.count > 0) {
+                    [selectDataList enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        NSString *text = obj;
+                        [weakSelf.model.contentList enumerateObjectsUsingBlock:^(OOXCContentModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if ([obj.XCNR isEqualToString:text] ) {
+                                [weakSelf.model.selectContentList addObject:obj];
+                            }
+                        }];
                     }];
                 }
                 [weakSelf updateData];
-            })
-            .wTitleSet(@"巡查内容")
-            .wTitleColorSet([UIColor blackColor])
-            .wTitleFontSet(16.0)
-            .wMessageSet(@"")
-            .wMessageColorSet([UIColor appTextColor])
-            .wMessageFontSet(15.0)
-            .wMultipleSelectionSet(YES)
-            .wSelectShowCheckedSet(YES)
-            .wDataSet(titles)
-            .wStart();
+            }];
         }
     };
     
@@ -444,42 +413,44 @@
 - (void)clickJoinPart {
     __weak typeof(self) weakSelf = self;
     void(^actionSheetBlock)(void) = ^ {
-        NSMutableArray *array = [NSMutableArray new];
         NSMutableArray *titles = [[NSMutableArray alloc] init];
         [weakSelf.model.joinPartList enumerateObjectsUsingBlock:^(OOXCJoinPartModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [titles addObject:obj.Dpnm];
         }];
+        NSMutableArray *selectedTitles = [[NSMutableArray alloc] init];
+        [weakSelf.model.selectjoinPartList enumerateObjectsUsingBlock:^(OOXCJoinPartModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [selectedTitles addObject:obj.Dpnm];
+        }];
         if (titles.count > 0) {
             __weak typeof(self) weakSelf = self;
-            Dialog()
-            .wTypeSet(DialogTypeSelect)
-            .wEventOKFinishSet(^(id anyID, id otherData) {
-                if ([anyID isKindOfClass:[NSArray class]]) {
-                    [weakSelf.model.selectjoinPartList removeAllObjects];
-                    NSArray *array = (NSArray *)anyID;
-                    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        if ([obj isKindOfClass:[NSString class]]) {
-                            NSString *string = (NSString *)obj;
-                            [weakSelf.model.joinPartList enumerateObjectsUsingBlock:^(OOXCJoinPartModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                                if ([obj.Dpnm isEqualToString:string]) {
-                                    [weakSelf.model.selectjoinPartList addObject:obj];
-                                }
-                            }];
+            [OOCheckBox configWithDataList:titles multiSelect:YES selectedDataList:selectedTitles boxTitle:@"参与单位" dismissBlock:^(NSArray<NSString *> *selectDataList) {
+                __block BOOL changed = NO;
+                if (selectDataList.count == weakSelf.model.selectjoinPartList.count) {
+                    [weakSelf.model.selectjoinPartList enumerateObjectsUsingBlock:^(OOXCJoinPartModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if (![selectDataList containsObject:obj.Dpnm]) {
+                            changed = YES;
                         }
+                    }];
+                }else {
+                    changed = YES;
+                }
+                if (changed) {
+                    [weakSelf.model.selectjoinPeopleList removeAllObjects];
+                }
+                
+                [weakSelf.model.selectjoinPartList removeAllObjects];
+                if (selectDataList.count > 0) {
+                    [selectDataList enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        NSString *text = obj;
+                        [weakSelf.model.joinPartList enumerateObjectsUsingBlock:^(OOXCJoinPartModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if ([obj.Dpnm isEqualToString:text] ) {
+                                [weakSelf.model.selectjoinPartList addObject:obj];
+                            }
+                        }];
                     }];
                 }
                 [weakSelf updateData];
-            })
-            .wTitleSet(@"参与单位")
-            .wTitleColorSet([UIColor blackColor])
-            .wTitleFontSet(16.0)
-            .wMessageSet(@"")
-            .wMessageColorSet([UIColor appTextColor])
-            .wMessageFontSet(15.0)
-            .wMultipleSelectionSet(YES)
-            .wSelectShowCheckedSet(YES)
-            .wDataSet(titles)
-            .wStart();
+            }];
         }
     };
     
@@ -529,37 +500,26 @@
         [weakSelf.model.joinPeopleList enumerateObjectsUsingBlock:^(OOXCJoinPeopleModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [titles addObject:obj.RealName];
         }];
+        NSMutableArray *selectedTitles = [[NSMutableArray alloc] init];
+        [weakSelf.model.selectjoinPeopleList enumerateObjectsUsingBlock:^(OOXCJoinPeopleModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [selectedTitles addObject:obj.RealName];
+        }];
         if (titles.count > 0) {
             __weak typeof(self) weakSelf = self;
-            Dialog()
-            .wTypeSet(DialogTypeSelect)
-            .wEventOKFinishSet(^(id anyID, id otherData) {
-                if ([anyID isKindOfClass:[NSArray class]]) {
-                    [weakSelf.model.selectjoinPeopleList removeAllObjects];
-                    NSArray *array = (NSArray *)anyID;
-                    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        if ([obj isKindOfClass:[NSString class]]) {
-                            NSString *string = (NSString *)obj;
-                            [weakSelf.model.joinPeopleList enumerateObjectsUsingBlock:^(OOXCJoinPeopleModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                                if ([obj.RealName isEqualToString:string]) {
-                                    [weakSelf.model.selectjoinPeopleList addObject:obj];
-                                }
-                            }];
-                        }
+            [OOCheckBox configWithDataList:titles multiSelect:YES selectedDataList:selectedTitles boxTitle:@"参与人员" dismissBlock:^(NSArray<NSString *> *selectDataList) {
+                [weakSelf.model.selectjoinPeopleList removeAllObjects];
+                if (selectDataList.count > 0) {
+                    [selectDataList enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        NSString *text = obj;
+                        [weakSelf.model.joinPeopleList enumerateObjectsUsingBlock:^(OOXCJoinPeopleModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if ([obj.RealName isEqualToString:text] ) {
+                                [weakSelf.model.selectjoinPeopleList addObject:obj];
+                            }
+                        }];
                     }];
                 }
                 [weakSelf updateData];
-            })
-            .wTitleSet(@"参与人员")
-            .wTitleColorSet([UIColor blackColor])
-            .wTitleFontSet(16.0)
-            .wMessageSet(@"")
-            .wMessageColorSet([UIColor appTextColor])
-            .wMessageFontSet(15.0)
-            .wMultipleSelectionSet(YES)
-            .wSelectShowCheckedSet(YES)
-            .wDataSet(titles)
-            .wStart();
+            }];
         }
     };
     
@@ -638,7 +598,7 @@
     
     if ([NSString xy_isEmpty:self.xcNameTextField.text]) {
         if (self.model.xcAreaModel && self.model.xcObject) {
-            NSString *text = [NSString stringWithFormat:@"%@%@",self.model.xcAreaModel.ADNM,self.model.xcObject.SKMC];
+            NSString *text = [NSString stringWithFormat:@"%@%@巡查",self.model.xcAreaModel.ADNM,self.model.xcObject.SKMC];
             self.xcNameTextField.text = text;
             self.model.xcName = text;
         }
