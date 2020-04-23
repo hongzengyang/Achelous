@@ -11,6 +11,7 @@
 #import "MDPageMaster.h"
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
 #import <BMKLocationkit/BMKLocationComponent.h>
+#import <Bugly/Bugly.h>
 
 @interface AppDelegate ()<BMKLocationAuthDelegate,BMKGeneralDelegate>
 
@@ -26,6 +27,9 @@
     
     self.locationManager = [[CLLocationManager alloc] init];
     [self.locationManager requestAlwaysAuthorization];
+    
+    
+    [Bugly startWithAppId:@"93f7b96da0"];
     
     // 初始化定位SDK
     [[BMKLocationAuth sharedInstance] checkPermisionWithKey:@"67bgD1oNYg9Pas2ovGYcOLMnP5eSfB9U" authDelegate:self];

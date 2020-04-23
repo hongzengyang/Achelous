@@ -7,6 +7,7 @@ platform :ios, '8.0'
 eval(File.open('PodDevExtension.rb').read) if File.exist? 'PodDevExtension.rb'
 
 
+pod 'Bugly','2.5.2'
 pod 'BaiduMapKit', '5.1.0'
 pod 'BMKLocationKit', '1.8.5'
 pod 'WMZDialog',  '1.0.7'
