@@ -143,7 +143,7 @@
 
 - (void)clickCountyButton {
     
-    NSArray <NSString *>*countylist = @[@"武定县",@"大姚县",@"南华县",@"姚安县",@"开发调试"];
+    NSArray <NSString *>*countylist = @[@"武定县",@"大姚县",@"南华县",@"姚安县"];
     __weak typeof(self) weakSelf = self;
     Dialog()
     .wTypeSet(DialogTypeSelect)
@@ -190,7 +190,7 @@
         if (complete) {
             [SVProgressHUD dismiss];
         }else {
-            [SVProgressHUD showErrorWithStatus:@"网络故障，请稍候再试"];
+            [SVProgressHUD showErrorWithStatus:@"登录名或密码错误！"];
         }
         
         if (complete) {
@@ -269,6 +269,9 @@
 - (UIView *)accountView {
     if (!_accountView) {
         CGFloat top = self.view.height * 610.0 / 1882.0;
+        if (self.view.height > 740) {
+            top += 50;
+        }
         _accountView = [[UIView alloc] initWithFrame:CGRectMake(30, top, self.view.width - 60, 50)];
         _accountView.backgroundColor = [UIColor whiteColor];
         _accountView.layer.cornerRadius = 8;
