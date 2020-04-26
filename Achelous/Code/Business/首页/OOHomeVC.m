@@ -72,7 +72,11 @@
 
 - (OOHomeNavBar *)navBar {
     if (!_navBar) {
-        _navBar = [[OOHomeNavBar alloc] initWithFrame:CGRectMake(0, SAFE_TOP, SCREEN_WIDTH, 44)];
+        CGFloat top = SAFE_TOP;
+        if (SAFE_TOP > 22) {
+            top = SAFE_TOP - 15;
+        }
+        _navBar = [[OOHomeNavBar alloc] initWithFrame:CGRectMake(0, top, SCREEN_WIDTH, 44)];
         _navBar.backgroundColor = [UIColor clearColor];
     }
     return _navBar;
