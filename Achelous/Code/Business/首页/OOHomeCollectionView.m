@@ -74,8 +74,22 @@
 //            [action setString:url forKey:@"linkUrl"];
 //            [action setString:model.name forKey:@"titleText"];
 //        }];
+        
+//        model.url = [NSString stringWithFormat:@"%@%@",model.url,[[OOUserMgr sharedMgr] loginUserInfo].UserId];
+//        model.url = [model.url stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        
+        NSString *url = model.url;
+        // 查找参数
+        NSRange range = [url rangeOfString:@"?"];
+        if (range.location == NSNotFound) {
+            url = [NSString stringWithFormat:@"%@?userId=%@",url,[[OOUserMgr sharedMgr] loginUserInfo].UserId];
+        }else {
+            url = [NSString stringWithFormat:@"%@&userId=%@",url,[[OOUserMgr sharedMgr] loginUserInfo].UserId];
+        }
+        
         [[MDPageMaster master] openUrl:@"xiaoying://oo_xc_h5_vc" action:^(MDUrlAction * _Nullable action) {
-            [action setString:model.url forKey:@"linkUrl"];
+            [action setString:url forKey:@"linkUrl"];
             [action setString:model.name forKey:@"titleText"];
         }];
     }

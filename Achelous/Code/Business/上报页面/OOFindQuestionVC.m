@@ -103,14 +103,18 @@
     [param setValue:self.model.desc forKey:@"SJMS"];
     
     __block NSString *sjzp = @"";
-    {
-        [self.model.photoPickModel.assetsArray enumerateObjectsUsingBlock:^(OOAssetModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (![NSString xy_isEmpty:obj.remoteUrl]) {
-                sjzp = [sjzp stringByAppendingString:obj.remoteUrl];
-                sjzp = [sjzp stringByAppendingString:@","];
+    if (self.model.photoPickModel.assetsArray.count > 1) {
+        {
+            [self.model.photoPickModel.assetsArray enumerateObjectsUsingBlock:^(OOAssetModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (![NSString xy_isEmpty:obj.remoteUrl]) {
+                    sjzp = [sjzp stringByAppendingString:obj.remoteUrl];
+                    sjzp = [sjzp stringByAppendingString:@","];
+                }
+            }];
+            if (![NSString xy_isEmpty:sjzp]) {
+                sjzp = [sjzp stringByReplacingCharactersInRange:NSMakeRange(sjzp.length - 1, 1) withString:@""];
             }
-        }];
-        sjzp = [sjzp stringByReplacingCharactersInRange:NSMakeRange(sjzp.length - 1, 1) withString:@""];
+        }
     }
     [param setValue:sjzp forKey:@"SJZP"];
     
